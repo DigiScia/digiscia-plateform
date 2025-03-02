@@ -1,0 +1,170 @@
+/* Import des polices tech */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* Variables globales */
+:root {
+  --primary-color: #0a0a45;
+  --secondary-color: #ffffff;
+  --accent-color: #64ffda;
+  --background-color: #ffffff;
+  --button-color: #0a0a45;
+  --transition-speed: 0.3s;
+}
+
+/* Style de base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--background-color);
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100vw; /* Utilisation de la largeur de la fenêtre */
+}
+
+.hero-section {
+  flex: 1;
+  width: 100%;
+  padding: 2rem;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 2rem;
+}
+
+/* Container du logo */
+.logo-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondary-color);
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  max-width: 525px;
+  margin-left: 8%;
+}
+
+.hero-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  
+}
+
+/* Texte d'accueil */
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  margin-left: 10%;
+}
+
+.welcome-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.brand-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.tagline {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+
+/* Boutons d'appel à l'action */
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cta-button {
+  font-family: 'Orbitron', sans-serif;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  background-color: var(--button-color);
+  color: var(--secondary-color);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  height: 50%;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(10, 10, 69, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hero-text {
+    align-items: center;
+  }
+  
+  .logo-container {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .cta-button {
+    width: 100%;
+  }
+}
+
+/* Support du thème clair/sombre */
+[data-theme="light"] {
+  --primary-color: #0a0a45;
+  --secondary-color: #ffffff;
+  --background-color: #ffffff;
+  --button-color: #0a0a45;
+}
+
+[data-theme="dark"] {
+  --primary-color: #0a0a45; 
+  --secondary-color: #ffffff;
+  --background-color: #f0f2f5;
+  --button-color: #0a0a45;
+}

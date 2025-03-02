@@ -1,0 +1,85 @@
+/* Import des polices identique aux autres pages */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #0a0a45;
+  --secondary-color: #ffffff;
+  --accent-color: #64ffda;
+  --background-color: #ffffff;
+  --button-color: #0a0a45;
+  --transition-speed: 0.3s;
+}
+
+.news-section {
+  padding: 2rem;
+  min-height: 60vh;
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+.news-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.news-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.news-card {
+  background-color: var(--secondary-color);
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-speed);
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.news-card-date {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.news-card-content {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.newsletter-subscribe {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.subscribe-button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.subscribe-button:hover {
+  background-color: var(--accent-color);
+}
