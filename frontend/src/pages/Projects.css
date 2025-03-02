@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* Variables globales */
+:root {
+  --primary-color: #0a0a45;
+  --secondary-color: #ffffff;
+  --accent-color: #64ffda;
+  --background-color: #ffffff;
+}
+
+/* Section Projets */
+.projects-section {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+/* Titre */
+.projects-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/* Conteneur de l'hexagone */
+.hexagon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Hexagone en CSS */
+.hexagon {
+  width: 120px;
+  height: 138px;
+  background-color: var(--primary-color);
+  position: relative;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotateHex 5s infinite linear;
+}
+
+/* Circuit simulé avec des traits */
+.hexagon::before,
+.hexagon::after {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  background: transparent;
+  border: 2px solid var(--accent-color);
+  clip-path: polygon(10% 20%, 90% 20%, 90% 80%, 10% 80%);
+}
+
+/* Pulsation de l'hexagone */
+@keyframes rotateHex {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Texte "Coming Soon..." */
+.projects-description {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}

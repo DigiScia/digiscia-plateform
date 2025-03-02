@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/* Variables globales */
+:root {
+  --primary-color: #0a0a45;
+  --background-color: #ffffff;
+}
+
+/* Container général */
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 5%;
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+/* Contenu textuel */
+.about-content {
+  max-width: 50%;
+}
+
+.about-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.about-description {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  line-height: 1.6;
+}
+
+/* Modifiez la règle pour les éléments de liste dans ".about-description" */
+.missions {
+  font-size: 1.2rem;
+  color: #000;
+  line-height: 1.6;
+}
+
+/* Bloc graphique avec découpe diagonale */
+.about-graphic {
+  width: 40%;
+  height: 300px;
+  background: linear-gradient(135deg, var(--primary-color) 50%, #f8f6f1 50%);
+  border-radius: 10px;
+}

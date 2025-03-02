@@ -1,0 +1,238 @@
+/* Import tech fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+:root {
+  --primary-color: #0a0a45;
+  --secondary-color: #1a4e86;
+  --hover-color: #2a5e96;
+  --text-color: #ffffff;
+  --highlight-color: #64ffda;
+  --transition-speed: 0.3s;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(15px, 2vw, 30px) clamp(20px, 4vw, 60px);
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-family: 'Rajdhani', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--text-color);
+  letter-spacing: 1px;
+  margin: clamp(0.5em, 1vw, 2em);
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+  transition: transform var(--transition-speed);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  color: var(--highlight-color);
+}
+
+.navbar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar ul {
+  display: flex;
+  list-style-type: none;
+  gap: clamp(15px, 2vw, 30px);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  font-weight: 500;
+  position: relative;
+  padding: 5px 0;
+  transition: color var(--transition-speed);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.navbar a.active {
+  font-weight: 700;
+  color: var(--highlight-color);
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: clamp(0.5em, 1vw, 2em);
+}
+
+.night-mode {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: clamp(8px, 1vw, 12px) clamp(12px, 2vw, 20px);
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Rajdhani', sans-serif;
+  box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+  transition: all var(--transition-speed);
+  letter-spacing: 1px;
+}
+
+.moon-icon {
+  margin-right: 8px;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+}
+
+/* Improved hover effects */
+.navbar a:hover {
+  color: var(--highlight-color);
+}
+
+.navbar a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--highlight-color);
+  transition: width var(--transition-speed);
+}
+
+.navbar a.active::after {
+  width: 100%;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+.night-mode:hover {
+  background-color: var(--hover-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+}
+
+/* Hamburger menu for mobile */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: var(--text-color);
+  border-radius: 3px;
+  transition: all var(--transition-speed);
+}
+
+/* For responsive design with improved breakpoints */
+@media (max-width: 1024px) {
+  .navbar ul {
+    gap: clamp(10px, 1.5vw, 20px);
+  }
+  
+  .navbar a {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: flex;
+    margin-left: auto;
+    margin-right: 15px;
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-color);
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-speed);
+    z-index: 999;
+  }
+  
+  .navbar.active {
+    max-height: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    padding: 20px 0;
+  }
+  
+  .navbar ul li {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+  
+  .header {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.6rem;
+    margin: 0.5em;
+  }
+  
+  .night-mode {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+  
+  .moon-icon {
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark/Light theme support */
+[data-theme="light"] {
+  --primary-color: #1a1e2d;
+  --secondary-color: #3a86ff;
+  --hover-color: #4a96ff;
+  --text-color: #f0f2f5;
+  --highlight-color: #0056b3;
+}
+
+/* Animation for mobile menu */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.navbar.active ul li {
+  animation: fadeIn 0.3s ease forwards;
+  animation-delay: calc(var(--item-index) * 0.1s);
+  opacity: 0;
+}

@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #0a0a45;
+  --secondary-color: #ffffff;
+  --accent-color: #64ffda;
+  --background-color: #ffffff;
+  --transition-speed: 0.3s;
+}
+
+.contact-section {
+  padding: 2rem;
+  min-height: 60vh;
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+.contact-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+/* Container pour organiser réseaux sociaux et formulaire côte à côte */
+.contact-content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  align-items: start;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Styles pour la container des réseaux sociaux */
+.social-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icons .icon {
+  font-size: 40px;
+  color: var(--primary-color);
+  transition: transform var(--transition-speed);
+}
+
+.social-icons .icon:hover {
+  transform: scale(1.1);
+}
+
+/* Container du formulaire */
+.contact-form-container {
+  text-align: left;
+}
+
+.contact-form {
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.form-group textarea {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* Champ plein largeur pour Message */
+.form-group.full-width {
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+}
+
+/* Bouton d'envoi */
+.contact-submit {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color var(--transition-speed);
+}
+
+.contact-submit:hover {
+  background-color: var(--accent-color);
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,220 @@
+/* Import tech fonts to match header */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+:root {
+  --footer-bg-color: #0a0a45;
+  --footer-text-color: #ffffff;
+  --footer-accent-color: #64ffda;
+  --linkedin-color: #0a66c2;
+  --instagram-color: #e1306c;
+  --facebook-color: #1877f2;
+  --gamepad-color: #7289da;
+  --transition-speed: 0.3s;
+}
+
+.footer {
+  background-color: var(--footer-bg-color);
+  color: var(--footer-text-color);
+  text-align: center;
+  padding: clamp(30px, 4vw, 60px) clamp(20px, 4vw, 60px);
+  font-family: 'Rajdhani', sans-serif;
+  position: relative;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Add a subtle tech pattern to the footer background */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--footer-accent-color), transparent);
+  opacity: 0.7;
+}
+
+.location {
+  font-size: clamp(16px, 1.2vw, 20px);
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+
+.location::before {
+  content: "📍";
+  margin-right: 8px;
+  font-size: 1.1em;
+}
+
+.contact {
+  font-size: clamp(14px, 1vw, 18px);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.contact a {
+  color: var(--footer-accent-color);
+  text-decoration: none;
+  position: relative;
+  transition: all var(--transition-speed);
+}
+
+.contact a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--footer-accent-color);
+  transition: width var(--transition-speed);
+}
+
+.contact a:hover {
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.contact a:hover::after {
+  width: 100%;
+}
+
+/* Icônes des réseaux sociaux */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: clamp(15px, 2vw, 25px);
+  margin: 25px 0;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(40px, 3.5vw, 50px);
+  height: clamp(40px, 3.5vw, 50px);
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all var(--transition-speed);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-icons a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: scale(0);
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 0;
+}
+
+.social-icons a:hover::before {
+  transform: scale(1.5);
+}
+
+.icon {
+  font-size: clamp(18px, 1.5vw, 24px);
+  transition: transform var(--transition-speed), color var(--transition-speed);
+  z-index: 1;
+}
+
+.linkedin:hover {
+  color: var(--linkedin-color);
+  transform: scale(1.2);
+}
+
+.instagram:hover {
+  color: var(--instagram-color);
+  transform: scale(1.2);
+}
+
+.facebook:hover {
+  color: var(--facebook-color);
+  transform: scale(1.2);
+}
+
+.game:hover {
+  color: var(--gamepad-color);
+  transform: scale(1.2);
+}
+
+/* Footer sections */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Copyright with tech style */
+.copyright {
+  font-size: clamp(12px, 0.9vw, 14px);
+  opacity: 0.8;
+  font-family: 'Roboto Mono', monospace;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright span {
+  color: var(--footer-accent-color);
+}
+
+/* For responsive design */
+@media (min-width: 768px) {
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    gap: 30px;
+  }
+  
+  .contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .social-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .social-icons {
+    margin-top: auto;
+  }
+  
+  .copyright {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+}
+
+/* Dark/Light theme support to match header */
+[data-theme="light"] {
+  --footer-bg-color: #e8eaf6;
+  --footer-text-color: #1a1e2d;
+  --footer-accent-color: #3a86ff;
+}
+
+/* Pulse animation for social icons */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
+}
+
+.social-icons a:hover {
+  animation: pulse 1.5s infinite;
+}
