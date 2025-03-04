@@ -20,7 +20,7 @@ class Admin(models.Model):
     # Définir les choix pour le champ permission
     PERMISSION_CHOICES = [
         ('read', 'Read'),
-        ('write', 'Write'),
+        ('create', 'Create'),
         ('delete', 'Delete'),
         ('manage', 'Manage'),
     ]
@@ -30,6 +30,18 @@ class Admin(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     permission = models.CharField(
         max_length=10, choices=PERMISSION_CHOICES, default='read')
+
+    def can_create(self):
+        return self.permission in ['manage', 'create']
+
+    def can_delete(self):
+        return self.permission in ['manage', 'delete', 'create']
+
+    def can_update(self):
+        return self.permission in ['manage', 'create', 'delete']
+
+    def can_read(self):
+        return self.permission in ['manage', 'read', 'create', 'delete']
 
     def __str__(self):
         return self.user.username  # Utiliser username au lieu de name
@@ -68,7 +80,7 @@ class Device(models.Model):
 class Projects(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    status = models.CharField(max_length=5)
+    status = models.CharField(max_length=20)
     start_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='projects/')
     created_at = models.DateTimeField(auto_now_add=True)
