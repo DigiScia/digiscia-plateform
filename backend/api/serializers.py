@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserPerso, Admin, Contact, Services, Device
+from .models import UserPerso, Admin, Contact, Services, Device, Projects
 import re
 from django.contrib.auth.hashers import make_password
 
@@ -47,6 +47,20 @@ class contactSterializer(serializers.ModelSerializer):
             'created_at'
         )
 
+    def validate_email(self, value):
+        # Validation de l'email
+        if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', value):
+            raise serializers.ValidationError(
+                "Veuillez entrer une adresse email valide.")
+        return value
+
+    def validate_username(self, value):
+        # Exemple : Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des underscores
+        if not re.match(r'^[\w\s]+$', value):
+            raise serializers.ValidationError(
+                "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores.")
+        return value
+
 
 class serviceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,3 +81,14 @@ class deviceSerializer(serializers.ModelSerializer):
             'price',
             'created_at'
         )
+
+    def valide_price(self, value):
+        if value < 0:
+            raise ValueError("Le Prix des services doit etre positis")
+        return value
+
+
+class projectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Projects
+        fields = '__all__'
