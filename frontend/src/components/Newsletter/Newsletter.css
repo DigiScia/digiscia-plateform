@@ -1,0 +1,30 @@
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .newsletter-email-input {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    border: 1px solid var(--primary-color);
+    background-color: var(--secondary-color);
+    border-radius: 4px;
+    width: 300px;
+    max-width: 100%;
+    transition: border-color var(--transition-speed);
+  }
+  
+  .newsletter-email-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
+  }
+  
+  .newsletter-email-input::placeholder {
+    color: var(--primary-color);
+    opacity: 0.7;
+  }
