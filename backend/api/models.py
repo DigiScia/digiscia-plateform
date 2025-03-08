@@ -13,7 +13,7 @@ class UserPerso(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class Admin(models.Model):
@@ -66,15 +66,6 @@ class Services(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Device(models.Model):
-    service = models.ForeignKey(Services, on_delete=models.CASCADE)
-    price = models.FloatField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.service.name
 
 
 class Projects(models.Model):

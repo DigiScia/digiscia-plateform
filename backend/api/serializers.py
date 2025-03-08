@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserPerso, Admin, Contact, Services, Device, Projects
+from .models import UserPerso, Admin, Contact, Services, Projects
 import re
 from django.contrib.auth.hashers import make_password
 
@@ -36,7 +36,7 @@ class adminSterializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class contactSterializer(serializers.ModelSerializer):
+class contactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = (
@@ -63,22 +63,14 @@ class contactSterializer(serializers.ModelSerializer):
 
 
 class serviceSerializer(serializers.ModelSerializer):
+    image = serializers.CharField(required=False)
+
     class Meta:
         model = Services
         fields = (
             'name',
             'description',
             'image',
-            'created_at'
-        )
-
-
-class deviceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Device
-        fields = (
-            'service',
-            'price',
             'created_at'
         )
 
