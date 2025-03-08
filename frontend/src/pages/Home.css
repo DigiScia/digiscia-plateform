@@ -52,8 +52,46 @@ body {
   aspect-ratio: 1 / 1;
   max-width: 525px;
   margin-left: 8%;
+  transition: all var(--transition-speed) ease;
+  position: relative;
 }
 
+.logo-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(10, 10, 69, 0.3);
+}
+
+/* Option bonus : ajout d'un effet de brillance */
+.logo-container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    0deg, 
+    transparent, 
+    rgba(255,255,255,0.3), 
+    transparent
+  );
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.logo-container:hover::after {
+  opacity: 0.2;
+}
+
+@keyframes subtle-hover-effect {
+  0% {
+    transform: scale(1.02) translateY(-2px);
+  }
+  100% {
+    transform: scale(1.02) translateY(2px);
+  }
+}
 .hero-logo {
   width: 100%;
   height: auto;

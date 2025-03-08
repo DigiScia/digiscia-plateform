@@ -4,7 +4,45 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #000066;
+  --secondary-color: #ffffff;
+  --accent-color: #64ffda;
+  --background-light: #f5f5f5;
+  --background-dark: #000066;
+  --transition-speed: 0.3s;
+}
+
 .app {
   min-height: 100vh;
   background-color: #000051;
 }
+
+/* .app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+} */
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  scroll-behavior: smooth;
+}
+
+section {
+  padding: 80px 20px; /* Ajuste selon la taille du header */
+  min-height: 100vh; /* Chaque section prend toute la hauteur de l'écran */
+  border-bottom: 1px solid #ddd; /* Pour bien séparer visuellement */
+}
+

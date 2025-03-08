@@ -1,79 +1,172 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-/* Variables globales */
 :root {
-  --primary-color: #0a0a45;
-  --secondary-color: #ffffff;
-  --accent-color: #64ffda;
-  --background-color: #ffffff;
+  --primary-color: #4157C0;
+  --secondary-color: #41C0A0;
+  --accent-color: #6E41C0;
+  --background-color: #f4f4f9;
+  --text-color: #333;
+  --transition-speed: 0.3s;
 }
 
-/* Section Projets */
 .projects-section {
-  min-height: 60vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--background-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-content {
+  z-index: 10;
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background-color: var(--background-color);
-  text-align: center;
 }
 
-/* Titre */
 .projects-title {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: 3rem;
   color: var(--primary-color);
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
 }
 
-/* Conteneur de l'hexagone */
-.hexagon-container {
+.projects-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background-color: var(--accent-color);
+}
+
+.projects-grid {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
-/* Hexagone en CSS */
+
 .hexagon {
   width: 120px;
-  height: 138px;
-  background-color: var(--primary-color);
-  position: relative;
+  height: 120px;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: rotateHex 5s infinite linear;
+  cursor: pointer;
+  opacity: 0.6;
+  transform: scale(0.8);
+  transition: all var(--transition-speed) ease;
+  color: white;
 }
 
-/* Circuit simulé avec des traits */
-.hexagon::before,
-.hexagon::after {
-  content: "";
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  background: transparent;
-  border: 2px solid var(--accent-color);
-  clip-path: polygon(10% 20%, 90% 20%, 90% 80%, 10% 80%);
+.hexagon:hover {
+  opacity: 0.9;
+  transform: scale(0.9);
 }
 
-/* Pulsation de l'hexagone */
-@keyframes rotateHex {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.hexagon.active {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
-/* Texte "Coming Soon..." */
-.projects-description {
-  font-size: 1.5rem;
+.project-details {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  min-height: 300px;
+}
+
+.project-info {
+  background-color: white;
+  border-radius: 15px;
+  color: var(--text-color);
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 20;
+}
+
+.project-info h2 {
+  font-family: 'Orbitron', sans-serif;
   color: var(--primary-color);
-  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.project-technologies {
+  margin-top: 1.5rem;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-tag {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.project-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: var(--text-color);
+  opacity: 0.5;
+}
+
+.background-illustration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.circuit-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0.3;
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .projects-title {
+    font-size: 2rem;
+  }
+
+  .hexagon {
+    width: 100px;
+    height: 100px;
+  }
 }

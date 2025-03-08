@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import logoImage from "../assets/logobleu.jpg";
+// import ProgressCircle from "../components/ProgressCircle/ProgressCircle.jsx";
 
 function TaglineRotator() {
   const texts = [
@@ -26,8 +27,13 @@ function TaglineRotator() {
 }
 
 function Home() {
+  // Fonction pour gérer le clic sur le bouton Sponsoring
+  const handleSponsoringClick = () => {
+    window.open(`https://wa.me/212716990681`, "_blank");
+  };
+
   return (
-    <div className="home-container">
+    <div id="home" className="home-container">
       <main className="hero-section">
         <div className="hero-content">
           <div className="logo-container">
@@ -40,11 +46,17 @@ function Home() {
               <TaglineRotator />
             </h3>
             <div className="cta-buttons">
-              <button className="cta-button sponsoring">Sponsoring</button>
+              <button 
+                className="cta-button sponsoring" 
+                onClick={handleSponsoringClick}
+              >
+                Sponsoring
+              </button>
               <a href="#contacts" className="cta-button contact">
                 Nous Contacter
               </a>
             </div>
+            {/* <ProgressCircle /> */}
           </div>
         </div>
       </main>
