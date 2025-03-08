@@ -26,29 +26,6 @@ SECRET_KEY = 'django-insecure-3l5=zfu*_$!3#+5n14plc*=k)43*p91&#+t%6d4i3dky7l^mox
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Desactiver l'authentification au momenent du dev.
-
-# Active le mode debug si DEBUG=True dans les variables d'environnement
-# DEBUG = os.getenv('DEBUG', 'True') == 'True'
-
-if DEBUG:
-    # En développement, désactive l'authentification
-    REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION_CLASSES': [
-            # Permet à tout le monde d'accéder à l'API
-            'rest_framework.permissions.AllowAny',
-        ],
-    }
-else:
-    # En production, active l'authentification
-    REST_FRAMEWORK = {
-        'DEFAULT_AUTHENTICATION_CLASSES': [
-            'rest_framework.authentication.TokenAuthentication',
-        ],
-        'DEFAULT_PERMISSION_CLASSES': [
-            'rest_framework.permissions.IsAuthenticated',
-        ],
-    }
 
 ALLOWED_HOSTS = []
 
@@ -155,3 +132,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Authentication
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+
+    ]
+}
