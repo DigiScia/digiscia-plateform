@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Element } from "react-scroll";
 import Header from "./components/Header/Header.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Home from "./pages/Home";
@@ -13,28 +14,21 @@ import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <div className="app-container">
-        <Header />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Home />
-                <About />
-                <Projects />
-                <Services />
-                <News />
-                <Team />
-                <Contact />
-              </>
-            }
-          />
-        </Routes>
+        <Header /> {/* Navigation avec liens vers les sections */}
+        <main>
+          <Element name="home"><Home /></Element>
+          <Element name="about"><About /></Element>
+          <Element name="projects"><Projects /></Element>
+          <Element name="services"><Services /></Element>
+          <Element name="news"><News /></Element>
+          <Element name="team"><Team /></Element>
+          <Element name="contact"><Contact /></Element>
+        </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

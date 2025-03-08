@@ -1,17 +1,31 @@
 import React from "react";
 import "./Services.css";
 
+
+
+import web_mobile from "../assets/web_mobile.jpg";
+import bi from "../assets/bi.jpg";  
+import bigdata from "../assets/bigdata.jpg";  
+import cybersecurity from "../assets/cybersecurity.jpg"; 
+import ia from "../assets/ia.jpg";  
+import formation from "../assets/formation.jpg"; 
+import robotics from "../assets/robotics.jpg"; 
+import iot from "../assets/iot.jpg";
+import sig from "../assets/sig.jpg";
+import audit from "../assets/audit.jpg";
+
 function Services() {
   const services = [
-    { title: "Web & Mobile", image: "https://via.placeholder.com/200?text=Web+%26+Mobile" },
-    { title: "Intelligence Artificielle", image: "https://via.placeholder.com/200?text=IA" },
-    { title: "SIG", image: "https://via.placeholder.com/200?text=SIG" },
-    { title: "Aide à la décision", image: "https://via.placeholder.com/200?text=Aide+à+la+décision" },
-    { title: "Big Data", image: "https://via.placeholder.com/200?text=Big+Data" },
-    { title: "IOT", image: "https://via.placeholder.com/200?text=IOT" },
-    { title: "Cybersécurité", image: "https://via.placeholder.com/200?text=Cybersécurité" },
-    { title: "Audit des SI", image: "https://via.placeholder.com/200?text=Audit+des+SI" },
-    { title: "Automatisme & Robotique", image: "https://via.placeholder.com/200?text=Auto+%26+Robotique" }
+    { title: "Web & Mobile", image: web_mobile },
+    { title: "Intelligence Artificielle", image: ia },
+    { title: "SIG", image: sig },
+    { title: "Aide à la décision", image: bi },
+    { title: "Big Data", image: bigdata },
+    { title: "IOT", image: iot },
+    { title: "Cybersécurité", image: cybersecurity},
+    { title: "Audit des SI", image: audit },
+    { title: "Automatisme & Robotique", image: robotics },
+    { title: "Formation", image: formation }
   ];
 
   return (
