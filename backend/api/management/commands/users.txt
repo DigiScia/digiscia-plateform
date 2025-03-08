@@ -1,0 +1,17 @@
+   # create users - username, email, pwd
+        # users = [
+        #     UserPerso(username="Souley TRAORE",
+        #               email="souley@gmail.com", password="souley"),
+        #     UserPerso(username="Souley BAMBA",
+        #               email="souley@gmail.com", password="bamba"),
+        #     UserPerso(username="Souley DIARRA",
+        #               email="souley@gmail.com", password="diarra"),
+        #     UserPerso(username="Souley SIRA",
+        #               email="souley@gmail.com", password="sira"),
+        #     UserPerso(username="Souley DAO",
+        #               email="souley@gmail.com", password="dao"),
+        # ]
+
+        # # create user & re-fetch from DB
+        # UserPerso.objects.bulk_create(users)
+        # users = UserPerso.objects.all()
