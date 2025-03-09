@@ -13,14 +13,14 @@ class UserPerso(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.username
+        return self.name
 
 
 class Admin(models.Model):
     # Définir les choix pour le champ permission
     PERMISSION_CHOICES = [
         ('read', 'Read'),
-        ('create', 'Create'),
+        ('write', 'Write'),
         ('delete', 'Delete'),
         ('manage', 'Manage'),
     ]
@@ -30,18 +30,6 @@ class Admin(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     permission = models.CharField(
         max_length=10, choices=PERMISSION_CHOICES, default='read')
-
-    def can_create(self):
-        return self.permission in ['manage', 'create']
-
-    def can_delete(self):
-        return self.permission in ['manage', 'delete', 'create']
-
-    def can_update(self):
-        return self.permission in ['manage', 'create', 'delete']
-
-    def can_read(self):
-        return self.permission in ['manage', 'read', 'create', 'delete']
 
     def __str__(self):
         return self.user.username  # Utiliser username au lieu de name
@@ -68,10 +56,19 @@ class Services(models.Model):
         return self.name
 
 
+class Device(models.Model):
+    service = models.ForeignKey(Services, on_delete=models.CASCADE)
+    price = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.service.name
+
+
 class Projects(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=5)
     start_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='projects/')
     created_at = models.DateTimeField(auto_now_add=True)

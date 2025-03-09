@@ -1,0 +1,77 @@
+GET http://127.0.0.1:8000/ HTTP/1.1
+
+###
+GET http://127.0.0.1:8000/user/b16bf2d5-1b29-45ca-8896-d895571e1903 HTTP/1.1
+
+
+###
+PUT http://127.0.0.1:8000/update_user/b16bf2d5-1b29-45ca-8896-d895571e1903 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNDY1Mzg2LCJpYXQiOjE3NDE0NjUwODYsImp0aSI6ImY3MjRmYjM5NjVlODQ3MWM5YjRjYmVjZDNmNDk5N2ZmIiwidXNlcl9pZCI6Mn0.He89tSm4wwoJ3_yYduRpsz0SW3W8a5eErdRwD10mu-4
+
+{
+    "username": "Souley TRAORE updated",
+    "email": "souley@gmail.com",
+    "password": "souley"
+}
+
+### 
+DELETE http://127.0.0.1:8000/delete_user/b16bf2d5-1b29-45ca-8896-d895571e1903 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNDY1Mzg2LCJpYXQiOjE3NDE0NjUwODYsImp0aSI6ImY3MjRmYjM5NjVlODQ3MWM5YjRjYmVjZDNmNDk5N2ZmIiwidXNlcl9pZCI6Mn0.He89tSm4wwoJ3_yYduRpsz0SW3W8a5eErdRwD10mu-4
+
+### 
+POST http://127.0.0.1:8000/create_user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNDYwNDQzLCJpYXQiOjE3NDE0NjAxNDMsImp0aSI6IjA3MWMyZWFhM2FlNjRlNDY5MjFhYzkxYTBiZDI2Nzg2IiwidXNlcl9pZCI6Mn0.-HXF5TlvGDwKM8K-k98_M-z4pigoMz8qrc1VRHW-sYE
+
+ {
+        "username": "Souleymane TRAORE Modif",
+        "email": "souleyupdate2026@gmail.com",
+        "password": "souleyouiimodife"
+    }
+
+
+###
+GET http://127.0.0.1:8000/contacts/ HTTP/1.1
+
+###
+GET http://127.0.0.1:8000/contact/1/ HTTP/1.1
+###
+POST http://127.0.0.1:8000/create_contact/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "fullname":"TRAORE Souleymane",
+    "email":"solo@gmail.com",
+    "sexe":"M",
+    "message":"Bonjour,Je suis TRAORE Souleymane, je vous suis depuis 2022 et vraiment je trouve appreciable ce que vous faites dans le domaine de la Tech"
+}
+
+###
+GET http://127.0.0.1:8000/services/ HTTP/1.1
+
+###
+GET http://127.0.0.1:8000/service/2/ HTTP/1.1
+
+###
+DELETE http://127.0.0.1:8000/delete_service/1/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNDY2NjIwLCJpYXQiOjE3NDE0NjYzMjAsImp0aSI6IjljOTY1OTYzZDYxMTQ1MGNhMWY3YjAxODQzM2UwNDc0IiwidXNlcl9pZCI6Mn0.vypkwmabnJNbKgRRLdWPPaLzZSUVFaPC9zBsHmXdPtU
+###
+PUT http://127.0.0.1:8000/update_service/2/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxNDY3Mzg0LCJpYXQiOjE3NDE0NjcwODQsImp0aSI6IjlkYWE0NDE0YjA4MDQ3MjU5MWRjY2Q4ODc0ZjY4ZWFjIiwidXNlcl9pZCI6Mn0.ExEzgKvdD5MkWrKIohqZvpTBZF6qqH-Q4sJApjd2XMU
+Content-Type: application/json
+
+{
+"name":"service2 updated",
+"description":"Ce ci est une mise a jour du service2",
+"image":"media/services/serv2.jpg"
+}
+
+###
+POST http://127.0.0.1:8000/api/token/ HTTP/1.1
+Content-Type:   application/json
+
+{
+  "username": "fidele",
+    "password": "1234"
+}

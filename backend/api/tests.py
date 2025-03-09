@@ -1,4 +1,7 @@
 # Create your tests here.
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
 from django.test import TestCase
 from .models import UserPerso
 import uuid
@@ -43,3 +46,6 @@ class UserPersoModelTest(TestCase):
     def test_str_method(self):
         """Teste que la méthode __str__ retourne le username."""
         self.assertEqual(str(self.user), "testuser")
+
+
+# Create your tests here.

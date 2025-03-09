@@ -1,0 +1,901 @@
+openapi: 3.0.3
+info:
+  title: API DigiScia Plateform
+  version: 1.0.0
+  description: API utilisé pour gerer le CRUD de notre plateforme
+paths:
+  /:
+    get:
+      operationId: root_list
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userSterializer'
+          description: ''
+    post:
+      operationId: root_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userSterializer'
+          description: ''
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /contact/{id}/:
+    get:
+      operationId: contact_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - contact
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contact'
+          description: ''
+  /contacts/:
+    get:
+      operationId: contacts_list
+      tags:
+      - contacts
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/contact'
+          description: ''
+  /create_contact/:
+    post:
+      operationId: create_contact_create
+      tags:
+      - create_contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contact'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/contact'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/contact'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contact'
+          description: ''
+  /create_project:
+    post:
+      operationId: create_project_create
+      tags:
+      - create_project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/project'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/project'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/project'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+          description: ''
+  /create_service:
+    post:
+      operationId: create_service_create
+      tags:
+      - create_service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/service'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/service'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/service'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service'
+          description: ''
+  /create_user:
+    post:
+      operationId: create_user_create
+      tags:
+      - create_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userSterializer'
+          description: ''
+  /delete_contact/{id}/:
+    delete:
+      operationId: delete_contact_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - delete_contact
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /delete_project/{id}:
+    delete:
+      operationId: delete_project_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - delete_project
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /delete_service/{id}/:
+    delete:
+      operationId: delete_service_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - delete_service
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /delete_user/{id}:
+    delete:
+      operationId: delete_user_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - delete_user
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: No response body
+  /project/{id}:
+    get:
+      operationId: project_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - project
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+          description: ''
+  /projects/:
+    get:
+      operationId: projects_list
+      tags:
+      - projects
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/project'
+          description: ''
+  /service/{id}/:
+    get:
+      operationId: service_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - service
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service'
+          description: ''
+  /services/:
+    get:
+      operationId: services_list
+      tags:
+      - services
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/service'
+          description: ''
+  /update_contact/{id}/:
+    put:
+      operationId: update_contact_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contact'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/contact'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/contact'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contact'
+          description: ''
+    patch:
+      operationId: update_contact_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_contact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patchedcontact'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Patchedcontact'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Patchedcontact'
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contact'
+          description: ''
+  /update_project/{id}:
+    put:
+      operationId: update_project_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/project'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/project'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/project'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+          description: ''
+    patch:
+      operationId: update_project_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patchedproject'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Patchedproject'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Patchedproject'
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+          description: ''
+  /update_service/{id}/:
+    put:
+      operationId: update_service_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/service'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/service'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/service'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service'
+          description: ''
+    patch:
+      operationId: update_service_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patchedservice'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Patchedservice'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Patchedservice'
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service'
+          description: ''
+  /update_user/{id}:
+    put:
+      operationId: update_user_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/userSterializer'
+        required: true
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userSterializer'
+          description: ''
+    patch:
+      operationId: update_user_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - update_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatcheduserSterializer'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatcheduserSterializer'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatcheduserSterializer'
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userSterializer'
+          description: ''
+  /user/{id}:
+    get:
+      operationId: user_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - user
+      security:
+      - jwtAuth: []
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userSterializer'
+          description: ''
+components:
+  schemas:
+    Patchedcontact:
+      type: object
+      properties:
+        fullname:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 50
+        sexe:
+          type: string
+          maxLength: 1
+        message:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Patchedproject:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        status:
+          type: string
+          maxLength: 20
+        start_date:
+          type: string
+          format: date-time
+          readOnly: true
+        image:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    Patchedservice:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        image:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatcheduserSterializer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 50
+        password:
+          type: string
+          maxLength: 50
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    contact:
+      type: object
+      properties:
+        fullname:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 50
+        sexe:
+          type: string
+          maxLength: 1
+        message:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - fullname
+      - message
+      - sexe
+    project:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        status:
+          type: string
+          maxLength: 20
+        start_date:
+          type: string
+          format: date-time
+          readOnly: true
+        image:
+          type: string
+          format: uri
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - description
+      - id
+      - image
+      - start_date
+      - status
+      - title
+    service:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        image:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - description
+      - name
+    userSterializer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        username:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 50
+        password:
+          type: string
+          maxLength: 50
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - id
+      - password
+      - username
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
