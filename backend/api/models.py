@@ -1,3 +1,5 @@
+from django.utils.text import slugify
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 import uuid
 
@@ -13,7 +15,7 @@ class UserPerso(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 
 class Admin(models.Model):
@@ -27,23 +29,56 @@ class Admin(models.Model):
 
     user = models.OneToOneField(UserPerso, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     permission = models.CharField(
         max_length=10, choices=PERMISSION_CHOICES, default='read')
 
     def __str__(self):
-        return self.user.username  # Utiliser username au lieu de name
+        return self.user.username
 
 
 class Contact(models.Model):
-    fullname = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
-    sexe = models.CharField(max_length=1)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    # Choix pour le champ "sexe"
+    SEXE_CHOICES = [
+        ('M', 'Masculin'),
+        ('F', 'Féminin'),
+        ('O', 'Autre'),
+    ]
+
+    fullname = models.CharField(max_length=50, verbose_name="Nom complet")
+    email = models.EmailField(max_length=50, verbose_name="Adresse email")
+    date_naissance = models.DateField(
+        verbose_name="Date de naissance", null=True, blank=True)
+    telephone = models.CharField(
+        max_length=15,
+        verbose_name="Téléphone",
+        validators=[
+            MinLengthValidator(10),  # Au moins 10 caractères
+            RegexValidator(
+                regex=r'^\+?1?\d{9,15}$',  # Format international
+                message="Le numéro de téléphone doit être au format valide."
+            )
+        ],
+        null=True,
+        blank=True
+    )
+    sexe = models.CharField(
+        max_length=1,
+        choices=SEXE_CHOICES,
+        verbose_name="Sexe",
+        null=True,
+        blank=True
+    )
+    message = models.TextField(verbose_name="Message")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Date de création")
 
     def __str__(self):
-        return self.name
+        return self.fullname  # Utilisation de `fullname` au lieu de `name`
+
+    class Meta:
+        verbose_name = "Contact"
+        verbose_name_plural = "Contacts"
+        ordering = ['-created_at']  # Tri par date de création décroissante
 
 
 class Services(models.Model):
@@ -56,13 +91,31 @@ class Services(models.Model):
         return self.name
 
 
-class Device(models.Model):
-    service = models.ForeignKey(Services, on_delete=models.CASCADE)
-    price = models.FloatField()
-    created_at = models.DateTimeField(auto_now_add=True)
+class News(models.Model):
+    title = models.CharField(max_length=255, unique=True, verbose_name='Titre')
+    description = models.TextField(blank=True, verbose_name='Description')
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    last_updated = models.DateTimeField(
+        auto_now=True, verbose_name='Dernière mise à jour')
+    created_on = models.DateTimeField(
+        auto_now_add=True, verbose_name='Date de création')
+    published = models.BooleanField(default=False, verbose_name='Publié')
+    thumbnail = models.ImageField(
+        blank=True, upload_to='news/', verbose_name='Miniature')
+    content = models.TextField(blank=False, verbose_name='Contenu')
+
+    class Meta:
+        ordering = ['-created_on']
+        verbose_name = "Article"
+        verbose_name_plural = "Articles"
 
     def __str__(self):
-        return self.service.name
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 
 class Projects(models.Model):
@@ -71,7 +124,6 @@ class Projects(models.Model):
     status = models.CharField(max_length=5)
     start_date = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='projects/')
-    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

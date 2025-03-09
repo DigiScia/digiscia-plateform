@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserPerso, Admin, Contact, Services, Projects
+from .models import UserPerso, Admin, Contact, Services, Projects, News
 import re
 from django.contrib.auth.hashers import make_password
 
@@ -42,6 +42,8 @@ class contactSerializer(serializers.ModelSerializer):
         fields = (
             'fullname',
             'email',
+            'telephone',
+            'date_naissance',
             'sexe',
             'message',
             'created_at'
@@ -84,3 +86,20 @@ class projectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = '__all__'
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.CharField(required=False)
+
+    class Meta:
+        model = News
+        fields = (
+            'title',
+            'description',
+            'slug',
+            'last_updated',
+            'created_on',
+            'published',
+            'thumbnail',
+            'content'
+        )

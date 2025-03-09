@@ -37,7 +37,17 @@ urlpatterns = [
     path("create_contact/", views.ContactCreateAPIView.as_view(),
          name="create_contact"),
     path("update_contact/<str:pk>/",
-         views.ContactUpdateAPIView.as_view(), name="updae contact"),
+         views.ContactUpdateAPIView.as_view(), name="update_contact"),
     path("delete_contact/<str:pk>/",
-         views.ContactDeleteAPIView.as_view(), name="delete_contact")
+         views.ContactDeleteAPIView.as_view(), name="delete_contact"),
+
+    # endpoints for News
+    path("news/", views.NewsListAPIView.as_view(), name="news"),
+    path("new/<str:pk>/", views.NewsDetailAPIView.as_view(), name='new'),
+    path("create_new/", views.NewsCreateAPIView.as_view(),
+         name="create_new"),
+    path("update_new/<str:pk>/",
+         views.NewsUpdateAPIView.as_view(), name="update_new"),
+    path("delete_new/<str:pk>/",
+         views.NewsDeleteAPIView.as_view(), name="delete_new")
 ]

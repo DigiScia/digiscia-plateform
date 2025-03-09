@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .models import UserPerso, Admin, Contact, Services, Projects
-from . serializers import userSterializer, adminSterializer, contactSerializer, serviceSerializer, projectSerializer
+from .models import UserPerso, News, Contact, Services, Projects
+from . serializers import userSterializer, NewsSerializer, contactSerializer, serviceSerializer, projectSerializer
 import logging
 from rest_framework import status
 from django.conf import settings
@@ -182,6 +182,44 @@ class ContactUpdateAPIView(generics.UpdateAPIView):
 class ContactDeleteAPIView(generics.DestroyAPIView):
     queryset = Contact.objects.all()
     serializer_class = contactSerializer
+
+    def get_permissions(self):
+        if self.request.method == "DELETE":
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
+
+
+# CRUD for News
+
+class NewsListAPIView(generics.ListAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+
+
+class NewsDetailAPIView(generics.RetrieveAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+
+
+class NewsCreateAPIView(generics.CreateAPIView):
+    model = News
+    serializer_class = NewsSerializer
+    # Pas besoin de se connecter avant de pouvoir nous contacter
+
+
+class NewsUpdateAPIView(generics.UpdateAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
+
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            self.permission_classes = [IsAdminUser]
+        return super().get_permissions()
+
+
+class NewsDeleteAPIView(generics.DestroyAPIView):
+    queryset = News.objects.all()
+    serializer_class = NewsSerializer
 
     def get_permissions(self):
         if self.request.method == "DELETE":
