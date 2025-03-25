@@ -1,43 +1,36 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    # endpoints for user
-    path("", views.UserListAPIView.as_view(), name="users"),
-    path("user/<str:pk>", views.UserDetailAPIView.as_view(), name="user"),
-    path("create_user", views.UserCreateAPIView.as_view(), name="create_user"),
-    path("update_user/<str:pk>",
-         views.UserUpdateAPIView.as_view(), name="update_user"),
-    path("delete_user/<str:pk>",
-         views.UserDeleteAPIView.as_view(), name="delete_user"),
-
-    # endpoints for projects
-    path("projects/", views.ProjectListAPIView.as_view(), name="projects"),
-    path("project/<str:pk>", views.ProjectDetailAPIView.as_view(), name="project"),
-    path("create_project", views.ProjectCreateAPIView.as_view(),
-         name="create_project"),
-    path("delete_project/<str:pk>",
-         views.ProjectDeleteAPIView.as_view(), name="delete_project"),
-    path("update_project/<str:pk>",
-         views.ProjectUpdateAPIView.as_view(), name="update_project"),
-
-    # endpoints for services
-    path("services/", views.ServiceListAPIView.as_view(), name="services"),
-    path("service/<str:pk>/", views.ServiceDetailAPIView.as_view(), name="service"),
-    path("create_service", views.ServiceCreateAPIView.as_view(),
-         name="create_service"),
-    path("delete_service/<str:pk>/",
-         views.ServiceDeleteAPIView.as_view(), name="delete_service"),
-    path("update_service/<str:pk>/",
-         views.ServiceUpdateAPIView.as_view(), name="update_service"),
-
-    # endpoints for contact
-    path("contacts/", views.ContactListAPIView.as_view(), name="contacts"),
-    path("contact/<str:pk>/", views.ContactDetailAPIView.as_view(), name='contact'),
-    path("create_contact/", views.ContactCreateAPIView.as_view(),
-         name="create_contact"),
-    path("update_contact/<str:pk>/",
-         views.ContactUpdateAPIView.as_view(), name="updae contact"),
-    path("delete_contact/<str:pk>/",
-         views.ContactDeleteAPIView.as_view(), name="delete_contact")
+    # Endpoints pour les utilisateurs
+    path("api/users/", views.UserListCreateAPIView.as_view(), name="users"),
+    path("api/user/<uuid:pk>/", views.UserDetailAPIView.as_view(), name="user"),
+    
+    # Endpoints pour les projets
+    path("api/projects/", views.ProjectListCreateAPIView.as_view(), name="projects"),
+    path("api/project/<uuid:pk>/", views.ProjectDetailAPIView.as_view(), name="project"),
+    
+    # Endpoints pour les services
+    path("api/services/", views.ServiceListCreateAPIView.as_view(), name="services"),
+    path("api/service/<int:pk>/", views.ServiceDetailAPIView.as_view(), name="service"),
+    
+    # Endpoints pour les contacts
+    path("api/contacts/", views.ContactListCreateAPIView.as_view(), name="contacts"),
+    path("api/contact/<uuid:pk>/", views.ContactDetailAPIView.as_view(), name="contact"),
+    
+    # Endpoints pour les news
+    path("api/news/", views.NewsListAPIView.as_view(), name="news"),
+    path("api/news/", views.NewsListCreateAPIView.as_view(), name="news-create"),
+    
+    path("api/news/<uuid:pk>/", views.NewsDetailAPIView.as_view(), name="news-detail"),
+    
+    # Endpoints pour les newslettersuscribers
+    path("api/suscribers/", views.NewsLetterSuscribersListAPIView.as_view(), name="suscribers"),
+    path("api/suscribers/", views.NewsLetterSuscribersListCreateAPIView.as_view(), name="suscribers-create"),
+    path("api/suscribers/<uuid:pk>/", views.NewsLetterSuscribersDetailAPIView.as_view(), name="suscriber-detail"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,38 @@
+from api.models import UserPerso, Admin  
+
+# Créer un utilisateur avec un nom unique
+try:
+    # Tester si l'utilisateur existe déjà
+    user = UserPerso.objects.get(email='yonlifidelis2@gmail.com')
+    print(f"L'utilisateur avec l'email yonlifidelis2@gmail.com existe déjà")
+except UserPerso.DoesNotExist:
+    # Créer l'utilisateur s'il n'existe pas
+    user = UserPerso.objects.create_user(
+        username='Fidelis_admin',  # Un nom qui n'existe pas déjà
+        email='yonlifidelis2@gmail.com',
+        password='admin'
+    )
+    user.save()
+    print(f"Utilisateur créé: {user.username}")
+
+# S'assurer que user est défini avant de continuer
+try:
+    if 'user' not in locals():
+        user = UserPerso.objects.get(email='yonlifidelis2@gmail.com')
+        print(f"Utilisateur récupéré: {user.username}")
+    
+    # Créer un admin associé à cet utilisateur
+    try:
+        admin = Admin.objects.get(user=user)
+        print(f"L'admin pour cet utilisateur existe déjà")
+    except Admin.DoesNotExist:
+        admin = Admin.objects.create(
+            user=user,
+            permission='manage'  # 'manage' donne tous les droits
+        )
+        admin.save()
+        print(f"Admin créé avec permission: {admin.permission}")
+    
+    print(f"Vous pouvez maintenant vous connecter avec l'email: {user.email} et le mot de passe: admin")
+except Exception as e:
+    print(f"Erreur: {e}")
