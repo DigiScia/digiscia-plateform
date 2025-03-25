@@ -1,0 +1,60 @@
+.article-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .article-header {
+    margin-bottom: 24px;
+  }
+  
+  .article-title {
+    font-size: 2.4rem;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  
+  .article-date {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+  .article-image-container {
+    margin-bottom: 24px;
+  }
+  
+  .article-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .article-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #333;
+  }
+  
+  .article-content p {
+    margin-bottom: 16px;
+  }
+  
+  .article-content h2, .article-content h3 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+  
+  .article-loading, .article-error, .article-not-found {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .article-error, .article-not-found {
+    color: #e74c3c;
+  }
