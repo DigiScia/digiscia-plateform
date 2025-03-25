@@ -1,0 +1,56 @@
+{% extends 'admin/base.html' %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+{% block extrastyle %}{{ block.super }}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+html[data-theme="light"], :root {
+  --primary: #ffffff;
+  --secondary: #0a0a45;
+  --link-fg: #7c449b;
+  --link-selected-fg: #8f5bb2;
+  --button-color: #0a0a45;
+  --transition-speed: 0.3s;
+  --accent-color : #64ffda;
+
+  /* Définition des polices */
+  --font-primary: 'Rajdhani', sans-serif;
+  --font-secondary: 'Orbitron', sans-serif;
+}
+
+#site-name a {
+  color: white !important; /* Change la couleur du texte */
+  font-weight: bold; /* Rendre le texte plus visible */
+  font-size: 30px; /* Augmenter la taille du texte */
+}
+#site-name a:hover {
+  color: var(--accent-color)!important; /* Change la couleur du texte */
+  font-weight: bold; /* Rendre le texte plus visible */
+  font-size: 30px; /* Augmenter la taille du texte */
+}
+
+#header a {
+  color: var(--secondary);
+  font-family: var(--font-secondary);
+  font-weight: 600;
+}
+
+#header a:hover {
+  color: var(--accent-color);
+}
+body {
+  font-family: var(--font-primary);
+}
+
+h1 {
+  font-family: var(--font-secondary);
+}
+</style>
+{% endblock %}

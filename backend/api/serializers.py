@@ -1,86 +1,69 @@
 from rest_framework import serializers
-from .models import UserPerso, Admin, Contact, Services, Projects
+from .models import UserPerso, Admin, Contacts, Services, Projects, News, NewsLetterSuscribers
 import re
 from django.contrib.auth.hashers import make_password
 
-# make_password : Cette fonction hash le mot de passe en utilisant l'algorithme par défaut de Django (PBKDF2 avec SHA256).
-
-
-class userSterializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPerso
         fields = '__all__'
+        extra_kwargs = {'password': {'write_only': True}}
 
     def validate_username(self, value):
-        # Exemple : Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des underscores
         if not re.match(r'^[\w\s]+$', value):
             raise serializers.ValidationError(
-                "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores.")
+                "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores."
+            )
         return value
 
     def validate_email(self, value):
-        # Validation de l'email
         if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', value):
             raise serializers.ValidationError(
-                "Veuillez entrer une adresse email valide.")
+                "Veuillez entrer une adresse email valide."
+            )
         return value
 
-    def hashpassword(self, value):
-        # Hasher le mot de passe
+    def validate_password(self, value):
         return make_password(value)
 
 
-class adminSterializer(serializers.ModelSerializer):
+class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = '__all__'
 
 
-class contactSerializer(serializers.ModelSerializer):
+class ContactSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Contact
-        fields = (
-            'fullname',
-            'email',
-            'sexe',
-            'message',
-            'created_at'
-        )
+        model = Contacts
+        fields = '__all__'
 
     def validate_email(self, value):
-        # Validation de l'email
         if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', value):
             raise serializers.ValidationError(
-                "Veuillez entrer une adresse email valide.")
-        return value
-
-    def validate_username(self, value):
-        # Exemple : Le nom d'utilisateur ne doit contenir que des lettres, des chiffres et des underscores
-        if not re.match(r'^[\w\s]+$', value):
-            raise serializers.ValidationError(
-                "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores.")
+                "Veuillez entrer une adresse email valide."
+            )
         return value
 
 
-class serviceSerializer(serializers.ModelSerializer):
-    image = serializers.CharField(required=False)
-
+class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services
-        fields = (
-            'name',
-            'description',
-            'image',
-            'created_at'
-        )
-
-    def valide_price(self, value):
-        if value < 0:
-            raise ValueError("Le Prix des services doit etre positis")
-        return value
+        fields = '__all__'
 
 
-class projectSerializer(serializers.ModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = '__all__'
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = News
+        fields = '__all__'
+        
+class NewsLetterSuscriberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewsLetterSuscribers
+        fields = ['email']
