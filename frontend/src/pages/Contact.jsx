@@ -2,17 +2,25 @@ import React, { useState } from "react";
 import "./Contact.css";
 import SocialMediaLinks from "../components/SocialMedia/SocialMediaLinks.jsx";
 
+const initialFormState = {
+  fullname: '',
+  genre: 'Homme',
+  telephone: '',
+  dob: '',
+  subject: '',
+  email: '',
+  message: ''
+};
+
+const ConfirmationMessage = () => (
+  <div className="confirmation-message">
+    <div className="confirmation-icon">✓</div>
+    <p>Merci de nous faire confiance! Notre équipe vous recontactera très bientôt!</p>
+  </div>
+);
+
 function Contact() {
-  const [formData, setFormData] = useState({
-    fullname: '',
-    genre: 'Homme', // Valeur par défaut
-    telephone: '',
-    dob: '',
-    subject: '',
-    email: '',
-    message: ''
-  });
-  
+  const [formData, setFormData] = useState(initialFormState);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleChange = (e) => {
@@ -33,15 +41,7 @@ function Contact() {
     setShowConfirmation(true);
     
     // Réinitialisation du formulaire
-    setFormData({
-      fullname: '',
-      genre: 'Homme',
-      telephone: '',
-      dob: '',
-      subject: '',
-      email: '',
-      message: ''
-    });
+    setFormData(initialFormState);
     
     // Masquer le message après 5 secondes
     setTimeout(() => {
@@ -49,10 +49,28 @@ function Contact() {
     }, 5000);
   };
 
+  const formFields = [
+    { id: 'fullname', type: 'text', placeholder: 'Nom/Prénom', required: true },
+    { 
+      id: 'genre', 
+      type: 'select', 
+      options: [
+        { value: 'Homme', label: 'Homme' },
+        { value: 'Femme', label: 'Femme' },
+        { value: 'Autre', label: 'Autre' }
+      ],
+      required: true 
+    },
+    { id: 'telephone', type: 'tel', placeholder: 'Téléphone', required: true },
+    { id: 'dob', type: 'date', placeholder: 'Date Naissance', required: true },
+    { id: 'subject', type: 'text', placeholder: 'Objet', required: true },
+    { id: 'email', type: 'email', placeholder: 'Mail', required: true }
+  ];
+
   return (
     <section className="contact-section" id="contacts">
       <div className="contact-content">
-        {/* Container des réseaux sociaux placé à gauche */}
+        {/* Container des réseaux sociaux */}
         <div className="social-container">
           <h2 className="social-title">Suivez-nous</h2>
           <SocialMediaLinks />
@@ -62,83 +80,39 @@ function Contact() {
         <div className="contact-form-container">
           <h1 className="contact-title">Contactez-nous</h1>
           
-          {showConfirmation && (
-            <div className="confirmation-message">
-              <div className="confirmation-icon">✓</div>
-              <p>Merci de nous faire confiance! Notre équipe vous recontactera très bientôt!</p>
-            </div>
-          )}
+          {showConfirmation && <ConfirmationMessage />}
           
           <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-grid">
-              <div className="form-group">
-                <input 
-                  type="text" 
-                  id="fullname" 
-                  name="fullname" 
-                  placeholder="Nom/Prénom" 
-                  value={formData.fullname}
-                  onChange={handleChange}
-                  required 
-                />
-              </div>
-              <div className="form-group">
-                <select
-                  id="genre"
-                  name="genre"
-                  value={formData.genre}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="Homme">Homme</option>
-                  <option value="Femme">Femme</option>
-                  <option value="Autre">Autre</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <input 
-                  type="tel" 
-                  id="telephone" 
-                  name="telephone" 
-                  placeholder="Téléphone" 
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  required 
-                />
-              </div>
-              <div className="form-group">
-                <input 
-                  type="date" 
-                  id="dob" 
-                  name="dob" 
-                  placeholder="Date Naissance" 
-                  value={formData.dob}
-                  onChange={handleChange}
-                  required 
-                />
-              </div>
-              <div className="form-group">
-                <input 
-                  type="text" 
-                  id="subject" 
-                  name="subject" 
-                  placeholder="Objet" 
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required 
-                />
-              </div>
-              <div className="form-group">
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  placeholder="Mail" 
-                  value={formData.email}
-                  onChange={handleChange}
-                  required 
-                />
-              </div>
+              {formFields.map(field => (
+                <div className="form-group" key={field.id}>
+                  {field.type === 'select' ? (
+                    <select
+                      id={field.id}
+                      name={field.id}
+                      value={formData[field.id]}
+                      onChange={handleChange}
+                      required={field.required}
+                    >
+                      {field.options.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input 
+                      type={field.type} 
+                      id={field.id} 
+                      name={field.id} 
+                      placeholder={field.placeholder} 
+                      value={formData[field.id]}
+                      onChange={handleChange}
+                      required={field.required} 
+                    />
+                  )}
+                </div>
+              ))}
             </div>
             <div className="form-group full-width">
               <textarea 
