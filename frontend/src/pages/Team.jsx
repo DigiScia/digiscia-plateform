@@ -1,13 +1,13 @@
 import React from "react";
 import "./Team.css";
 // Importation des images locales
-import fidele from "../assets/fidele.jpg";
-import yaoHonore from "../assets/honore.jpg";  
-import souleymaneTroaore from "../assets/souleymane.jpg";  
-import nitiemasylvius from "../assets/sylvius.jpg";
-import siehoNarcisse from "../assets/narcisse.jpg";  
-import ouedraogoPhil from "../assets/philjacq.jpg";
-import felicite from "../assets/felicite.jpg";
+import fidele from "../assets/team/fidele.jpg";
+import yaoHonore from "../assets/team/honore.jpg";  
+import souleymaneTroaore from "../assets/team/souleymane.jpg";  
+import nitiemasylvius from "../assets/team/sylvius.jpg";
+import siehoNarcisse from "../assets/team/narcisse.jpg";  
+import ouedraogoPhil from "../assets/team/philjacq.jpg";
+// import felicite from "../assets/team/felicite.jpg";
 
 const teamMembers = [
   {
@@ -25,7 +25,7 @@ const teamMembers = [
   {
     name: "Souleymane TRAORÉ",
     role: "Software & AI Engineer",
-    skills: "Developpeur Fullstack, AI Engineer",
+    skills: "Developpeur web/mobile Fullstack, AI Engineer",
     image: souleymaneTroaore
   },
   {
@@ -36,8 +36,8 @@ const teamMembers = [
   },
   {
     name: "SIEHO Narcisse",
-    role: "Automatisme & Robotique",
-    skills: "Developpeur web, ingénieur mecatronicien",
+    role: "Responsable Mécatronique",
+    skills: " Ingénieur en Productique & Mecatronique/Developpeur Web, Expert en Automatisme et Robotique/ Consultant support Technique à Alten", 
     image: siehoNarcisse
   },
   {
@@ -46,12 +46,12 @@ const teamMembers = [
     skills: "Expert gestion de projets IT, Phil Jacq OUEDRAOGO pilote des initiatives stratégiques en garantissant le respect des délais, des budgets et des exigences techniques.",
     image: ouedraogoPhil
   },
-  {
-    name: "Félicité Traoré",
-    role: "Community Management & SEO & Designer Graphic",
-    skills: "Developpeur Fullstack & Réseaux Informatiques",
-    image: felicite
-  }
+  // {
+  //   name: "Félicité Traoré",
+  //   role: "Community Management & SEO & Designer Graphic",
+  //   skills: "Developpeur Fullstack & Réseaux Informatiques",
+  //   image: felicite
+  // }
 ];
 
 const TeamCard = ({ member }) => (

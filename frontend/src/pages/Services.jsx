@@ -39,15 +39,13 @@ function Services() {
   
   // Définition des services
   const services = useMemo(() => [
-    { title: "Web & Mobile", image: '/src/assets/web_mobile.jpg', id: "web-mobile" },
-    { title: "Intelligence Artificielle", image: '/src/assets/ia.jpg', id: "ai" },
-    { title: "SIG", image: '/src/assets/sig.jpg', id: "sig" },
-    { title: "Aide à la décision", image: '/src/assets/bi.jpg', id: "bi" },
-    { title: "Data Science", image: '/src/assets/bigdata.jpg', id: "bigdata" },
-    { title: "Audit des SI", image: '/src/assets/audit.jpg', id: "audit" },
-    { title: "Robotique", image: '/src/assets/robotics.jpg', id: "robotics" },
-    { title: "Formation", image: '/src/assets/formation.jpg', id: "formation" }
-  ], []);
+    { title: "Web & Mobile", image: '/src/assets/services/dev.jpg', id: "dev" },
+    { title: "Data Science & Intelligence Artificielle", image: '/src/assets/services/datascience.jpg', id: "datascience" },
+    { title: "SIG & Webmapping", image: '/src/assets/services/webmapping.jpg', id: "webmapping" },
+    { title: "Aide à la décision & Reporting", image: '/src/assets/services/businessintelligence.jpg', id: "reporting" },
+    { title: "Big Data & Architecture Data", image: '/src/assets/services/bigdata.jpg', id: "bigdata" },
+    { title: "Data Engineering & DevOps", image: '/src/assets/services/devops.jpg', id: "devops" },
+    ], []);
   
   // Rendu mémorisé de la grille de services
   const serviceGrid = useMemo(() => (
