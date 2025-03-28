@@ -126,7 +126,7 @@ function About() {
         <div className="about-content">
           <div className="about-intro glass-effect">
             <p className="about-description">
-              <span className="highlight">DigiScia</span> est un centre d'innovation numérique spécialisé en science des données, avec une expertise particulière en ingénierie et en qualité des données, ainsi qu'en intelligence artificielle. Nous vous accompagnons dans la transformation de vos idées en projets innovants et à fort impact.
+            <span className="highlight">DigiScia</span> est une entreprise de services numériques spécialisée en science des données et intelligence artificielle. Experts en ingénierie et en qualité des données, nous transformons vos idées en projets numériques innovants et impactants. Nous accompagnons les entreprises et organismes publics dans leurs initiatives IT et data, en garantissant performance, fiabilité et valeur ajoutée.  
             </p>
             
             <div className="tech-icons">
@@ -174,7 +174,8 @@ function About() {
       <div className="missions-section full-width">
         <div className="missions-header">
           <h3>Nos Missions</h3>
-          <div className="section-subtitle">Nous concrétisons votre transformation digitale</div>
+          <div className="section-subtitle">Accélérez votre transformation digitale avec DigiScia</div>
+          <div className="section-subtitle">Nous sommes à vos côtés pour exploiter tout le potentiel de vos données et booster votre performance.</div>
         </div>
         
         <div className="missions-grid">

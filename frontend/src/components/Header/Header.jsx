@@ -48,13 +48,13 @@ function Header() {
   }, []);
 
   const navItems = [
-    { name: "Home", id: "home" },
-    { name: "About us", id: "about" },
-    { name: "Projects", id: "projects" },
+    { name: "Accueil", id: "home" },
+    { name: "A Propos", id: "about" },
+    { name: "Projets", id: "projects" },
     { name: "Services", id: "services" },
-    { name: "News", id: "news" },
-    { name: "Team", id: "team" },
-    { name: "Contacts", id: "contacts" }
+    { name: "Blog", id: "news" },
+    { name: "Equipe", id: "team" },
+    { name: "Nous Contacter", id: "contacts" }
   ];
 
   return (

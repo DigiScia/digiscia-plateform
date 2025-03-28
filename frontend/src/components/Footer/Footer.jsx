@@ -39,7 +39,7 @@ function Footer() {
             </div>
             <div className="footer-contact-item">
               <FaEnvelope className="footer-icon" />
-              <span>infos.digiscia@gmail.com</span>
+              <span>digiscia.infos@gmail.com</span>
             </div>
           </div>
           
