@@ -41,7 +41,7 @@ const teamMembers = [
     image: siehoNarcisse
   },
   {
-    name: "OEDRAOGO Phil Jacq",
+    name: "OUEDRAOGO Phil Jacq",
     role: "Suivi de Projet & Evaluation",
     skills: "Expert gestion de projets IT, Phil Jacq OUEDRAOGO pilote des initiatives stratégiques en garantissant le respect des délais, des budgets et des exigences techniques.",
     image: ouedraogoPhil
