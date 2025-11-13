@@ -3,10 +3,10 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 from .models import UserPerso, Admin, Contacts, Services, Projects, News, NewsLetterSuscribers
 
-class AdminInline(admin.StackedInline):
+"""class AdminInline(admin.StackedInline):
     model = Admin
     extra = 0
-    fk_name = 'user'
+    fk_name = 'user'"""
 
 # Admin pour Admin
 class AdminAdmin(admin.ModelAdmin):
