@@ -5,31 +5,31 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     # Endpoints pour les utilisateurs
-    path("api/users/", views.UserListCreateAPIView.as_view(), name="users"),
-    path("api/user/<uuid:pk>/", views.UserDetailAPIView.as_view(), name="user"),
+    path("api/ds/users/", views.UserListCreateAPIView.as_view(), name="users"),
+    path("api/ds/user/<uuid:pk>/", views.UserDetailAPIView.as_view(), name="user"),
     
     # Endpoints pour les projets
-    path("api/projects/", views.ProjectListCreateAPIView.as_view(), name="projects"),
-    path("api/project/<uuid:pk>/", views.ProjectDetailAPIView.as_view(), name="project"),
+    path("api/ds/projects/", views.ProjectListCreateAPIView.as_view(), name="projects"),
+    path("api/ds/project/<uuid:pk>/", views.ProjectDetailAPIView.as_view(), name="project"),
     
     # Endpoints pour les services
-    path("api/services/", views.ServiceListCreateAPIView.as_view(), name="services"),
-    path("api/service/<int:pk>/", views.ServiceDetailAPIView.as_view(), name="service"),
+    path("api/ds/services/", views.ServiceListCreateAPIView.as_view(), name="services"),
+    path("api/ds/service/<int:pk>/", views.ServiceDetailAPIView.as_view(), name="service"),
     
     # Endpoints pour les contacts
-    path("api/contacts/", views.ContactListCreateAPIView.as_view(), name="contacts"),
-    path("api/contact/<uuid:pk>/", views.ContactDetailAPIView.as_view(), name="contact"),
+    path("api/ds/contacts/", views.ContactListCreateAPIView.as_view(), name="contacts"),
+    path("api/ds/contact/<uuid:pk>/", views.ContactDetailAPIView.as_view(), name="contact"),
     
     # Endpoints pour les news
-    path("api/news/", views.NewsListAPIView.as_view(), name="news"),
-    path("api/news/", views.NewsListCreateAPIView.as_view(), name="news-create"),
+    path("api/ds/news/", views.NewsListAPIView.as_view(), name="news"),
+    path("api/ds/news/create", views.NewsListCreateAPIView.as_view(), name="news-create"),
     
-    path("api/news/<uuid:pk>/", views.NewsDetailAPIView.as_view(), name="news-detail"),
+    path("api/ds/news/<uuid:pk>/", views.NewsDetailAPIView.as_view(), name="news-detail"),
     
     # Endpoints pour les newslettersuscribers
-    path("api/suscribers/", views.NewsLetterSuscribersListAPIView.as_view(), name="suscribers"),
-    path("api/suscribers/", views.NewsLetterSuscribersListCreateAPIView.as_view(), name="suscribers-create"),
-    path("api/suscribers/<uuid:pk>/", views.NewsLetterSuscribersDetailAPIView.as_view(), name="suscriber-detail"),
+    path("api/ds/suscribers/", views.NewsLetterSuscribersListAPIView.as_view(), name="subscribers"),
+    path("api/ds/suscribers/", views.NewsLetterSuscribersListCreateAPIView.as_view(), name="subscribers-create"),
+    path("api/ds/suscribers/<uuid:pk>/", views.NewsLetterSuscribersDetailAPIView.as_view(), name="subscriber-detail"),
 ]
 
 if settings.DEBUG:

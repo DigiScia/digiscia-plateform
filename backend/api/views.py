@@ -1,4 +1,7 @@
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from .permissions import IsAdminOrCommunityManager
 from .models import UserPerso, Admin, Contacts, Services, Projects, News, NewsLetterSuscribers
 from .serializers import UserSerializer, AdminSerializer, ContactSerializer, ServiceSerializer, ProjectSerializer, NewsSerializer, NewsLetterSuscriberSerializer
 from django.shortcuts import render, redirect
@@ -10,17 +13,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-from .permissions import IsCommunityManager, IsContentManager
+from .permissions import IsContentManager
 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework import generics, permissions
-from .permissions import IsCommunityManager, IsContentManager
 from django.contrib.auth.mixins import UserPassesTestMixin
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 
 # CRUD pour les utilisateurs
@@ -38,7 +40,7 @@ class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Projects.objects.all()
     serializer_class = ProjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
 
 class ProjectDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Projects.objects.all()
@@ -68,17 +70,20 @@ class ContactDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
 
 
-# CRUD pour les news
 class NewsListCreateAPIView(generics.ListCreateAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
-    
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+
     def get_permissions(self):
-        if self.request.method == "POST":
+        if self.request.method == "GET":
             return [permissions.AllowAny()]
-        return [permissions.IsAdminUser() or IsCommunityManager()]
+        elif self.request.method == "POST":
+            return [permissions.IsAdminUser(), IsCommunityManager()]
+        else:
+            return [permissions.IsAuthenticated()]
     
-class NewsListAPIView(generics.ListCreateAPIView):
+class NewsListAPIView(generics.ListAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
     permission_classes = [AllowAny]    
@@ -87,8 +92,8 @@ class NewsListAPIView(generics.ListCreateAPIView):
 class NewsDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
-    permission_classes = [permissions.IsAdminUser or IsCommunityManager]
-
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminOrCommunityManager]
 # CRUD pour les inscrits à la newsletter
 class NewsLetterSuscribersListCreateAPIView(generics.ListCreateAPIView):
     queryset = NewsLetterSuscribers.objects.all()
