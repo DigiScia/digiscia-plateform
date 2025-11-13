@@ -8,7 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
 dist-ssr
 *.local
 
@@ -31,7 +30,6 @@ __pycache__/
 # Ignorer les fichiers Node.js
 frontend/node_modules/
 frontend/.vite/
-frontend/dist/
 
 # Ignorer les fichiers de configuration sensibles
 .env
