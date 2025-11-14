@@ -471,12 +471,13 @@ const TaglineRotator = memo(() => {
   const texts = [
     "Data Science",
     "Intelligence Artificielle",
-    "Data Governance",
-    "Data Management",
-    "Data Engineering",
-    "Data Quality",
-    "Data Security",
-    "Web & Mobile"
+    "Management de Données",
+    "Automatisation",
+    "Agents IA",
+    "Analyse de Données & Aide a la decision",
+    "Ingenierie de donnees",
+    "Securite des donnees & Systemes",
+    "Applications Web & Mobile"
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fadeIn, setFadeIn] = useState(true);

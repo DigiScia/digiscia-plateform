@@ -826,7 +826,7 @@ function Services() {
     },
     {
       id: "governance",
-      title: "Data Governance",
+      title: "Governance des Données",
       description: "Stratégies de gouvernance des données pour assurer qualité, sécurité et conformité.",
       icon: <DataIcon />,
       category: "Gouvernance",
@@ -862,7 +862,7 @@ function Services() {
     },
     {
       id: "data-management",
-      title: "Data Management",
+      title: "Management des données",
       description: "Architecture et gestion de bases de données scalables pour optimiser vos performances.",
       icon: <CloudIcon />, // Utilisation de CloudIcon (Fichier 1)
       category: "Infrastructure",
