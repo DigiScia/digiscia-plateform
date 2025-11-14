@@ -1,114 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
+/* === RESET & BASE === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background: #00093D;
-  color: #FFFFFF;
-  overflow-x: hidden;
+:root {
+  /* Couleurs basées sur le logo */
+  --primary-blue: #000066;
+  --accent-blue: #5B7CFF;
+  --light-blue: #8BA3FF;
+  --white: #FFFFFF;
+  
+  /* Backgrounds */
+  --bg-dark: #00093D;
+  
+  /* Typography */
+  --font-primary: 'Space+Grotesk', sans-serif;
+  --font-secondary: 'Inter', sans-serif;
+  
+  /* Transitions */
+  --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+body {
+  font-family: var(--font-secondary);
+  background: var(--bg-dark);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* === HOME CONTAINER (Base) === */
 .home-container {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: #00093D;
+  background: var(--bg-dark);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Effet de fond animé */
-.home-container::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 100%;
-  height: 150%;
-  background: radial-gradient(circle, rgba(91, 124, 255, 0.12) 0%, transparent 70%);
-  animation: float 20s infinite ease-in-out;
-  pointer-events: none;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-30px, -30px) scale(1.1); }
-  66% { transform: translate(30px, 30px) scale(0.9); }
-}
-
-/* Grille de points animée */
-.grid-background {
+/* === CONSTELLATION CANVAS (Nouveau) === */
+.constellation-canvas {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.03;
-  background-image: 
-    radial-gradient(circle, rgba(91, 124, 255, 0.8) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: gridMove 30s linear infinite;
+  opacity: 0.6;
   pointer-events: none;
 }
 
-@keyframes gridMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 40px 40px; }
-}
-
-/* Particules flottantes */
-.particles-container {
+/* === GRADIENT OVERLAY (Nouveau) === */
+.gradient-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(91, 124, 255, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(0, 0, 102, 0.15) 0%, transparent 50%);
   pointer-events: none;
+  animation: gradientShift 20s ease-in-out infinite;
 }
 
-.particle {
-  position: absolute;
-  background: rgba(91, 124, 255, 0.5);
-  border-radius: 50%;
-  opacity: 0;
-  animation: particleFloat var(--duration) infinite ease-in-out;
-  animation-delay: var(--delay);
-  filter: blur(1px);
+@keyframes gradientShift {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
 }
 
-@keyframes particleFloat {
-  0% {
-    transform: translateY(100vh) translateX(0) scale(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.3;
-  }
-  90% {
-    opacity: 0.3;
-  }
-  100% {
-    transform: translateY(-100vh) translateX(var(--drift)) scale(1);
-    opacity: 0;
-  }
-}
-
-/* Hero Section */
+/* === HERO SECTION (Base) === */
 .hero-section {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,13 +95,13 @@ body {
   align-items: center;
   text-align: center;
   width: 100%;
-  animation: fadeInUp 1s ease-out;
+  animation: fadeInUp 1s var(--transition-smooth);
 }
 
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -135,7 +109,9 @@ body {
   }
 }
 
-/* Logo */
+/* === STYLES DE CONTENU (Original) === */
+
+/* Logo (Original) */
 .logo-container {
   margin-bottom: clamp(2rem, 4vw, 3rem);
   position: relative;
@@ -157,7 +133,7 @@ body {
   width: clamp(200px, 40vw, 400px);
   height: auto;
   filter: drop-shadow(0 10px 40px rgba(91, 124, 255, 0.3));
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s var(--transition-smooth);
 }
 
 .hero-logo:hover {
@@ -165,7 +141,7 @@ body {
   transform: translateY(-5px);
 }
 
-/* Hero Text */
+/* Hero Text (Original) */
 .hero-text {
   max-width: 900px;
   width: 100%;
@@ -186,42 +162,69 @@ body {
   to { opacity: 1; }
 }
 
-/* --- MODIFIÉ --- */
-/* Titre simplifié pour correspondre à l'image */
 .brand-name {
   font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
-  font-family: 'Space Grotesk', sans-serif;
-  color: #FFFFFF; /* Couleur blanche simple */
+  font-family: var(--font-primary);
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--accent-blue) 50%, #FFFFFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: clamp(1rem, 2vw, 1.5rem);
   letter-spacing: -0.02em;
   line-height: 1.1;
-  animation: fadeIn 1s ease-out 0.4s both;
-  /* Dégradé, background-clip et animation shimmer SUPPRIMÉS */
+  background-size: 200% auto;
+  animation: fadeIn 1s ease-out 0.4s both, shimmer 3s ease-in-out infinite;
 }
 
-/* --- SUPPRIMÉ --- */
-/* @keyframes shimmer { ... } */
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
-/* --- NOUVEAU --- */
-/* Accroche statique remplaçant le rotateur, basée sur l'image */
-.hero-tagline {
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
+/* Tagline avec rotation (Original) */
+.tagline {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 500;
-  color: #8BA3FF; /* Bleu clair de l'image */
+  color: var(--accent-blue);
   margin-bottom: clamp(2rem, 4vw, 3rem);
-  min-height: clamp(2.5rem, 5vw, 4rem);
-  font-family: 'Space Grotesk', sans-serif;
+  min-height: clamp(2.5rem, 5vw, 4rem); /* Espace pour le texte */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  letter-spacing: -0.01em;
   animation: fadeIn 1s ease-out 0.6s both;
-  text-decoration: underline;
-  text-decoration-color: rgba(139, 163, 255, 0.5);
-  text-underline-offset: 6px;
 }
 
-/* --- SUPPRIMÉ --- */
-/* Les anciens .tagline et .tagline-text sont supprimés */
+.tagline-text {
+  display: inline-block;
+  transition: all 0.5s var(--transition-smooth);
+  position: relative;
+}
 
-/* CTA Buttons */
+.tagline-text::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+  opacity: 0.5;
+}
+
+.tagline-text.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tagline-text.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* CTA Buttons (Original) */
 .cta-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -236,11 +239,11 @@ body {
   padding: clamp(0.9rem, 2vw, 1.1rem) clamp(2rem, 4vw, 2.5rem);
   font-size: clamp(1rem, 2vw, 1.1rem);
   font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s var(--transition-smooth);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -258,7 +261,7 @@ body {
   height: 100%;
   background: rgba(255, 255, 255, 0.1);
   transform: translateX(-100%);
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.6s var(--transition-smooth);
 }
 
 .cta-button:hover::before {
@@ -266,8 +269,8 @@ body {
 }
 
 .cta-button.sponsoring {
-  background: linear-gradient(135deg, #5B7CFF 0%, #8BA3FF 100%);
-  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--light-blue) 100%);
+  color: var(--white);
   box-shadow: 0 10px 40px rgba(91, 124, 255, 0.3);
 }
 
@@ -278,20 +281,20 @@ body {
 
 .cta-button.contact {
   background: transparent;
-  color: #FFFFFF;
+  color: var(--white);
   border: 2px solid rgba(91, 124, 255, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 .cta-button.contact:hover {
-  border-color: #5B7CFF;
+  border-color: var(--accent-blue);
   background: rgba(91, 124, 255, 0.1);
   transform: translateY(-3px);
   box-shadow: 0 10px 40px rgba(91, 124, 255, 0.2);
 }
 
-/* Scroll Indicator */
+/* Scroll Indicator (Original) */
 .scroll-indicator {
   position: absolute;
   bottom: clamp(2rem, 4vw, 3rem);
@@ -334,7 +337,7 @@ body {
   transform: translateX(-50%);
   width: 4px;
   height: 8px;
-  background: #5B7CFF;
+  background: var(--accent-blue);
   border-radius: 2px;
   animation: scrollDot 2s ease-in-out infinite;
 }
@@ -344,62 +347,37 @@ body {
   50% { top: 18px; opacity: 0.3; }
 }
 
-/* Responsive Design (Mobile-First) */
+/* === RESPONSIVE - MOBILE FIRST === */
+
+/* Tablette & Mobile (Centrage des boutons) */
 @media (max-width: 768px) {
   .hero-section {
     padding: clamp(1.5rem, 5vw, 2rem) clamp(1rem, 4vw, 1.5rem);
   }
   
-  /* C'est ce style qui organise les boutons sur mobile */
   .cta-buttons {
     flex-direction: column;
     width: 100%;
-    max-width: 300px; /* Assure que les boutons ne sont pas trop larges */
+    max-width: 300px; /* Assure un bon centrage */
+    
+    /* --- LE CORRECTIF EST ICI --- */
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .cta-button {
-    width: 100%; /* Les boutons prennent toute la largeur du conteneur */
+    width: 100%; /* Les deux boutons ont la même largeur */
   }
   
   .scroll-indicator {
-    display: none; /* Caché sur mobile pour un look plus propre */
+    display: none; /* Caché sur mobile pour épurer */
   }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
   .hero-logo {
     width: clamp(150px, 50vw, 250px);
-  }
-  
-  /* Cache les particules sur les petits écrans pour la performance */
-  .particles-container {
-    display: none;
-  }
-}
-
-/* Préférences utilisateur */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  .particle,
-  .grid-background {
-    animation: none;
-    opacity: 0.02;
-  }
-}
-
-/* Support tactile */
-@media (hover: none) {
-  .cta-button:active {
-    transform: scale(0.95);
-  }
-  
-  .hero-logo:active {
-    transform: scale(0.95);
   }
 }
 
@@ -407,7 +385,7 @@ body {
 @media (max-height: 600px) and (orientation: landscape) {
   .hero-section {
     min-height: auto;
-    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 4vw, 2rem);
+    padding: clamp(1rem, 3vh, 1.5rem) clamp(1rem, 4vw, 2rem);
   }
   
   .logo-container {
@@ -418,7 +396,7 @@ body {
     width: clamp(120px, 25vw, 200px);
   }
   
-  .hero-tagline { /* Utilise la nouvelle classe */
+  .tagline {
     min-height: 2rem;
     margin-bottom: 1.5rem;
   }
@@ -428,9 +406,29 @@ body {
   }
 }
 
-/* Ultra-larges écrans */
-@media (min-width: 1920px) {
-  .hero-section {
-    max-width: 1600px;
+/* Préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .constellation-canvas {
+    display: none;
+  }
+}
+
+/* Support tactile */
+@media (hover: none) and (pointer: coarse) {
+  .cta-primary:active,
+  .cta-button.contact:active {
+    transform: scale(0.96);
+  }
+  
+  .hero-logo:active {
+    transform: scale(0.95);
   }
 }

@@ -1,13 +1,10 @@
 /* --- Import des polices ESN/Tech modernes --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap');
 
 :root {
   /* --- Palette Logo --- */
   --primary-color: #000066;
   --secondary-color: #ffffff;
-  
-  /* --- COULEUR ACCENT SUPPRIMÉE --- */
-  /* --accent-color: #64ffda; */ 
   
   /* --- Variables de UI --- */
   --background-light-theme: #F9FAFB;
@@ -15,7 +12,7 @@
   --text-light-theme: var(--primary-color);
   --text-dark-theme: var(--secondary-color);
   
-  --ui-gray: #F3F4F6; /* Gris clair pour les interactions */
+  --ui-gray: #F3F4F6;
   
   /* --- Polices --- */
   --font-title: 'Space Grotesk', sans-serif;
@@ -26,16 +23,11 @@
   --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
   
   /* --- Dimensions --- */
-  --header-height: 70px;
-  --container-padding: 1.5rem;
-  
-  /* --- Hamburger "Sophistiqué" --- */
-  --hamburger-line-height: 3px;
-  --hamburger-gap: 0.5px;
-  --hamburger-v-offset: calc(var(--hamburger-line-height) + var(--hamburger-gap));
+  --header-height: 64px;
+  --container-padding: 1.25rem;
 }
 
-/* --- Thème (basé sur l'attribut data-theme) --- */
+/* --- Thème --- */
 [data-theme="dark"] {
   --background-color: var(--background-dark-theme);
   --text-color: var(--text-dark-theme);
@@ -45,7 +37,6 @@
   --background-color: var(--background-light-theme);
   --text-color: var(--text-light-theme);
 }
-/* Note: Le header lui-même ne change pas avec le thème, il reste bleu */
 
 * {
   margin: 0;
@@ -62,7 +53,7 @@ body {
   overflow-x: hidden;
 }
 
-/* --- Styles de base du Header (Mobile-First) --- */
+/* --- Header --- */
 .header {
   display: flex;
   align-items: center;
@@ -76,30 +67,45 @@ body {
   left: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all var(--transition-speed);
 }
 
+.header.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  height: 60px;
+}
+
 .header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   font-family: var(--font-title);
-  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.5px;
   transition: transform var(--transition-speed);
   white-space: nowrap;
   flex-shrink: 0;
 }
-.header-logo:hover {
-  transform: scale(1.03);
+
+.header-logo svg {
+  width: clamp(28px, 5vw, 32px);
+  height: auto;
 }
 
-/* --- Hamburger Liquid Morphing --- */
+.header-logo:hover {
+  transform: scale(1.02);
+}
+
+/* --- Hamburger Sophistiqué --- */
 .header-menu-toggle {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 28px;
-  height: 10px;
+  justify-content: center;
+  align-items: flex-end;
+  width: 32px;
+  height: 24px;
   cursor: pointer;
   background: transparent;
   border: none;
@@ -107,61 +113,88 @@ body {
   z-index: 1010;
   margin-left: 1rem;
   position: relative;
+  gap: 5px;
 }
 
 .header-menu-toggle span {
   display: block;
-  height: 2px;
-  width: 100%;
+  height: 2.5px;
   background-color: var(--secondary-color);
-  border-radius: 999px; /* rondeur extrême pour effet liquide */
-  transition: transform 0.6s cubic-bezier(0.77,0.2,0.05,1.0), 
-              opacity 0.6s cubic-bezier(0.77,0.2,0.05,1.0),
-              background-color 0.3s ease;
+  border-radius: 2px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   transform-origin: center;
-  box-shadow: 0 2px 5px rgba(255,255,255,0.1); /* glow subtil */
 }
 
-/* Morphing vers X */
-.header-menu-toggle[aria-expanded="true"] span:nth-child(1) {
-  transform: translateY(10px) rotate(45deg) scaleX(1.1);
-  background-color: var(--secondary-color);
+.header-menu-toggle span:nth-child(1) {
+  width: 100%;
 }
+
+.header-menu-toggle span:nth-child(2) {
+  width: 75%;
+}
+
+.header-menu-toggle span:nth-child(3) {
+  width: 50%;
+}
+
+.header-menu-toggle:hover span {
+  width: 100%;
+}
+
+.header-menu-toggle[aria-expanded="true"] span {
+  width: 100%;
+}
+
+.header-menu-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
 .header-menu-toggle[aria-expanded="true"] span:nth-child(2) {
   opacity: 0;
   transform: scaleX(0);
 }
-.header-menu-toggle[aria-expanded="true"] span:nth-child(3) {
-  transform: translateY(-10px) rotate(-45deg) scaleX(1.1);
-  background-color: var(--secondary-color);
-}
 
-/* Hover micro-interactions */
-.header-menu-toggle:hover span:nth-child(1),
-.header-menu-toggle:hover span:nth-child(3) {
-  transform: scaleX(1.2);
-  box-shadow: 0 4px 8px rgba(255,255,255,0.2);
+.header-menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
 }
 
 .header-menu-toggle:focus-visible {
   outline: 2px solid var(--secondary-color);
   outline-offset: 4px;
+  border-radius: 4px;
 }
 
-/* --- Navbar (Mobile-First) --- */
+/* --- Overlay Menu --- */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- Navbar Mobile --- */
 .header-navbar {
   position: fixed;
   top: 0;
   right: 0;
-  width: min(75vw, 300px);
+  width: min(80vw, 320px);
   height: 100vh;
-  padding: var(--header-height) 0 2rem;
+  padding: calc(var(--header-height) + 1rem) 0 1.5rem;
   background-color: var(--primary-color);
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
   
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Pousse le CTA en bas */
   
   transform: translateX(100%);
   transition: transform 0.4s var(--transition-bezier);
@@ -180,45 +213,72 @@ body {
 
 .header-navbar li {
   width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .header-navbar a {
   display: block;
-  padding: 1.25rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   text-decoration: none;
   color: var(--secondary-color);
   font-family: var(--font-body);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
+  transition: all var(--transition-speed);
+  position: relative;
 }
+
+.header-navbar a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  transition: width var(--transition-speed);
+}
+
+.header-navbar a:hover::before,
+.header-navbar a:focus::before {
+  width: 4px;
+}
+
 .header-navbar a:hover,
 .header-navbar a:focus {
   background-color: rgba(255, 255, 255, 0.05);
+  padding-left: 1.8rem;
 }
 
-/* --- CTA "Nous Contacter" (Mobile) --- */
+/* --- CTA Mobile --- */
 .header-navbar li:last-child {
   border-bottom: none;
-  padding: 1.5rem; /* Espace pour le bouton */
+  padding: 1.2rem 1.5rem 0;
 }
 
 .header-navbar li:last-child a {
-  background-color: var(--secondary-color);
+  background: linear-gradient(135deg, var(--secondary-color) 0%, rgba(255, 255, 255, 0.9) 100%);
   color: var(--primary-color);
   border-radius: 8px;
   text-align: center;
   font-weight: 600;
-  padding: 0.8rem 1rem;
+  padding: 0.85rem 1.2rem;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
+
+.header-navbar li:last-child a::before {
+  display: none;
+}
+
 .header-navbar li:last-child a:hover {
-  background-color: var(--ui-gray);
+  background: var(--secondary-color);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+  padding-left: 1.2rem;
 }
 
-
-/* --- Theme Toggle (Minimaliste) --- */
+/* --- Theme Toggle --- */
 .header-theme-toggle {
   display: flex;
   align-items: center;
@@ -244,7 +304,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--ui-gray); /* Fond gris clair (Dark mode) */
+  background-color: var(--ui-gray);
   transition: var(--transition-speed);
   border-radius: 34px;
 }
@@ -256,34 +316,33 @@ body {
   width: 18px;
   left: 3px;
   bottom: 3px;
-  background-color: var(--primary-color); /* Bouton bleu (Dark mode) */
+  background-color: var(--primary-color);
   transition: var(--transition-speed);
   border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: var(--primary-color); /* Fond bleu (Light mode) */
+  background-color: var(--primary-color);
 }
 
 input:checked + .slider:before {
-  background-color: var(--secondary-color); /* Bouton blanc (Light mode) */
+  background-color: var(--secondary-color);
   transform: translateX(20px);
 }
 
 input:focus-visible + .slider {
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5); /* Accessibilité */
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
-
-/* --- Styles Desktop (min-width: 900px) --- */
+/* --- Desktop --- */
 @media (min-width: 900px) {
   :root {
-    --header-height: 80px;
+    --header-height: 72px;
     --container-padding: 2rem;
   }
 
-  .header-menu-toggle {
-    display: none; /* Cacher le hamburger */
+  .header-menu-toggle, .menu-overlay {
+    display: none;
   }
 
   .header-navbar {
@@ -296,47 +355,44 @@ input:focus-visible + .slider {
     padding: 0;
     background-color: transparent;
     box-shadow: none;
-    flex: 1; /* Prend l'espace central */
-    justify-content: center; /* Centre les liens */
+    flex: 1;
+    justify-content: center;
   }
 
   .header-navbar ul {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
     overflow-y: hidden;
   }
   
   .header-navbar li {
     width: auto;
     border-bottom: none;
-    padding: 0; /* Réinitialiser le padding du CTA */
+    padding: 0;
   }
   
   .header-navbar a {
     display: inline-block;
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
     position: relative;
-    border-radius: 4px;
-    background-color: transparent; /* Réinitialiser */
-    opacity: 0.8;
+    border-radius: 6px;
+    background-color: transparent;
+    opacity: 0.85;
+  }
+  
+  .header-navbar a::before {
+    display: none;
   }
   
   .header-navbar a:hover,
   .header-navbar a:focus {
     opacity: 1;
-    background-color: transparent; /* Réinitialiser */
-  }
-  
-  /* Ligne de soulignement active (minimaliste) */
-  .header-navbar a.active,
-  .header-navbar a[href="#contacts"]:hover,
-  .header-navbar a[href="#contacts"].active {
-    opacity: 1;
-    border-bottom: none; /* Assurer qu'il n'y a pas de double bordure */
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 1rem;
   }
   
   .header-navbar a:not([href="#contacts"])::after {
@@ -344,7 +400,7 @@ input:focus-visible + .slider {
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: -4px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--secondary-color);
@@ -356,29 +412,46 @@ input:focus-visible + .slider {
     width: 100%;
   }
 
-  /* --- CTA "Nous Contacter" (Desktop) --- */
+  /* --- CTA Desktop --- */
+  .header-navbar li:last-child {
+    padding: 0;
+  }
+  
   .header-navbar li:last-child a {
-    background-color: var(--secondary-color);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, rgba(255, 255, 255, 0.95) 100%);
     color: var(--primary-color);
-    padding: 0.6rem 1.2rem;
-    margin-left: 1rem; /* Espace par rapport aux autres liens */
+    padding: 0.7rem 1.5rem;
+    margin-left: 1.5rem;
     font-weight: 600;
     opacity: 1;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
     transition: all var(--transition-speed);
   }
+  
+  .header-navbar li:last-child a::after {
+    display: none;
+  }
+  
   .header-navbar li:last-child a:hover {
-    background-color: var(--ui-gray);
+    background: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+    padding-left: 1.5rem;
   }
 }
 
-/* Ajustements pour très grands écrans */
+/* Grands écrans */
 @media (min-width: 1400px) {
   :root {
     --container-padding: 3rem;
   }
+  
   .header-navbar ul {
-    gap: 2.5rem;
+    gap: 1rem;
+  }
+  
+  .header-navbar a {
+    padding: 0.6rem 1.25rem;
   }
 }
