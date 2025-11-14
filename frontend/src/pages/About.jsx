@@ -583,7 +583,7 @@ function About() {
   return (
     <>
       <style>{styles}</style>
-      <section className="about-container">
+      <section className="about-container" id="about">
         <div className="animated-particles">
           {[...Array(15)].map((_, index) => (
             <div 
