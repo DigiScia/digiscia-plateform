@@ -1,20 +1,21 @@
+/* J'ai supprimé le fond, l'ombre et le padding de la carte 
+   pour qu'elle s'intègre parfaitement dans la colonne social. */
 .card {
-  width: fit-content;
+  width: 100%;
   height: fit-content;
-  background-color: rgb(238, 238, 238);
   display: flex;
+  flex-wrap: wrap; /* Pour les petits écrans si nécessaire */
   align-items: center;
-  justify-content: center;
-  padding: 25px 25px;
-  gap: 20px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.055);
+  justify-content: center; /* Centré sur mobile */
+  gap: 16px; /* Espace entre les icônes */
 }
 
+/* Styles pour les conteneurs d'icônes individuels */
 .socialContainer {
   width: 52px;
   height: 52px;
-  border-radius: 5px;
-  background-color: rgb(44, 44, 44);
+  border-radius: 12px; /* Radius moderne */
+  background-color: rgb(44, 44, 44); /* Fond sombre (image) */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,30 +23,28 @@
   transition-duration: 0.3s;
 }
 
+/* --- Effets de survol (hover) --- */
 .containerOne:hover {
   background-color: #d62976;
   transition-duration: 0.3s;
 }
-
 .containerTwo:hover {
   background-color: #1877F2;
   transition-duration: 0.3s;
 }
-
 .containerThree:hover {
   background-color: #0072b1;
   transition-duration: 0.3s;
 }
-
 .containerFour:hover {
-  background-color: green;
+  background-color: #25D366; /* Vert WhatsApp */
   transition-duration: 0.3s;
 }
-
 .containerFive:hover {
   background-color: #5865F2;
   transition-duration: 0.3s;
 }
+/* --- Fin des effets de survol --- */
 
 .socialContainer:active {
   transform: scale(0.9);
@@ -53,34 +52,29 @@
 }
 
 .socialSvg {
-  width: 17px;
+  width: 20px;
+  height: 20px;
 }
 
 .socialSvg path {
-  fill: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255); /* Icônes blanches */
 }
 
 .socialContainer:hover .socialSvg {
   animation: slide-in-top 0.3s both;
 }
 
-/* Style pour Discord (conteneur cinq) */
-.discordSvg {
-  fill: #5865F2;
+/* Styles spécifiques (inutiles si le fill est déjà blanc) */
+.discordSvg { fill: white; }
+.facebookSvg { fill: white; }
+
+/* Responsive: aligner les icônes à gauche sur desktop */
+@media screen and (min-width: 900px) {
+  .card {
+    justify-content: flex-start;
+  }
 }
 
-.containerFive:hover .discordSvg {
-  fill: white;
-}
-
-/* Style pour Facebook (remplace Twitter) */
-.facebookSvg {
-  fill: #1877F2;
-}
-
-.containerTwo:hover .facebookSvg {
-  fill: white;
-}
 
 @keyframes slide-in-top {
   0% {

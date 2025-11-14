@@ -1,510 +1,383 @@
-/* Import des polices tech */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-/* Variables globales responsives */
-:root {
-  --primary-color: #0a0a45;
-  --secondary-color: #ffffff;
-  --accent-color: #64ffda;
-  --background-color: #ffffff;
-  --button-color: #0a0a45;
-  --transition-speed: 0.3s;
-  --shadow-color: rgba(10, 10, 69, 0.3);
-  
-  /* Variables responsives */
-  --container-padding: clamp(1rem, 4vw, 2rem);
-  --section-padding: clamp(2rem, 8vh, 4rem);
-  --gap-size: clamp(1.5rem, 5vw, 6rem);
-  --logo-size: clamp(200px, 40vw, 525px);
-  --button-padding-x: clamp(1rem, 3vw, 2rem);
-  --button-padding-y: clamp(0.6rem, 2vh, 1rem);
-  --border-radius: clamp(4px, 1vw, 8px);
-}
-
-/* Base responsive */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-/* Styles pour le thème clair/sombre */
-[data-theme="light"] {
-  --primary-color: #0a0a45;
-  --secondary-color: #ffffff;
-  --background-color: #ffffff;
-  --button-color: #0a0a45;
-  --shadow-color: rgba(10, 10, 69, 0.3);
-}
-
-[data-theme="dark"] {
-  --primary-color: #64ffda;
-  --secondary-color: #0a0a45;
-  --background-color: #001f3f;
-  --button-color: #64ffda;
-  --shadow-color: rgba(100, 255, 218, 0.3);
-}
-
-/* Styles de la section Home */
-.home-container {
-  min-height: 100vh;
-  min-height: 100dvh; /* Support navigateurs modernes */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+body {
+  font-family: 'Inter', sans-serif;
+  background: #00093D;
+  color: #FFFFFF;
   overflow-x: hidden;
-  background-color: var(--background-color);
-  transition: background-color var(--transition-speed);
 }
 
-.hero-section {
-  flex: 1;
+.home-container {
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  padding: var(--section-padding) 0;
+  background: #00093D;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Effet de fond animé */
+.home-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 100%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(91, 124, 255, 0.12) 0%, transparent 70%);
+  animation: float 20s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, -30px) scale(1.1); }
+  66% { transform: translate(30px, 30px) scale(0.9); }
+}
+
+/* Grille de points animée */
+.grid-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  background-image: 
+    radial-gradient(circle, rgba(91, 124, 255, 0.8) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridMove 30s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+/* Particules flottantes */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(91, 124, 255, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat var(--duration) infinite ease-in-out;
+  animation-delay: var(--delay);
+  filter: blur(1px);
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(var(--drift)) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  min-height: 100dvh;
 }
 
 .hero-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  text-align: center;
   width: 100%;
-  max-width: min(1600px, 95vw);
-  margin: 0 auto;
-  gap: var(--gap-size);
-  padding: 0 var(--container-padding);
-  position: relative;
+  animation: fadeInUp 1s ease-out;
 }
 
-/* Container du logo */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Logo */
 .logo-container {
-  flex: 1 1 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--secondary-color);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  max-width: var(--logo-size);
-  min-width: clamp(150px, 25vw, 300px);
-  box-shadow: 0 clamp(3px, 1vw, 5px) clamp(10px, 3vw, 15px) rgba(0, 0, 0, 0.1);
-  transition: all var(--transition-speed) ease;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
   position: relative;
-  will-change: transform;
+  animation: scaleIn 0.8s ease-out;
 }
 
-.logo-container:hover {
-  transform: translateY(clamp(-3px, -1vw, -5px));
-  box-shadow: 0 clamp(8px, 2vw, 10px) clamp(20px, 5vw, 25px) var(--shadow-color);
-}
-
-/* Effet de brillance adaptatif */
-.logo-container::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.3), 
-    transparent
-  );
-  transform: rotate(45deg);
-  opacity: 0;
-  transition: opacity var(--transition-speed) ease;
-  pointer-events: none;
-}
-
-.logo-container:hover::after {
-  opacity: 0.4;
-  animation: shine 1.5s ease;
-}
-
-@keyframes shine {
-  0% { left: -50%; }
-  100% { left: 150%; }
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .hero-logo {
-  width: 100%;
+  width: clamp(200px, 40vw, 400px);
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: transform var(--transition-speed);
+  filter: drop-shadow(0 10px 40px rgba(91, 124, 255, 0.3));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.logo-container:hover .hero-logo {
-  transform: scale(1.02);
+.hero-logo:hover {
+  filter: drop-shadow(0 15px 60px rgba(91, 124, 255, 0.5));
+  transform: translateY(-5px);
 }
 
-/* Texte d'accueil */
+/* Hero Text */
 .hero-text {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: min(600px, 50vw);
-  min-width: 0; /* Permet la réduction */
+  max-width: 900px;
+  width: 100%;
 }
 
 .welcome-text {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1.2rem, 3vw, 2.5rem);
-  color: var(--primary-color);
-  margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
-  font-weight: 500;
-  transition: color var(--transition-speed);
-  line-height: 1.2;
-  word-break: break-word;
-  hyphens: auto;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 300;
+  color: #B8C5E0;
+  margin-bottom: clamp(0.5rem, 1vw, 1rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  animation: fadeIn 1s ease-out 0.2s both;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- MODIFIÉ --- */
+/* Titre simplifié pour correspondre à l'image */
 .brand-name {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(2rem, 6vw, 5rem);
-  color: var(--primary-color);
-  margin-top: 0;
-  margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+  font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 700;
-  letter-spacing: clamp(1px, 0.3vw, 2px);
-  transition: color var(--transition-speed);
-  text-shadow: 0 clamp(1px, 0.5vw, 2px) clamp(5px, 2vw, 10px) var(--shadow-color);
+  font-family: 'Space Grotesk', sans-serif;
+  color: #FFFFFF; /* Couleur blanche simple */
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  letter-spacing: -0.02em;
   line-height: 1.1;
-  word-break: break-word;
-  hyphens: auto;
+  animation: fadeIn 1s ease-out 0.4s both;
+  /* Dégradé, background-clip et animation shimmer SUPPRIMÉS */
 }
 
-.tagline {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1rem, 3vw, 2.5rem);
-  color: var(--primary-color);
-  margin-top: 0;
-  margin-bottom: clamp(1rem, 4vw, 3rem);
+/* --- SUPPRIMÉ --- */
+/* @keyframes shimmer { ... } */
+
+/* --- NOUVEAU --- */
+/* Accroche statique remplaçant le rotateur, basée sur l'image */
+.hero-tagline {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   font-weight: 500;
-  min-height: clamp(2em, 6vw, 3em);
-  display: flex;
-  align-items: center;
-  transition: color var(--transition-speed);
-  line-height: 1.3;
-  word-break: break-word;
-  hyphens: auto;
+  color: #8BA3FF; /* Bleu clair de l'image */
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  min-height: clamp(2.5rem, 5vw, 4rem);
+  font-family: 'Space Grotesk', sans-serif;
+  animation: fadeIn 1s ease-out 0.6s both;
+  text-decoration: underline;
+  text-decoration-color: rgba(139, 163, 255, 0.5);
+  text-underline-offset: 6px;
 }
 
-/* Animation pour le tagline rotator */
-.tagline-text {
-  display: inline-block;
-  transition: opacity 0.5s ease-in-out;
-  width: 100%;
-}
+/* --- SUPPRIMÉ --- */
+/* Les anciens .tagline et .tagline-text sont supprimés */
 
-.fade-in {
-  opacity: 1;
-}
-
-.fade-out {
-  opacity: 0;
-}
-
-/* Boutons d'appel à l'action */
+/* CTA Buttons */
 .cta-buttons {
   display: flex;
-  gap: clamp(0.5rem, 2vw, 1.5rem);
-  margin-top: clamp(1rem, 3vw, 2rem);
-  width: 100%;
   flex-wrap: wrap;
-  align-items: stretch;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 1s ease-out 0.8s both;
 }
 
 .cta-button {
-  font-family: 'Orbitron', sans-serif;
-  padding: var(--button-padding-y) var(--button-padding-x);
+  position: relative;
+  padding: clamp(0.9rem, 2vw, 1.1rem) clamp(2rem, 4vw, 2.5rem);
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
   border: none;
-  border-radius: var(--border-radius);
-  font-size: clamp(0.75rem, 2vw, 1.1rem);
+  border-radius: 50px;
   cursor: pointer;
-  transition: all var(--transition-speed);
-  background-color: var(--button-color);
-  color: var(--secondary-color);
-  font-weight: 500;
-  letter-spacing: clamp(0.5px, 0.2vw, 1px);
-  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
-  text-align: center;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   overflow: hidden;
-  z-index: 1;
-  box-shadow: 0 clamp(2px, 1vw, 4px) clamp(5px, 2vw, 10px) rgba(0, 0, 0, 0.1);
-  min-height: 44px; /* Accessibilité tactile */
-  flex: 1 1 auto;
-  min-width: clamp(120px, 25vw, 160px);
-  white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
-.cta-button::after {
+.cta-button::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transition: left 0.5s ease;
-  z-index: -1;
-  pointer-events: none;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cta-button:hover {
-  transform: translateY(clamp(-2px, -0.5vw, -3px));
-  box-shadow: 0 clamp(6px, 2vw, 10px) clamp(12px, 4vw, 20px) var(--shadow-color);
+.cta-button:hover::before {
+  transform: translateX(0);
 }
 
-.cta-button:hover::after {
-  left: 100%;
+.cta-button.sponsoring {
+  background: linear-gradient(135deg, #5B7CFF 0%, #8BA3FF 100%);
+  color: #FFFFFF;
+  box-shadow: 0 10px 40px rgba(91, 124, 255, 0.3);
 }
 
-.cta-button:active {
-  transform: translateY(clamp(-1px, -0.3vw, -1px));
-  box-shadow: 0 clamp(3px, 1vw, 5px) clamp(6px, 2vw, 10px) var(--shadow-color);
+.cta-button.sponsoring:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 60px rgba(91, 124, 255, 0.5);
 }
 
-.cta-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 clamp(2px, 0.5vw, 3px) var(--accent-color), 
-              0 clamp(6px, 2vw, 10px) clamp(12px, 4vw, 20px) var(--shadow-color);
+.cta-button.contact {
+  background: transparent;
+  color: #FFFFFF;
+  border: 2px solid rgba(91, 124, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Media queries spécifiques pour différents breakpoints */
+.cta-button.contact:hover {
+  border-color: #5B7CFF;
+  background: rgba(91, 124, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(91, 124, 255, 0.2);
+}
 
-/* Très petits écrans (< 375px) */
-@media (max-width: 374px) {
-  :root {
-    --gap-size: 1rem;
-    --logo-size: 180px;
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: clamp(2rem, 4vw, 3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeIn 1s ease-out 1s both, bounce 2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
+
+.scroll-indicator-text {
+  font-size: 0.85rem;
+  color: #7A8AB5;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.scroll-indicator-icon {
+  width: 24px;
+  height: 36px;
+  border: 2px solid rgba(91, 124, 255, 0.4);
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-indicator-icon::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: #5B7CFF;
+  border-radius: 2px;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+  0%, 100% { top: 6px; opacity: 1; }
+  50% { top: 18px; opacity: 0.3; }
+}
+
+/* Responsive Design (Mobile-First) */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: clamp(1.5rem, 5vw, 2rem) clamp(1rem, 4vw, 1.5rem);
   }
   
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-  
-  .hero-text {
-    align-items: center;
-    max-width: 100%;
-    margin-top: 1rem;
-  }
-  
+  /* C'est ce style qui organise les boutons sur mobile */
   .cta-buttons {
     flex-direction: column;
-    gap: 0.75rem;
+    width: 100%;
+    max-width: 300px; /* Assure que les boutons ne sont pas trop larges */
   }
   
   .cta-button {
-    width: 100%;
-    min-width: 100%;
+    width: 100%; /* Les boutons prennent toute la largeur du conteneur */
   }
   
-  .tagline {
-    min-height: 2em;
-    margin-bottom: 1rem;
+  .scroll-indicator {
+    display: none; /* Caché sur mobile pour un look plus propre */
   }
 }
 
-/* Petits écrans (375px - 576px) */
-@media (min-width: 375px) and (max-width: 576px) {
-  :root {
-    --gap-size: 1.5rem;
-    --logo-size: 220px;
-  }
-  
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .hero-text {
-    align-items: center;
-    max-width: 100%;
-    margin-top: 1.5rem;
-  }
-  
-  .cta-buttons {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-}
-
-/* Écrans moyens (577px - 768px) */
-@media (min-width: 577px) and (max-width: 768px) {
-  :root {
-    --gap-size: 2rem;
-    --logo-size: 280px;
-  }
-  
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .hero-text {
-    align-items: center;
-    max-width: 100%;
-    margin-top: 2rem;
-  }
-}
-
-/* Tablettes (769px - 900px) */
-@media (min-width: 769px) and (max-width: 900px) {
-  :root {
-    --gap-size: 3rem;
-    --logo-size: 350px;
-  }
-  
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .hero-text {
-    align-items: center;
-    max-width: 100%;
-    margin-top: 2rem;
-  }
-}
-
-/* Écrans moyens desktop (901px - 1200px) */
-@media (min-width: 901px) and (max-width: 1200px) {
-  :root {
-    --gap-size: 4rem;
-    --logo-size: 400px;
-  }
-  
-  .hero-text {
-    max-width: 45vw;
-  }
-}
-
-/* Grands écrans (1201px - 1600px) */
-@media (min-width: 1201px) and (max-width: 1600px) {
-  :root {
-    --gap-size: 5rem;
-    --logo-size: 480px;
-  }
-}
-
-/* Très grands écrans (> 1600px) */
-@media (min-width: 1601px) {
-  :root {
-    --gap-size: 6rem;
-    --logo-size: 600px;
-  }
-  
-  .hero-content {
-    max-width: 1800px;
-  }
-}
-
-/* Écrans ultra-larges (> 2000px) */
-@media (min-width: 2001px) {
-  .hero-content {
-    max-width: 2200px;
-  }
-  
-  :root {
-    --logo-size: 700px;
-  }
-}
-
-/* Orientation paysage pour petits écrans */
-@media (max-height: 500px) and (orientation: landscape) {
-  .hero-section {
-    min-height: auto;
-    padding: clamp(1rem, 3vh, 2rem) 0;
-  }
-  
-  .hero-content {
-    flex-direction: row;
-    gap: clamp(1rem, 4vw, 3rem);
-  }
-  
-  .logo-container {
-    max-width: clamp(150px, 25vh, 250px);
-  }
-  
-  .hero-text {
-    align-items: flex-start;
-    text-align: left;
-    margin-top: 0;
-  }
-  
-  .tagline {
-    min-height: 1.5em;
-    margin-bottom: 1rem;
-  }
-}
-
-/* Orientation portrait pour tablettes */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  .hero-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .hero-text {
-    align-items: center;
-    max-width: 100%;
-    margin-top: 2rem;
-  }
-}
-
-/* Support des écrans pliables */
-@media (min-width: 280px) and (max-width: 653px) {
-  .hero-content {
-    flex-direction: column;
-  }
-}
-
-/* Optimisation pour les dispositifs tactiles */
-@media (hover: none) {
-  .cta-button:hover {
-    transform: none;
-    box-shadow: 0 clamp(2px, 1vw, 4px) clamp(5px, 2vw, 10px) rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo-container:hover {
-    transform: none;
-    box-shadow: 0 clamp(3px, 1vw, 5px) clamp(10px, 3vw, 15px) rgba(0, 0, 0, 0.1);
-  }
-  
-  .logo-container:hover::after {
-    opacity: 0;
-  }
-  
-  .logo-container:hover .hero-logo {
-    transform: none;
-  }
-}
-
-/* Support pour les écrans haute densité */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (max-width: 480px) {
   .hero-logo {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
+    width: clamp(150px, 50vw, 250px);
+  }
+  
+  /* Cache les particules sur les petits écrans pour la performance */
+  .particles-container {
+    display: none;
   }
 }
 
-/* Support pour les préférences de réduction de mouvement */
+/* Préférences utilisateur */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -512,70 +385,52 @@
     transition-duration: 0.01ms !important;
   }
   
-  .logo-container:hover {
-    transform: none;
-  }
-  
-  .cta-button:hover {
-    transform: none;
-  }
-  
-  .logo-container:hover .hero-logo {
-    transform: none;
+  .particle,
+  .grid-background {
+    animation: none;
+    opacity: 0.02;
   }
 }
 
-/* Support pour les écrans à contraste élevé */
-@media (prefers-contrast: high) {
-  .logo-container {
-    border: 2px solid var(--primary-color);
+/* Support tactile */
+@media (hover: none) {
+  .cta-button:active {
+    transform: scale(0.95);
   }
   
-  .cta-button {
-    border: 2px solid var(--button-color);
+  .hero-logo:active {
+    transform: scale(0.95);
   }
 }
 
-/* Mode sombre automatique */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary-color: #64ffda;
-    --secondary-color: #0a0a45;
-    --background-color: #001f3f;
-    --button-color: #64ffda;
-    --shadow-color: rgba(100, 255, 218, 0.3);
-  }
-}
-
-/* Support pour les appareils avec encoche */
-@supports (padding: max(0px)) {
+/* Mode paysage mobile */
+@media (max-height: 600px) and (orientation: landscape) {
   .hero-section {
-    padding-left: max(var(--container-padding), env(safe-area-inset-left));
-    padding-right: max(var(--container-padding), env(safe-area-inset-right));
-    padding-top: max(var(--section-padding), env(safe-area-inset-top));
-    padding-bottom: max(var(--section-padding), env(safe-area-inset-bottom));
-  }
-}
-
-/* Support pour les écrans flexibles */
-@supports (display: flex) {
-  .hero-content {
-    gap: var(--gap-size);
-  }
-}
-
-/* Fallback pour les anciens navigateurs */
-@supports not (display: flex) {
-  .hero-content {
-    display: block;
-    text-align: center;
+    min-height: auto;
+    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 4vw, 2rem);
   }
   
-  .hero-text,
   .logo-container {
-    display: inline-block;
-    vertical-align: top;
-    width: 45%;
-    margin: 0 2.5%;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-logo {
+    width: clamp(120px, 25vw, 200px);
+  }
+  
+  .hero-tagline { /* Utilise la nouvelle classe */
+    min-height: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+/* Ultra-larges écrans */
+@media (min-width: 1920px) {
+  .hero-section {
+    max-width: 1600px;
   }
 }
