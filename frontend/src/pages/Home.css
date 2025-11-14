@@ -18,7 +18,7 @@
   --bg-dark: #00093D;
   
   /* Typography */
-  --font-primary: 'Space+Grotesk', sans-serif;
+  --font-primary: 'Space Grotesk', sans-serif;
   --font-secondary: 'Inter', sans-serif;
   
   /* Transitions */
@@ -45,7 +45,7 @@ body {
   justify-content: center;
 }
 
-/* === CONSTELLATION CANVAS (Nouveau) === */
+/* === CONSTELLATION CANVAS === */
 .constellation-canvas {
   position: absolute;
   top: 0;
@@ -56,7 +56,7 @@ body {
   pointer-events: none;
 }
 
-/* === GRADIENT OVERLAY (Nouveau) === */
+/* === GRADIENT OVERLAY === */
 .gradient-overlay {
   position: absolute;
   top: 0;
@@ -86,12 +86,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 100vh; /* Assure que le hero prend l'écran */
 }
 
+/* Mobile-first: layout vertical */
 .hero-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Logo en haut, texte en bas */
   align-items: center;
   text-align: center;
   width: 100%;
@@ -109,13 +110,14 @@ body {
   }
 }
 
-/* === STYLES DE CONTENU (Original) === */
+/* === STYLES DE CONTENU === */
 
-/* Logo (Original) */
+/* Logo */
 .logo-container {
   margin-bottom: clamp(2rem, 4vw, 3rem);
   position: relative;
   animation: scaleIn 0.8s ease-out;
+  flex-shrink: 0; /* Empêche le logo de rétrécir */
 }
 
 @keyframes scaleIn {
@@ -141,7 +143,7 @@ body {
   transform: translateY(-5px);
 }
 
-/* Hero Text (Original) */
+/* Hero Text */
 .hero-text {
   max-width: 900px;
   width: 100%;
@@ -182,16 +184,16 @@ body {
   50% { background-position: 100% 50%; }
 }
 
-/* Tagline avec rotation (Original) */
+/* Tagline avec effet "Typing" */
 .tagline {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 500;
   color: var(--accent-blue);
   margin-bottom: clamp(2rem, 4vw, 3rem);
-  min-height: clamp(2.5rem, 5vw, 4rem); /* Espace pour le texte */
+  min-height: clamp(2.5rem, 5vw, 4rem);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Centré sur mobile */
   font-family: var(--font-primary);
   letter-spacing: -0.01em;
   animation: fadeIn 1s ease-out 0.6s both;
@@ -199,37 +201,26 @@ body {
 
 .tagline-text {
   display: inline-block;
-  transition: all 0.5s var(--transition-smooth);
-  position: relative;
 }
 
-.tagline-text::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
-  opacity: 0.5;
+.typing-cursor {
+  font-weight: 500;
+  color: var(--light-blue);
+  animation: blink 1s infinite;
+  margin-left: 2px;
 }
 
-.tagline-text.fade-in {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-.tagline-text.fade-out {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* CTA Buttons (Original) */
+/* CTA Buttons */
 .cta-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(1rem, 2vw, 1.5rem);
-  justify-content: center;
+  justify-content: center; /* Centré sur mobile */
   align-items: center;
   animation: fadeIn 1s ease-out 0.8s both;
 }
@@ -294,7 +285,7 @@ body {
   box-shadow: 0 10px 40px rgba(91, 124, 255, 0.2);
 }
 
-/* Scroll Indicator (Original) */
+/* === AJOUT : Scroll Indicator === */
 .scroll-indicator {
   position: absolute;
   bottom: clamp(2rem, 4vw, 3rem);
@@ -347,10 +338,11 @@ body {
   50% { top: 18px; opacity: 0.3; }
 }
 
-/* === RESPONSIVE - MOBILE FIRST === */
+
+/* === RESPONSIVE === */
 
 /* Tablette & Mobile (Centrage des boutons) */
-@media (max-width: 768px) {
+@media (max-width: 899px) { /* Changé de 768px à 899px pour couvrir la transition */
   .hero-section {
     padding: clamp(1.5rem, 5vw, 2rem) clamp(1rem, 4vw, 1.5rem);
   }
@@ -358,15 +350,13 @@ body {
   .cta-buttons {
     flex-direction: column;
     width: 100%;
-    max-width: 300px; /* Assure un bon centrage */
-    
-    /* --- LE CORRECTIF EST ICI --- */
+    max-width: 300px;
     margin-left: auto;
     margin-right: auto;
   }
   
   .cta-button {
-    width: 100%; /* Les deux boutons ont la même largeur */
+    width: 100%;
   }
   
   .scroll-indicator {
@@ -381,10 +371,54 @@ body {
   }
 }
 
+/* === AJOUT : NOUVEAU LAYOUT DESKTOP === */
+@media (min-width: 900px) {
+  .hero-section {
+    /* S'assure que le contenu s'aligne au début */
+    justify-content: flex-start; 
+    /* Ajoute du padding pour le look asymétrique */
+    padding-left: clamp(2rem, 8vw, 10rem);
+    padding-right: clamp(2rem, 8vw, 10rem);
+  }
+
+  .hero-content {
+    flex-direction: row; /* Logo à gauche, texte à droite */
+    align-items: center; /* "au meme niveau" */
+    justify-content: space-between;
+    text-align: left; /* Aligne tout le texte à gauche */
+    gap: clamp(2rem, 5vw, 4rem);
+    width: 100%;
+  }
+
+  .logo-container {
+    flex: 1; /* Le logo prend 1 part */
+    max-width: 40%;
+    margin-bottom: 0; /* Annule le margin mobile */
+  }
+
+  .hero-text {
+    flex: 1.5; /* Le texte prend 1.5 part */
+    max-width: 60%;
+    display: flex; /* Permet un meilleur contrôle de l'alignement */
+    flex-direction: column;
+    align-items: flex-start; /* Aligne le contenu à gauche */
+  }
+
+  /* Aligne le rotateur à gauche */
+  .tagline {
+    justify-content: flex-start;
+  }
+
+  /* Aligne les boutons à gauche */
+  .cta-buttons {
+    justify-content: flex-start;
+  }
+}
+
 /* Mode paysage mobile */
 @media (max-height: 600px) and (orientation: landscape) {
   .hero-section {
-    min-height: auto;
+    min-height: auto; /* Permet de réduire la hauteur */
     padding: clamp(1rem, 3vh, 1.5rem) clamp(1rem, 4vw, 2rem);
   }
   
@@ -418,6 +452,23 @@ body {
   
   .constellation-canvas {
     display: none;
+  }
+  
+  .typing-cursor {
+    animation: none;
+    opacity: 1;
+  }
+  
+  .brand-name {
+    animation: fadeIn 1s ease-out 0.4s both;
+  }
+
+  .scroll-indicator {
+    animation: fadeIn 1s ease-out 1s both; /* Supprime le bounce */
+  }
+
+  .scroll-indicator-icon::before {
+    animation: none; /* Supprime l'animation du point */
   }
 }
 
