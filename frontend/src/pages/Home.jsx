@@ -10,9 +10,10 @@ const TaglineRotator = memo(() => {
     "Management de Données",
     "Automatisation",
     "Agents IA",
-    "Analyse de Données & Aide a la decision",
-    "Ingenierie de donnees",
-    "Securite des donnees & Systemes",
+    "Analyse de Données",
+    "Aide à la decision",
+    "Ingenierie de Données",
+    "Securité des Données",
     "Applications Web & Mobile"
   ];
 

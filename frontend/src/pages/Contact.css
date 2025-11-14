@@ -270,3 +270,34 @@ select {
     text-align: right; /* Aligne le bouton à droite dans sa cellule */
   }
 }
+
+/* --- AJOUTS POUR LA LOGIQUE D'ENVOI --- */
+
+/* Message d'erreur (échec de l'envoi) */
+.error-message {
+  background-color: #FF5252; /* Rouge erreur */
+  border-radius: var(--border-radius-md);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.error-message p {
+  margin: 0;
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+/* Bouton pendant le chargement */
+.contact-submit:disabled {
+  background-color: #B0BEC5; /* Gris désactivé */
+  color: #78909C;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
