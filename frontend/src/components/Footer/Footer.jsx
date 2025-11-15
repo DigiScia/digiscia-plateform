@@ -202,7 +202,7 @@ function Footer() {
         }
 
         .contact-icon {
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(58, 94, 235, 0.9);
           flex-shrink: 0;
           margin-top: 2px;
         }
@@ -234,7 +234,7 @@ function Footer() {
         }
 
         .social-link:hover {
-          background: var(--white);
+          background: rgba(47, 98, 239, 0.2);
           color: var(--navy);
           border-color: var(--white);
           transform: translateY(-4px);
