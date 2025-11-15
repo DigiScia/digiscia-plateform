@@ -34,4 +34,5 @@ frontend/.vite/
 # Ignorer les fichiers de configuration sensibles
 .env
 env/
+env3.12/
 

@@ -6,6 +6,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
 import datetime
 
+# ✅ SUPPRESSION DE L'IMPORT CIRCULAIRE
+# Ne PAS importer permissions.py dans models.py
+
+
 # ✅ Modèle UserPerso (Utilisateur)
 class UserPerso(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -21,7 +25,7 @@ class UserPerso(AbstractUser):
             'The groups this user belongs to. A user will get all permissions '
             'granted to each of their groups.'
         ),
-        related_name='userperso_set',  # Nom personnalisé ici
+        related_name='userperso_groups',
         related_query_name='userperso',
     )
     user_permissions = models.ManyToManyField(
@@ -29,7 +33,7 @@ class UserPerso(AbstractUser):
         verbose_name=_('user permissions'),
         blank=True,
         help_text=_('Specific permissions for this user.'),
-        related_name='userperso_set',  # Nom personnalisé ici
+        related_name='userperso_permissions',
         related_query_name='userperso',
     )
     
@@ -37,11 +41,15 @@ class UserPerso(AbstractUser):
     REQUIRED_FIELDS = ["username"]
 
     def __str__(self):
-        return self.email  # ✅ Utilisation de l'email pour l'affichage
+        return self.email
+
+    class Meta:
+        verbose_name = "Utilisateur"
+        verbose_name_plural = "Utilisateurs"
 
 
 # ✅ Modèle Admin (Gestion des permissions)
-class Admin(models.Model):
+class AdminProfile(models.Model):
     ROLE_CHOICES = [
         ('superadmin', 'Super Admin'),
         ('community', 'Community Manager'),
@@ -83,82 +91,54 @@ class Admin(models.Model):
     def __str__(self):
         return f"{self.user.email} ({self.get_role_display()})"
 
-# ✅ Modèle Contact
-class Contacts(models.Model):
-    SEXE_CHOICES = [
-        ("H", "Homme"),
-        ("F", "Femme"),
-        ("A", "Autre"),
-    ]
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    fullname = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
-    sexe = models.CharField(max_length=1, choices=SEXE_CHOICES)
-    objet = models.CharField(max_length=50)
-    birthday = models.DateField(null=False, blank=False)  # Champ obligatoire
-    message = models.TextField()
-    phone = PhoneNumberField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.fullname
+    class Meta:
+        verbose_name = "Profil Admin"
+        verbose_name_plural = "Profils Admin"
 
 
 # ✅ Modèle Services
 class Services(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    image = models.ImageField(upload_to='services/', blank=True, null=True)  # ✅ Image facultative
+    image = models.ImageField(upload_to='services/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "Service"
+        verbose_name_plural = "Services"
+        ordering = ['-created_at']
 
-# ✅ Modèle Projects
-class Projects(models.Model):
-    STATUS_CHOICES = [
-        ('programmé', 'Programmé'),
-        ('en cours', 'En cours'),
-        ('terminé', 'Terminé'),
-        ('annulé', 'Annulé'),
-    ]
-    
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=50)
-    description = models.TextField()
-    status = models.CharField(
-        max_length=20, 
-        choices=STATUS_CHOICES, 
-        default='programmé'  # Valeur par défaut cohérente
-    )
-    start_date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='projects/', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.title
-  
-  
-    
 # ✅ Modèle News
 class News(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=50)
     content = models.TextField()
-    image = models.ImageField(upload_to='news/', blank=True, null=True)  # ✅ Image facultative
+    image = models.ImageField(upload_to='news/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
-    
-    
+
+    class Meta:
+        verbose_name = "Actualité"
+        verbose_name_plural = "Actualités"
+        ordering = ['-created_at']
+
+
 # ✅ Modèle NewsLetterSubscribers
 class NewsLetterSuscribers(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(unique=True)  # Adresse e-mail unique pour éviter les doublons
-    subscribed_at = models.DateTimeField(auto_now_add=True)  # Date d'inscription automatique
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.email
 
+    class Meta:
+        verbose_name = "Abonné Newsletter"
+        verbose_name_plural = "Abonnés Newsletter"
+        ordering = ['-subscribed_at']

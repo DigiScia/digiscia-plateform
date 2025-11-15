@@ -22,7 +22,7 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-    path('DiGiScia-admin/', custom_admin_site.urls),
+    path('administration.digiscia/', custom_admin_site.urls),
     path('', include('api.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

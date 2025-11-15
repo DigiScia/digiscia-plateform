@@ -1,11 +1,12 @@
-# forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserPerso, Admin, Services, Projects, News
+from .models import UserPerso, AdminProfile, Services, News
+
 
 class AdminLoginForm(forms.Form):
     email = forms.EmailField(label="Adresse e-mail")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+
 
 class AdminCreationForm(UserCreationForm):
     ROLE_CHOICES = [
@@ -28,6 +29,7 @@ class AdminCreationForm(UserCreationForm):
         model = UserPerso
         fields = ('username', 'email', 'password1', 'password2')
 
+
 class NewsForm(forms.ModelForm):
     class Meta:
         model = News
@@ -36,18 +38,11 @@ class NewsForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 5}),
         }
 
+
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = Services
         fields = ['name', 'description', 'image']
-        widgets = {
-            'description': forms.Textarea(attrs={'rows': 5}),
-        }
-
-class ProjectForm(forms.ModelForm):
-    class Meta:
-        model = Projects
-        fields = ['title', 'description', 'status', 'image']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 5}),
         }

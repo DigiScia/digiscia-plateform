@@ -1,15 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import UserPerso, Admin, Contacts, Services, Projects, News, NewsLetterSuscribers
+from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers  # , Projects, Contacts,
 
-"""class AdminInline(admin.StackedInline):
-    model = Admin
-    extra = 0
-    fk_name = 'user'"""
-
-# Admin pour Admin
-class AdminAdmin(admin.ModelAdmin):
+# Admin pour AdminProfile
+class AdminProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'role', 'permission', 'created_at', 'updated_at')
     list_filter = ['role', 'permission']
     search_fields = ['user__email']
@@ -21,7 +16,7 @@ class AdminAdmin(admin.ModelAdmin):
 
 # Admin pour UserPerso
 class UserPersoAdmin(UserAdmin):
-    model = UserPerso
+    # model = UserPerso
     list_display = ('email', 'username', 'date_joined', 'last_login', 'is_staff', 'is_active')
     list_filter = ['is_staff', 'is_active', 'date_joined']
     search_fields = ['email', 'username']
@@ -33,17 +28,17 @@ class UserPersoAdmin(UserAdmin):
     )
 
 # Admin pour Contact
-class ContactAdmin(admin.ModelAdmin):
-    list_display = ('fullname', 'email', 'phone', 'objet', 'sexe', 'created_at')
-    list_filter = ['sexe', 'created_at']
-    search_fields = ['fullname', 'email', 'message']
-    readonly_fields = ('created_at',)
-    date_hierarchy = 'created_at'
-    fieldsets = (
-        ('Informations personnelles', {'fields': ('fullname', 'email', 'phone', 'sexe', 'birthday')}),
-        ('Message', {'fields': ('objet', 'message')}),
-        ('Métadonnées', {'fields': ('created_at',)}),
-    )
+# class ContactAdmin(admin.ModelAdmin):
+#     list_display = ('fullname', 'email', 'phone', 'objet', 'sexe', 'created_at') 
+#     list_filter = ['created_at', 'sexe']
+#     search_fields = ['fullname', 'email', 'message']
+#     readonly_fields = ('created_at',)
+#     date_hierarchy = 'created_at'
+#     fieldsets = (
+#         ('Informations personnelles', {'fields': ('fullname', 'email', 'phone', 'sexe', 'birthday')}), 
+#         ('Message', {'fields': ('objet', 'message')}),
+#         ('Métadonnées', {'fields': ('created_at',)}),
+#     )
 
 # Admin pour Services
 class ServicesAdmin(admin.ModelAdmin):
@@ -116,9 +111,9 @@ custom_admin_site = CustomAdminSite(name="custom_admin")
 
 # Enregistrer tous les modèles
 custom_admin_site.register(UserPerso, UserPersoAdmin)
-custom_admin_site.register(Admin, AdminAdmin)
-custom_admin_site.register(Contacts, ContactAdmin)
+custom_admin_site.register(AdminProfile, AdminProfileAdmin)
+# custom_admin_site.register(Contacts, ContactAdmin)
 custom_admin_site.register(Services, ServicesAdmin)
-custom_admin_site.register(Projects, ProjectsAdmin)
+# custom_admin_site.register(Projects, ProjectsAdmin)
 custom_admin_site.register(News, NewsAdmin)
 custom_admin_site.register(NewsLetterSuscribers, NewsLetterSuscribersAdmin)
