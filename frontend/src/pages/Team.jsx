@@ -5,6 +5,7 @@ import souleymaneTroaore from "../assets/team/souleymane.jpg";
 import nitiemasylvius from "../assets/team/sylvius.jpg";
 import siehoNarcisse from "../assets/team/narcisse.jpg";  
 import ouedraogoPhil from "../assets/team/philjacq.jpg";
+import abdel from "../assets/team/abdel.jpg";
 // import felicite from "../assets/team/felicite.jpg";
 
 
@@ -457,9 +458,9 @@ const CloseIcon = () => (
 
 const teamMembers = [
   {
-    name: "YONLI Fidele",
-    role: "CEO & Head of Innovation",
-    skills: "Développeur web Fullstack, Business Intelligence & Data Analyst, Data/AI/Machine Learning Engineer, certifié Google Data Analytics, 2x certifié Microsoft",
+    name: "Fidele YONLI",
+    role: "Founder & CEO & Head of Innovation",
+    skills: "Développeur web Fullstack, Business Intelligence & Data Analyst, Data/AI/Machine Learning Engineer",
     image: fidele
   },
   {
@@ -468,27 +469,33 @@ const teamMembers = [
     skills: "Developpeur web/mobile Fullstack, AI Engineer spécialisé en deep learning et computer vision",
     image: souleymaneTroaore
   },
+  // {
+  //   name: "Honoré YAO",
+  //   role: "CFO & Partenariats",
+  //   skills: "Consultant en Communication Financière et Relations Investisseurs, Certifié FMVA, CMSA, CBCA, FPWM et ESG de la Corporate Finance Institute",
+  //   image: yaoHonore
+  // },
   {
-    name: "YAO Honoré",
-    role: "CFO & Partenariats",
-    skills: "Consultant en Communication Financière et Relations Investisseurs, Certifié FMVA, CMSA, CBCA, FPWM et ESG de la Corporate Finance Institute",
-    image: yaoHonore
+    name: "Abdel Nasser SAVADOGO",
+    role: "Responsable DigiScia Media",
+    skills: "Expert gestion de projets IT, pilote des initiatives stratégiques en garantissant le respect des délais, budgets et exigences techniques",
+    image: abdel
   },
   {
-    name: "NITIEMA Sylvius",
-    role: "SIG & Télédétection Engineer",
+    name: "Sylvius NITIEMA",
+    role: "Resposnable DigiScia Academy",
     skills: "Expert en géosciences appliquées, spécialiste dans le management des données geospatiales et le traitement des données géophysiques",
     image: nitiemasylvius
   },
   {
-    name: "SIEHO Narcisse",
-    role: "Responsable Mécatronique",
+    name: "Narcisse SIEHO",
+    role: "Responsable DigiScia Store",
     skills: "Ingénieur en Productique & Mecatronique/Developpeur Web, Expert en Automatisme et Robotique/Consultant support Technique à Alten",
     image: siehoNarcisse
   },
   {
-    name: "OUEDRAOGO Phil Jacq",
-    role: "Suivi de Projet & Evaluation",
+    name: "Phil Jacq OUEDRAOGO",
+    role: "Responsable Gestion de Projet",
     skills: "Expert gestion de projets IT, pilote des initiatives stratégiques en garantissant le respect des délais, budgets et exigences techniques",
     image: ouedraogoPhil
   }
