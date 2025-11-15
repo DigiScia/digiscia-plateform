@@ -62,7 +62,7 @@ body {
   background-color: var(--primary-color);
   color: var(--secondary-color);
   height: var(--header-height);
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
