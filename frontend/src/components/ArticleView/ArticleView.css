@@ -1,60 +1,263 @@
+/* --- Import des polices --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
+
+/* --- Variables (Cohérence avec le site) --- */
+:root {
+  --primary-blue: #000066;
+  --accent-blue: #5B7CFF;
+  --light-blue: #8BA3FF;
+  --white: #FFFFFF;
+  --text-primary: #E2E8F0; 
+  --text-secondary: #B8C5E0; 
+  --bg-dark: #00093D; 
+  
+  /* --- CORRECTION : Logique Mobile-First --- */
+  /* Hauteur par défaut (Mobile) basée sur Header.css */
+  --header-height: 64px; 
+  
+  --font-title: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --transition-speed: 0.3s ease;
+}
+
+/* --- Conteneur principal de la vue --- */
+.article-view-wrapper {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  width: 100%;
+  min-height: 100vh;
+  
+  /* Calcule la hauteur du header + un padding de 3rem (clamp) */
+  padding-top: calc(var(--header-height) + clamp(1.5rem, 4vw, 3rem));
+  
+  padding-bottom: clamp(3rem, 6vw, 6rem); /* Espace avant le footer */
+}
+
 .article-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+  /* J'ai retiré le padding-top d'ici pour le mettre sur le wrapper */
+  padding: 0 clamp(1rem, 4vw, 2rem); 
+  animation: articleFadeIn 0.8s ease-out;
+}
+
+@keyframes articleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .article-header {
-    margin-bottom: 24px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+}
+
+/* --- Bouton Retour --- */
+.article-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(91, 124, 255, 0.1);
+  border: 1px solid rgba(91, 124, 255, 0.3);
+  color: var(--light-blue);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+  transition: all var(--transition-speed);
+}
+
+.article-back-btn:hover {
+  background: rgba(91, 124, 255, 0.2);
+  color: var(--white);
+  transform: translateX(-4px);
+}
+
+.article-back-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* --- En-tête de l'article --- */
+.article-header {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  border-bottom: 1px solid rgba(91, 124, 255, 0.2);
+  padding-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.article-title {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: var(--white);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.article-meta svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent-blue);
+}
+
+/* --- Image principale --- */
+.article-image-container {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(91, 124, 255, 0.1);
+  border: 1px solid rgba(91, 124, 255, 0.15);
+}
+
+.article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Contenu de l'article (depuis l'API) --- */
+.article-content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+.article-content p {
+  margin-bottom: 1.5rem;
+}
+
+.article-content a {
+  color: var(--light-blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color var(--transition-speed);
+}
+
+.article-content a:hover {
+  color: var(--white);
+}
+
+.article-content h2, 
+.article-content h3, 
+.article-content h4 {
+  font-family: var(--font-title);
+  color: var(--white);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.article-content h2 { font-size: 1.8rem; }
+.article-content h3 { font-size: 1.5rem; }
+.article-content h4 { font-size: 1.2rem; }
+
+.article-content ul,
+.article-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.article-content li {
+  margin-bottom: 0.75rem;
+}
+
+.article-content blockquote {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(91, 124, 255, 0.05);
+  border-left: 4px solid var(--accent-blue);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+/* --- États de chargement / Erreur --- */
+.article-status-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-dark);
+  padding: var(--header-height) 1rem 1rem;
+  font-family: var(--font-body);
+}
+
+.article-loading, 
+.article-error {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(91, 124, 255, 0.05);
+  border: 1px solid rgba(91, 124, 255, 0.15);
+  border-radius: 16px;
+  color: var(--text-primary);
+}
+
+.article-error {
+  color: #F87171;
+  background: rgba(239, 68, 68, 0.05);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.article-error h2 {
+  font-family: var(--font-title);
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.article-error p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(91, 124, 255, 0.2);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Responsive --- */
+@media (min-width: 900px) {
+  :root {
+    /* CORRECTION : Hauteur Desktop */
+    --header-height: 72px; 
+  }
+}
+
+@media (max-width: 480px) {
   .article-title {
-    font-size: 2.4rem;
-    color: #333;
-    margin-bottom: 12px;
+    font-size: 1.8rem;
   }
-  
-  .article-date {
-    font-size: 0.9rem;
-    color: #777;
-  }
-  
-  .article-image-container {
-    margin-bottom: 24px;
-  }
-  
-  .article-image {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  
   .article-content {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
   }
-  
-  .article-content p {
-    margin-bottom: 16px;
-  }
-  
-  .article-content h2, .article-content h3 {
-    margin-top: 32px;
-    margin-bottom: 16px;
-  }
-  
-  .article-loading, .article-error, .article-not-found {
-    text-align: center;
-    padding: 40px;
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .article-error, .article-not-found {
-    color: #e74c3c;
-  }
+}

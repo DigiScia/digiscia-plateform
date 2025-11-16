@@ -32,7 +32,12 @@ DEBUG = True  # os.getenv("DEBUG", "False") == "True"
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "difficulty-scuba-rebates-creation.trycloudflare.com",
+]
+
 AUTH_USER_MODEL = 'api.UserPerso'
 
 
@@ -54,7 +59,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # <-- Gardez celui-ci (le premier)
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     # Active la compression et la gestion des fichiers statiques en prod
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -70,6 +75,12 @@ MIDDLEWARE = [
 
 # ⚙️ 2. CORS & CSRF
 CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "difficulty-scuba-rebates-creation.trycloudflare.com",
+]
+
 CSRF_TRUSTED_ORIGINS = [origin for origin in CORS_ALLOWED_ORIGINS if origin]
 
 CORS_ALLOW_CREDENTIALS = True

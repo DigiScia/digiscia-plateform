@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// Assurez-vous que le chemin vers votre service est correct
 import fetchNews from "../services/newsService.js"; 
 
-// --- Composant LoadingAnimation (avec styles préfixés pour éviter les conflits) ---
-
+// --- Composant de l'animation de chargement sophistiquée ---
 function LoadingAnimation() {
   return (
     <>
@@ -843,9 +841,8 @@ function News() {
   const carouselRef = useRef(null);
   const navigate = useNavigate(); // Ajout de useNavigate
 
-  // **LOGIQUE COMBINÉE**
   
-  // 1. Récupération des données réelles (de Fichier 2)
+  // 1. Récupération des données réelles 
   useEffect(() => {
     async function getNews() {
       setIsLoading(true); // Commencer le chargement
@@ -967,7 +964,6 @@ function News() {
             
             <div className="news-carousel" ref={carouselRef}>
               {isLoading ? (
-                // **AMÉLIORATION DEMANDÉE**
                 // Utilisation du composant de chargement sophistiqué
                 <LoadingAnimation />
               ) : newsData.length > 0 ? (
