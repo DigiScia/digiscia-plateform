@@ -1,4 +1,5 @@
 app = "digiscia-backend"
+org = "DigiScia"
 primary_region = "cdg"
 
 [build]
