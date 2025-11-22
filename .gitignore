@@ -1,2 +1,4 @@
 node_modules
 env/
+env3.12/
+__pycache__/

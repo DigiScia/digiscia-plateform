@@ -1,0 +1,12 @@
+# .dockerignore
+.git
+.gitignore
+.env
+__pycache__
+*.pyc
+*.pyo
+venv/
+env/
+db.sqlite3
+mediafiles/
+staticfiles/

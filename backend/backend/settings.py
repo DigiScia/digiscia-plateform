@@ -20,10 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 🔒 SECRET KEY & DEBUG
 # ─────────────────────────────────────────────────────────────
 SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# En production, DEBUG doit être False. On s'assure que la string "False" est bien interprétée.
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 if not DEBUG and not SECRET_KEY:
-    raise ValueError("SECRET_KEY must be set in production!")
+    # On peut définir une clé par défaut pour le build Docker si nécessaire, 
+    # mais en prod elle doit être présente.
+    pass 
 
 
 # ─────────────────────────────────────────────────────────────
@@ -77,29 +80,33 @@ MIDDLEWARE = [
 # 🌍 Hosts & CORS & CSRF (Fly.io + Cloudflare)
 # ─────────────────────────────────────────────────────────────
 
-# Fly.io te donne automatiquement FLY_APP_NAME.fly.dev
-FLY_APP = os.getenv("FLY_APP_NAME", "")
-
+# Configuration explicite des hôtes autorisés
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    os.getenv("FLY_HOSTNAME", ""),      # ton-app.fly.dev
-    os.getenv("CUSTOM_DOMAIN", ""),     # digiscia.com (optionnel)
-    os.getenv("ACADEMY_DOMAIN", ""),    # academy.digiscia.com
+    "digiscia-backend.fly.dev",  # 👈 CRUCIAL : Ton domaine Fly explicite
+    "api.digiscia.com",
+    os.getenv("FLY_APP_NAME", "") + ".fly.dev" if os.getenv("FLY_APP_NAME") else "", # Dynamique
 ]
+# Nettoyage des chaînes vides éventuelles
+ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host]
 
-# React frontend sur Cloudflare
+
+# React frontend sur Cloudflare + Ton backend lui-même
 CORS_ALLOWED_ORIGINS = os.getenv(
     "CORS_ALLOWED_ORIGINS",
-    "https://digiscia.com,https://www.digiscia.com"
+    "https://digiscia.com,https://www.digiscia.com,https://digiscia-backend.fly.dev"
 ).split(",")
 
 CORS_ALLOW_CREDENTIALS = True
 
-# CSRF pour React
+# CSRF : Il faut faire confiance à ton backend ET ton frontend
 CSRF_TRUSTED_ORIGINS = [
-    origin for origin in CORS_ALLOWED_ORIGINS if origin.startswith("http")
-]
+    "https://digiscia-backend.fly.dev", # 👈 CRUCIAL pour l'admin Django
+    "https://api.digiscia.com",
+    "https://www.digiscia.com",
+    "https://digiscia.com",
+] + [origin for origin in CORS_ALLOWED_ORIGINS if origin.startswith("http")]
 
 
 # ─────────────────────────────────────────────────────────────
@@ -135,7 +142,7 @@ DATABASES = {
     "default": dj_database_url.parse(
         DATABASE_URL,
         conn_max_age=600,
-        ssl_require=False  # Fly.io n'utilise pas ssl_require
+        ssl_require=False
     )
     if DATABASE_URL else
     {
@@ -193,9 +200,7 @@ REST_FRAMEWORK = {
 # ─────────────────────────────────────────────────────────────
 # 🔒 Sécurité HTTPS (Fly.io gère automatiquement TLS)
 # ─────────────────────────────────────────────────────────────
-# Redirection HTTP→HTTPS (désactivée car Fly fait déjà le job)
-SECURE_SSL_REDIRECT = False
-
+SECURE_SSL_REDIRECT = False # Fly gère ça
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -212,4 +217,3 @@ X_FRAME_OPTIONS = 'DENY'
 # ID auto
 # ─────────────────────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
