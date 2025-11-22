@@ -1,5 +1,5 @@
 """
-Django settings for backend project — version optimisée pour Fly.io
+Django settings for backend project — Version optimisée Fly.io + Dev Local
 """
 
 import os
@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 🔒 SECRET KEY & DEBUG
 # ─────────────────────────────────────────────────────────────
 SECRET_KEY = os.getenv("SECRET_KEY")
-# En production, DEBUG doit être False. On s'assure que la string "False" est bien interprétée.
+
+# En production, DEBUG doit être False.
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+# DEBUG = True
 
 if not DEBUG and not SECRET_KEY:
-    # On peut définir une clé par défaut pour le build Docker si nécessaire, 
-    # mais en prod elle doit être présente.
     pass 
 
 
@@ -62,7 +62,7 @@ INSTALLED_APPS = [
 # 🌐 MIDDLEWARE
 # ─────────────────────────────────────────────────────────────
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # Doit être le plus haut possible
 
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Static files
@@ -77,36 +77,52 @@ MIDDLEWARE = [
 
 
 # ─────────────────────────────────────────────────────────────
-# 🌍 Hosts & CORS & CSRF (Fly.io + Cloudflare)
+# 🌍 Hosts & CORS & CSRF (Config Unifiée)
 # ─────────────────────────────────────────────────────────────
 
-# Configuration explicite des hôtes autorisés
+# 1. ALLOWED HOSTS (Qui a le droit d'accéder au serveur ?)
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "digiscia-backend.fly.dev",  # 👈 CRUCIAL : Ton domaine Fly explicite
+    "digiscia-backend.fly.dev",
     "api.digiscia.com",
-    os.getenv("FLY_APP_NAME", "") + ".fly.dev" if os.getenv("FLY_APP_NAME") else "", # Dynamique
+    # Ajoute le nom de l'app Fly dynamiquement si présent
+    os.getenv("FLY_APP_NAME", "") + ".fly.dev" if os.getenv("FLY_APP_NAME") else "",
 ]
-# Nettoyage des chaînes vides éventuelles
+# Nettoyage
 ALLOWED_HOSTS = [host for host in ALLOWED_HOSTS if host]
 
 
-# React frontend sur Cloudflare + Ton backend lui-même
-CORS_ALLOWED_ORIGINS = os.getenv(
-    "CORS_ALLOWED_ORIGINS",
-    "https://digiscia.com,https://www.digiscia.com,https://digiscia-backend.fly.dev"
-).split(",")
+# 2. CORS (Qui a le droit d'appeler l'API ?)
+# On définit une liste explicite qui mélange PROD et LOCAL
+CORS_ALLOWED_ORIGINS = [
+    # --- PRODUCTION ---
+    "https://digiscia.com",
+    "https://www.digiscia.com",
+    "https://digiscia-backend.fly.dev",
+    "https://api.digiscia.com",
+    
+    # --- LOCAL DEV (Vite utilise souvent 5173 ou 5174) ---
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+]
+
+# Ajout dynamique depuis le .env si besoin
+env_cors = os.getenv("CORS_ALLOWED_ORIGINS", "")
+if env_cors:
+    CORS_ALLOWED_ORIGINS += env_cors.split(",")
 
 CORS_ALLOW_CREDENTIALS = True
 
-# CSRF : Il faut faire confiance à ton backend ET ton frontend
+
+# 3. CSRF (Sécurité des formulaires et sessions)
+# On fait confiance aux mêmes origines que le CORS + le backend lui-même
 CSRF_TRUSTED_ORIGINS = [
-    "https://digiscia-backend.fly.dev", # 👈 CRUCIAL pour l'admin Django
+    "https://digiscia-backend.fly.dev", 
     "https://api.digiscia.com",
-    "https://www.digiscia.com",
-    "https://digiscia.com",
-] + [origin for origin in CORS_ALLOWED_ORIGINS if origin.startswith("http")]
+] + CORS_ALLOWED_ORIGINS
 
 
 # ─────────────────────────────────────────────────────────────
@@ -134,7 +150,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # ─────────────────────────────────────────────────────────────
-# 🗄️ DATABASE (Fly.io PostgreSQL → DATABASE_URL)
+# 🗄️ DATABASE
 # ─────────────────────────────────────────────────────────────
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -173,7 +189,7 @@ USE_TZ = True
 
 
 # ─────────────────────────────────────────────────────────────
-# 📁 STATIC & MEDIA (Fly.io + Whitenoise)
+# 📁 STATIC & MEDIA
 # ─────────────────────────────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -198,9 +214,9 @@ REST_FRAMEWORK = {
 
 
 # ─────────────────────────────────────────────────────────────
-# 🔒 Sécurité HTTPS (Fly.io gère automatiquement TLS)
+# 🔒 Sécurité HTTPS
 # ─────────────────────────────────────────────────────────────
-SECURE_SSL_REDIRECT = False # Fly gère ça
+SECURE_SSL_REDIRECT = False # Géré par le proxy Fly.io
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -211,6 +227,10 @@ SECURE_HSTS_PRELOAD = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
+
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # ─────────────────────────────────────────────────────────────

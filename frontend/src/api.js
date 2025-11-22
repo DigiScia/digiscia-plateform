@@ -1,7 +1,9 @@
 import axios from "axios";
 
-// const API_URL = "http://127.0.0.1:8000"; // L'URL de ton backend Django
-const API_URL = "https://digiscia-backend.fly.dev"; // L'URL de ton backend Django
+// Utilise une variable d'environnement (standard Vite)
+// Si la variable n'existe pas (en local), on utilise localhost par défaut
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+// const API_URL = "http://127.0.0.1:8000";
 
 
 const api = axios.create({
@@ -9,7 +11,8 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  // INDISPENSABLE car tu as mis CORS_ALLOW_CREDENTIALS = True dans Django
+  withCredentials: true, 
 });
 
 export default api;
-

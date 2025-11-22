@@ -1,30 +1,20 @@
-"""
-URL configuration for backend project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# backend/urls.py
 from django.contrib import admin
-from api.admin import custom_admin_site
-from django.conf.urls.static import static
-from  backend import  settings
 from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('administration.digiscia/', custom_admin_site.urls),
-    path('', include('api.urls')),
+    # 1. Admin Django
+    path('administration.digiscia/', admin.site.urls),
+
+    # 2. Browser Reload (si installé)
     path("__reload__/", include("django_browser_reload.urls")),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # 3. TOUT le reste va vers api/urls.py
+    # La chaîne vide '' capture la racine et tout ce qui suit
+    path('', include('api.urls')),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

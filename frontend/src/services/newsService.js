@@ -1,15 +1,15 @@
-import api from "../api"; // Importation de l'instance Axios
+import api from "../api"; // Importation de l'instance Axios configurée
 
 const fetchNews = async () => {
   try {
-    const response = await api.get("http://127.0.0.1:8000/api/v1/news/"); // Remplace par le bon endpoint
+    // On utilise seulement le chemin relatif.
+    // L'instance 'api' ajoutera automatiquement le domaine (localhost ou fly.dev)
+    const response = await api.get("/api/v1/news/"); 
     return response.data;
   } catch (error) {
-    console.error("Erreur lors de la création de la prise de contact :", error);
-    return []; // Retourne un tableau vide en cas d'erreur
+    console.error("Erreur lors de la récupération des news :", error);
+    return []; // Retourne un tableau vide pour éviter de planter l'interface
   }
 };
 
 export default fetchNews;
-
-
