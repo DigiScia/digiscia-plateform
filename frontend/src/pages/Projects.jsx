@@ -288,7 +288,6 @@ const mockProjects = [
     id: 1,
     title: "DigiScia Academy",
     description: "Plateforme EdTech innovante pour former la prochaine génération d'experts en Data & IA.",
-    status: "Terminé",
     category: "Éducation",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80",
     link: "https://academy.digiscia.com" 
@@ -297,7 +296,6 @@ const mockProjects = [
     id: 2,
     title: "DigiScia Media",
     description: "Suivez l'actualité du secteur de l'IA et de la Data.",
-    status: "Terminé",
     category: "Media",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80",
     link: "https://linkedin.com/company/digiscia" 
@@ -306,7 +304,6 @@ const mockProjects = [
   //   id: 2,
   //   title: "DataEcho Hub",
   //   description: "Tableaux de bord temps réel pour le pilotage stratégique des KPIs industriels.",
-  //   status: "En cours",
   //   category: "Business Intelligence",
   //   image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
   //   link: "#"
@@ -315,7 +312,6 @@ const mockProjects = [
   //   id: 3,
   //   title: "SecureLake",
   //   description: "Architecture Data Lake souveraine pour centraliser et sécuriser les données sensibles.",
-  //   status: "Terminé",
   //   category: "Infrastructure",
   //   image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop&q=80",
   //   link: "#"
@@ -324,7 +320,6 @@ const mockProjects = [
   //   id: 4,
   //   title: "AgriTech IA",
   //   description: "Modèles prédictifs pour optimiser les rendements agricoles et la gestion des ressources.",
-  //   status: "En cours",
   //   category: "IA Appliquée",
   //   image: "https://images.unsplash.com/photo-1625246333195-58f214f76328?w=800&h=600&fit=crop&q=80",
   //   link: "#"
