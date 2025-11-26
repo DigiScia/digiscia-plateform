@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Bloquer les parties techniques inutiles pour le SEO (exemple)
+Disallow: /admin/
+Disallow: /private/
+
+# Indique le chemin de ton Sitemap (Remplace par ton VRAI nom de domaine)
+Sitemap: https://www.digiscia.com/sitemap.xml

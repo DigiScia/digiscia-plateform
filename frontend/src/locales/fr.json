@@ -1,0 +1,46 @@
+{
+    "header": {
+        "home": "Accueil",
+        "about": "À Propos",
+        "projects": "Projets",
+        "services": "Services",
+        "blog": "Blog",
+        "team": "Équipe",
+        "contact": "Nous Contacter"
+    },
+    "home": {
+        "brand": "DigiScia",
+        "welcome": "vous accompagne en ...",
+        "partnership": "Partenariat",
+        "contactUs": "Nous Contacter"
+    },
+    "news": {
+        "badge": "Actualités",
+        "title": "Dernières Nouvelles",
+        "subtitle": "Restez informé des dernières actualités, innovations et événements de DigiScia",
+        "loading": "Chargement des actualités",
+        "loadingSubtext": "Récupération des dernières informations...",
+        "noNews": "Aucune actualité disponible.",
+        "readArticle": "Lire l'article",
+        "newsletter": {
+            "title": "Restez Connecté",
+            "description": "Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités",
+            "placeholder": "votre.email@exemple.com",
+            "subscribe": "S'inscrire",
+            "thankYou": "Merci de faire partie de notre communauté !",
+            "alreadySubscribed": "Vous êtes déjà inscrit 😉!",
+            "errorGeneric": "Une erreur est survenue. Veuillez réessayer.",
+            "errorServer": "Impossible de joindre le serveur."
+        },
+        "loadingTips": {
+            "tip1": "Découvrez nos dernières innovations et projets en cours",
+            "tip2": "Restez informé des tendances tech et des actualités du secteur",
+            "tip3": "Explorez nos success stories et témoignages clients"
+        }
+    },
+    "seo": {
+        "defaultTitle": "DigiScia - Expert IA & Data au Burkina Faso (AES)",
+        "defaultDescription": "ESN leader en Intelligence Artificielle, Qualité de données et Automatisation. Centre d'innovation technologique pour l'Afrique francophone et l'espace AES.",
+        "defaultKeywords": "startup, Intelligence artificielle, ingénierie de données, qualité de données, automatisation, ESN, Burkina Faso, AES, Afrique francophone, transformation digitale"
+    }
+}

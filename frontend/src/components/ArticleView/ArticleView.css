@@ -1,80 +1,75 @@
 /* --- Import des polices --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap');
 
-/* --- Variables (Cohérence avec le site) --- */
 :root {
-  --primary-blue: #000066;
-  --accent-blue: #5B7CFF;
-  --light-blue: #8BA3FF;
-  --white: #FFFFFF;
-  --text-primary: #E2E8F0; 
-  --text-secondary: #B8C5E0; 
-  --bg-dark: #00093D; 
+  /* --- PALETTE LIGHT MODE (Spécifique Article) --- */
+  --page-bg: #FFFFFF;           /* Fond Blanc demandé */
+  --brand-blue: #00093D;        /* Bleu du Logo pour les titres */
+  --text-body: #334155;         /* Gris foncé pour la lecture (confort) */
+  --text-meta: #64748B;         /* Gris moyen pour les dates */
+  --accent-blue: #5B7CFF;       /* Bleu électrique pour les liens/actions */
   
-  /* --- CORRECTION : Logique Mobile-First --- */
-  /* Hauteur par défaut (Mobile) basée sur Header.css */
-  --header-height: 64px; 
+  /* --- Dimensions --- */
+  /* Hauteur estimée du header fixe + marge de sécurité */
+  --header-safe-area: 100px; 
   
   --font-title: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --transition-speed: 0.3s ease;
+  --transition: 0.3s ease;
 }
 
-/* --- Conteneur principal de la vue --- */
+/* --- Conteneur Principal --- */
 .article-view-wrapper {
-  background-color: var(--bg-dark);
-  color: var(--text-primary);
+  background-color: var(--page-bg);
+  color: var(--text-body);
   font-family: var(--font-body);
   width: 100%;
   min-height: 100vh;
   
-  /* Calcule la hauteur du header + un padding de 3rem (clamp) */
-  padding-top: calc(var(--header-height) + clamp(1.5rem, 4vw, 3rem));
-  
-  padding-bottom: clamp(3rem, 6vw, 6rem); /* Espace avant le footer */
+  /* C'EST ICI QUE LA MAGIE OPÈRE POUR NE PAS CACHER LE TITRE */
+  /* On ajoute assez d'espace en haut pour que le header fixe ne couvre rien */
+  padding-top: calc(var(--header-safe-area) + 5rem); 
+  padding-bottom: 4rem;
 }
 
 .article-container {
   max-width: 800px;
   margin: 0 auto;
-  /* J'ai retiré le padding-top d'ici pour le mettre sur le wrapper */
-  padding: 0 clamp(1rem, 4vw, 2rem); 
-  animation: articleFadeIn 0.8s ease-out;
+  padding: 0 1.5rem;
+  
+  /* Animation douce d'apparition */
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
-@keyframes articleFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- Bouton Retour --- */
 .article-back-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(91, 124, 255, 0.1);
-  border: 1px solid rgba(91, 124, 255, 0.3);
-  color: var(--light-blue);
+  gap: 0.6rem;
+  background-color: #F1F5F9; /* Gris très clair */
+  color: var(--brand-blue);
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
-  padding: 0.6rem 1rem;
+  padding: 0.7rem 1.2rem;
   border-radius: 50px;
+  border: 1px solid #E2E8F0;
   cursor: pointer;
-  margin-bottom: clamp(1.5rem, 3vw, 2rem);
-  transition: all var(--transition-speed);
+  margin-bottom: 2rem;
+  transition: var(--transition);
 }
 
 .article-back-btn:hover {
-  background: rgba(91, 124, 255, 0.2);
-  color: var(--white);
+  background-color: var(--brand-blue);
+  color: #FFFFFF;
   transform: translateX(-4px);
+  box-shadow: 0 4px 12px rgba(0, 9, 61, 0.15);
 }
 
 .article-back-btn svg {
@@ -84,180 +79,182 @@
 
 /* --- En-tête de l'article --- */
 .article-header {
-  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
-  border-bottom: 1px solid rgba(91, 124, 255, 0.2);
-  padding-bottom: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid #E2E8F0; /* Ligne de séparation subtile */
+  padding-bottom: 2rem;
 }
 
 .article-title {
   font-family: var(--font-title);
-  font-size: clamp(2rem, 6vw, 3.5rem);
-  color: var(--white);
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Gros titre lisible */
+  font-weight: 700;
+  color: var(--brand-blue); /* Rappel du logo */
   margin-bottom: 1rem;
-  line-height: 1.2;
+  line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
 .article-meta {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  gap: 0.6rem;
+  color: var(--text-meta);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .article-meta svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: var(--accent-blue);
 }
 
-/* --- Image principale --- */
+/* --- Image Principale --- */
 .article-image-container {
-  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
   width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 16px;
+  margin-bottom: 3rem;
+  border-radius: 20px;
   overflow: hidden;
-  background: rgba(91, 124, 255, 0.1);
-  border: 1px solid rgba(91, 124, 255, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); /* Ombre douce sur fond blanc */
+  background-color: #F8FAFC;
 }
 
 .article-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
+  transition: transform 0.5s ease;
 }
 
-/* --- Contenu de l'article (depuis l'API) --- */
+.article-image:hover {
+  transform: scale(1.02);
+}
+
+/* --- Contenu Texte --- */
 .article-content {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: var(--text-primary);
+  font-size: 1.125rem; /* ~18px pour un confort de lecture optimal */
+  line-height: 1.8;
+  color: var(--text-body);
 }
 
+/* Espacement des paragraphes */
 .article-content p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
 }
 
-.article-content a {
-  color: var(--light-blue);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color var(--transition-speed);
-}
-
-.article-content a:hover {
-  color: var(--white);
-}
-
+/* Titres dans l'article */
 .article-content h2, 
-.article-content h3, 
-.article-content h4 {
+.article-content h3 {
   font-family: var(--font-title);
-  color: var(--white);
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
+  color: var(--brand-blue);
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.2rem;
   line-height: 1.3;
 }
 
-.article-content h2 { font-size: 1.8rem; }
-.article-content h3 { font-size: 1.5rem; }
-.article-content h4 { font-size: 1.2rem; }
+.article-content h2 { font-size: 2rem; }
+.article-content h3 { font-size: 1.6rem; }
 
-.article-content ul,
+/* Liens */
+.article-content a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(91, 124, 255, 0.2);
+  transition: var(--transition);
+}
+
+.article-content a:hover {
+  border-bottom-color: var(--accent-blue);
+  color: var(--brand-blue);
+}
+
+/* Listes */
+.article-content ul, 
 .article-content ol {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   padding-left: 1.5rem;
 }
 
 .article-content li {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.8rem;
+  padding-left: 0.5rem;
 }
 
+.article-content li::marker {
+  color: var(--accent-blue);
+  font-weight: bold;
+}
+
+/* Citations */
 .article-content blockquote {
-  margin: 2rem 0;
-  padding: 1.5rem;
-  background: rgba(91, 124, 255, 0.05);
-  border-left: 4px solid var(--accent-blue);
-  border-radius: 0 8px 8px 0;
-  color: var(--text-secondary);
+  margin: 2.5rem 0;
+  padding: 2rem;
+  background-color: #F8FAFC; /* Gris très très clair */
+  border-left: 5px solid var(--accent-blue);
+  border-radius: 0 12px 12px 0;
   font-style: italic;
+  color: var(--brand-blue);
+  font-size: 1.2rem;
+  font-family: var(--font-title);
 }
 
+/* Images dans le contenu */
 .article-content img {
   max-width: 100%;
   height: auto;
   border-radius: 12px;
   margin: 2rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/* --- États de chargement / Erreur --- */
+/* --- Loader & Erreur (Centrés verticalement) --- */
 .article-status-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  width: 100%;
-  background-color: var(--bg-dark);
-  padding: var(--header-height) 1rem 1rem;
+  min-height: 100vh; /* Prend tout l'écran */
+  background-color: var(--page-bg);
+  padding-top: var(--header-safe-area); /* Évite que le header cache le loader */
+}
+
+.article-loading,
+.article-error {
+  text-align: center;
+  color: var(--brand-blue);
   font-family: var(--font-body);
 }
 
-.article-loading, 
-.article-error {
-  text-align: center;
-  padding: 2rem;
-  background: rgba(91, 124, 255, 0.05);
-  border: 1px solid rgba(91, 124, 255, 0.15);
-  border-radius: 16px;
-  color: var(--text-primary);
-}
-
-.article-error {
-  color: #F87171;
-  background: rgba(239, 68, 68, 0.05);
-  border-color: rgba(239, 68, 68, 0.2);
-}
-
 .article-error h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
   font-family: var(--font-title);
-  color: var(--white);
-  margin-bottom: 0.5rem;
-}
-.article-error p {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(91, 124, 255, 0.2);
+  width: 50px;
+  height: 50px;
+  border: 4px solid #E2E8F0;
   border-top-color: var(--accent-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
+  margin: 0 auto 1.5rem;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* --- Responsive --- */
-@media (min-width: 900px) {
-  :root {
-    /* CORRECTION : Hauteur Desktop */
-    --header-height: 72px; 
+@media (max-width: 768px) {
+  .article-view-wrapper {
+    padding-top: 110px; /* Ajustement mobile */
   }
-}
-
-@media (max-width: 480px) {
+  
   .article-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
+  
   .article-content {
     font-size: 1rem;
-    line-height: 1.6;
   }
 }

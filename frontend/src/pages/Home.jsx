@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useCallback, memo, useRef } from "react";
-import logoImage from "../assets/logobleu.jpg"; // Utilisation de votre logo original
-import "./Home.css"; // Importation du CSS externe
+import logoImage from "../assets/logobleu.jpg";
+import "./Home.css";
 
-// --- Composant TaglineRotator (Effet "Typing") ---
+// --- Composant TaglineRotator ---
 const TaglineRotator = memo(() => {
   const texts = [
     "Data Science",
     "Intelligence Artificielle",
-    "Management de Données",
     "Automatisation",
-    "Agents IA",
-    "Analyse de Données",
-    "Aide à la decision",
-    "Ingenierie de Données",
-    "Securité des Données",
-    "Applications Web & Mobile"
+    "Business Intelligence",
+    "Sécurité des Données",
+    "Solutions Web & Mobile"
   ];
 
   const [index, setIndex] = useState(0);
@@ -22,9 +18,10 @@ const TaglineRotator = memo(() => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [currentText, setCurrentText] = useState('');
 
-  const typingSpeed = 120;
-  const deletingSpeed = 60;
-  const pauseDelay = 2000;
+  // Vitesses ajustées pour un effet plus "pro"
+  const typingSpeed = 80;
+  const deletingSpeed = 40;
+  const pauseDelay = 2500;
 
   useEffect(() => {
     const currentWord = texts[index];
@@ -57,9 +54,9 @@ const TaglineRotator = memo(() => {
   }, [subIndex, isDeleting, index, texts]);
 
   return (
-    <span className="tagline-text">
+    <span className="tagline-container">
       {currentText}
-      <span className="typing-cursor" aria-hidden="true">_</span>
+      <span className="tagline-cursor" aria-hidden="true" />
     </span>
   );
 });
@@ -68,169 +65,157 @@ TaglineRotator.displayName = "TaglineRotator";
 
 // --- Composant Home Principal ---
 function Home() {
-  const [nodes, setNodes] = useState([]);
   const canvasRef = useRef(null);
 
-  // --- Logique du Canvas  ---
-  useEffect(() => {
-    const generateNodes = () => {
-      const nodeCount = window.innerWidth < 768 ? 30 : 50;
-      return Array.from({ length: nodeCount }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        vx: (Math.random() - 0.5) * 0.05,
-        vy: (Math.random() - 0.5) * 0.05,
-        size: Math.random() * 2 + 1
-      }));
-    };
-    setNodes(generateNodes());
-  }, []);
-
+  // --- Animation Canvas (Particules subtiles) ---
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let animationFrameId;
-    let currentNodes = nodes;
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    
+    // Configuration
+    let width, height;
+    let particles = [];
+    const particleCount = window.innerWidth < 768 ? 30 : 60;
+    
+    const resize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5; // Plus lent pour être plus élégant
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2;
+        this.alpha = Math.random() * 0.5 + 0.1;
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        if (this.x < 0) this.x = width;
+        if (this.x > width) this.x = 0;
+        if (this.y < 0) this.y = height;
+        if (this.y > height) this.y = 0;
+      }
+      
+      draw() {
+        ctx.fillStyle = `rgba(148, 163, 184, ${this.alpha})`; // Couleur slate-400
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const init = () => {
+      resize();
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    };
 
     const animate = () => {
-      if (!canvas) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      currentNodes = currentNodes.map(node => {
-        let newX = node.x + node.vx;
-        let newY = node.y + node.vy;
-        if (newX < 0 || newX > 100) node.vx *= -1;
-        if (newY < 0 || newY > 100) node.vy *= -1;
-        return { ...node, x: newX, y: newY };
-      });
-      ctx.lineWidth = 0.5;
-      currentNodes.forEach((node, i) => {
-        currentNodes.slice(i + 1).forEach(otherNode => {
-          const dx = (otherNode.x - node.x) * canvas.width / 100;
-          const dy = (otherNode.y - node.y) * canvas.height / 100;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 150) {
-            const opacity = (1 - distance / 150) * 0.3;
-            ctx.strokeStyle = `rgba(91, 124, 255, ${opacity})`;
+      ctx.clearRect(0, 0, width, height);
+      
+      // Dessiner les connexions
+      particles.forEach((p, index) => {
+        p.update();
+        p.draw();
+        
+        // Lignes de connexion (plus subtiles)
+        for (let j = index + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < 150) {
+            ctx.strokeStyle = `rgba(148, 163, 184, ${0.1 * (1 - dist/150)})`;
+            ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(node.x * canvas.width / 100, node.y * canvas.height / 100);
-            ctx.lineTo(otherNode.x * canvas.width / 100, otherNode.y * canvas.height / 100);
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
           }
-        });
+        }
       });
-      currentNodes.forEach(node => {
-        ctx.fillStyle = 'rgba(91, 124, 255, 0.8)';
-        ctx.beginPath();
-        ctx.arc(
-          node.x * canvas.width / 100,
-          node.y * canvas.height / 100,
-          node.size,
-          0,
-          Math.PI * 2
-        );
-        ctx.fill();
-      });
-      animationFrameId = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
     };
-    if (currentNodes.length > 0) {
-      animate();
-    }
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, [nodes]);
 
-  // --- Handlers ---
+    init();
+    animate();
+    window.addEventListener('resize', init);
+    
+    return () => window.removeEventListener('resize', init);
+  }, []);
+
   const handleSponsoringClick = useCallback(() => {
     window.open('https://wa.me/212716990681', '_blank');
   }, []);
 
-  const handleContactClick = useCallback((e) => {
-    e.preventDefault();
-    const contactsSection = document.getElementById('contacts');
-    if (contactsSection) {
-      contactsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, []);
-
-  // AJOUT : Logique de scroll vers le bas
   const handleScrollClick = useCallback(() => {
     window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
   }, []);
 
   return (
     <section id="home" className="home-container">
-      {/* Fond Constellation */}
-      <canvas 
-        ref={canvasRef} 
-        className="constellation-canvas"
-        aria-hidden="true"
-      />
-      {/* Overlay */}
-      <div className="gradient-overlay" aria-hidden="true" />
+      {/* Background Elements */}
+      <canvas ref={canvasRef} className="constellation-canvas" />
+      <div className="ambient-glow top-left" />
+      <div className="ambient-glow bottom-right" />
 
-      {/* Hero Section */}
       <div className="hero-section">
-        <div className="hero-content">
+        
+        {/* COLONNE GAUCHE : TEXTE */}
+        <div className="hero-text-wrapper">
+          {/* Badge Status */}
+          <div className="hero-badge">
+            <span className="badge-dot"></span>
+            <span className="badge-text">ESN & Centre d'Innovation</span>
+          </div>
+
+          <h1 className="brand-title">DigiScia</h1>
           
-          {/* LOGO (GAUCHE) */}
-          <div className="logo-container">
+          <h2 className="hero-subtitle">
+            Experts en <TaglineRotator />
+          </h2>
+          
+          <p style={{ color: '#94A3B8', fontSize: '1.1rem', marginBottom: '2rem', lineHeight: '1.6', maxWidth: '90%' }}>
+            Nous transformons vos données en leviers de croissance. Une approche sur-mesure pour propulser votre entreprise dans l'ère numérique.
+          </p>
+
+          <div className="cta-group">
+            <button className="btn btn-primary" onClick={handleSponsoringClick}>
+              <span>Démarrer un projet</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <a href="#contacts" className="btn btn-secondary">
+              Nous contacter
+            </a>
+          </div>
+        </div>
+
+        {/* COLONNE DROITE : LOGO GLASS */}
+        <div className="hero-visual-wrapper">
+          <div className="logo-glass-card">
             <img 
-              src={logoImage}
-              alt="DigiScia Logo" 
-              className="hero-logo"
+              src={logoImage} 
+              alt="Logo DigiScia" 
+              className="hero-logo" 
             />
           </div>
-          
-          {/* TEXTE (DROITE) */}
-          <div className="hero-text">
-            <h1 className="welcome-text">Bienvenue sur</h1>
-            <h2 className="brand-name">DigiScia</h2>
-            <h3 className="tagline">
-              <TaglineRotator />
-            </h3>
-            
-            <div className="cta-buttons">
-              <button 
-                className="cta-button sponsoring" 
-                onClick={handleSponsoringClick}
-                aria-label="Ouvrir WhatsApp pour un partenariat"
-              >
-                Partenariat
-              </button>
-              <a 
-                href="#contacts" 
-                className="cta-button contact"
-                onClick={handleContactClick}
-                aria-label="Naviguer vers la section contact"
-              >
-                Nous Contacter
-              </a>
-            </div>
-          </div>
-
         </div>
+
       </div>
 
-      {/* AJOUT : Indicateur de scroll (en bas) */}
-      <div 
-        className="scroll-indicator" 
-        onClick={handleScrollClick}
-        aria-label="Défiler vers le bas"
-        role="button"
-        tabIndex={0}
-      >
-        <span className="scroll-indicator-text">Scroll</span>
-        <div className="scroll-indicator-icon"></div>
+      {/* Scroll Indicator */}
+      <div className="scroll-mouse" onClick={handleScrollClick} role="button" aria-label="Scroll down">
+        <div className="scroll-wheel"></div>
       </div>
     </section>
   );

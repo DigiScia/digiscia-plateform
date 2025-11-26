@@ -1,9 +1,10 @@
 import React, { useState, useRef } from "react";
-import emailjs from '@emailjs/browser'; // Importation d'EmailJS
-import "./Contact.css"; // Styles mis à jour
+import emailjs from '@emailjs/browser';
+import "./Contact.css"; 
 import SocialMediaLinks from "../components/SocialMedia/SocialMediaLinks.jsx";
+import { FaPaperPlane, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 
-// État initial (allégé)
+// État initial
 const initialFormState = {
   telephone: '',
   subject: '',
@@ -11,40 +12,19 @@ const initialFormState = {
   message: ''
 };
 
-// Message de confirmation
-const ConfirmationMessage = () => (
-  <div className="confirmation-message">
-    <div className="confirmation-icon">✓</div>
-    <p>Merci de nous faire confiance! Notre équipe vous recontactera très bientôt!</p>
-  </div>
-);
-
-// NOUVEAU: Message d'échec
-const ErrorMessage = ({ message }) => (
-  <div className="error-message">
-    <p>{message}</p>
-  </div>
-);
-
 function Contact() {
-  const form = useRef(); // Référence pour EmailJS
+  const form = useRef();
   const [formData, setFormData] = useState(initialFormState);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false); // État de chargement
-  const [submitError, setSubmitError] = useState(''); // État d'erreur
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData(prevState => ({ ...prevState, [name]: value }));
     if (errors[name]) {
-      setErrors(prevErrors => ({
-        ...prevErrors,
-        [name]: null
-      }));
+      setErrors(prevErrors => ({ ...prevErrors, [name]: null }));
     }
   };
   
@@ -58,7 +38,6 @@ function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 1. Validation
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -67,131 +46,155 @@ function Contact() {
       return;
     }
     
-    // 2. Début de la soumission
     setErrors({});
     setSubmitError('');
     setIsSubmitting(true);
     setShowConfirmation(false);
 
-    // 3. Envoi avec EmailJS
     emailjs.sendForm(
-      'service_fcvhskh', // Remplacez par votre Service ID
-      'template_wglutjo', // Remplacez par votre Template ID
+      'service_fcvhskh', 
+      'template_wglutjo', 
       form.current,
-      '7XluHeKjHpwQ_1CfB' // Remplacez par votre Public Key (User ID)
+      '7XluHeKjHpwQ_1CfB' 
     )
     .then((result) => {
-        // 4a. Succès
         console.log('E-mail envoyé!', result.text);
         setShowConfirmation(true);
-        setFormData(initialFormState); // Réinitialiser le formulaire
+        setFormData(initialFormState);
         setTimeout(() => setShowConfirmation(false), 5000);
     }, (error) => {
-        // 4b. Échec
         console.error('Erreur d\'envoi:', error.text);
         setSubmitError('Une erreur est survenue. Veuillez réessayer plus tard.');
     })
     .finally(() => {
-        // 5. Fin de la soumission
         setIsSubmitting(false);
     });
   };
 
   return (
     <section className="contact-section" id="contacts">
-      <div className="contact-content">
-        {/* ... (Partie Social-container inchangée) ... */}
-        <div className="social-container">
-          <h2 className="social-title">Suivez-nous</h2>
-          <p className="social-subtitle">
-            Rejoignez notre communauté et restez à l'affût de nos dernières actualités.
-          </p>
-          <SocialMediaLinks />
-        </div>
+      
+      {/* Texture de fond */}
+      <div className="contact-glow"></div>
+      
+      <div className="contact-container">
         
-        {/* Container du formulaire (Droite) */}
-        <div className="contact-form-container">
-          <h1 className="contact-title">Contactez-nous</h1>
+        {/* En-tête de page */}
+        <header className="contact-header">
+          <span className="badge-pill">Contact & Support</span>
+          <h1 className="contact-title-main">Parlons de votre projet</h1>
+          <p className="contact-subtitle-main">
+            Vous avez une vision ? Nous avons l'expertise technique pour la réaliser.
+            Contactez notre équipe pour une consultation personnalisée.
+          </p>
+        </header>
+
+        {/* Carte Principale Glassmorphism */}
+        <div className="contact-content">
           
-          {showConfirmation && <ConfirmationMessage />}
-          {submitError && <ErrorMessage message={submitError} />}
+          {/* Colonne Gauche : Social & Infos */}
+          <div className="social-container">
+            <h2 className="social-title">Restons connectés</h2>
+            <p className="social-subtitle">
+              Suivez nos dernières actualités et rejoignez la communauté DigiScia sur les réseaux sociaux.
+            </p>
+            <SocialMediaLinks />
+          </div>
           
-          <form ref={form} className="contact-form" onSubmit={handleSubmit} noValidate>
-            <div className="form-grid">
-              
-              {/* Ligne 1: Email (50%) + Téléphone (50%) */}
-              <div className="form-group grid-col-span-3">
-                <label htmlFor="email" className="sr-only">Email*</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" // Doit correspondre à {{email}} dans EmailJS
-                  placeholder="Email e.g john.dossy@gmail.com" 
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className={errors.email ? 'input-error' : ''}
-                  disabled={isSubmitting}
-                />
-                {errors.email && <span className="error-text">{errors.email}</span>}
+          {/* Colonne Droite : Formulaire */}
+          <div className="contact-form-container">
+            <h2 className="contact-title">Envoyez-nous un message</h2>
+            
+            {showConfirmation && (
+              <div className="confirmation-message">
+                <FaCheckCircle size={20} />
+                <p>Message envoyé ! Notre équipe vous recontactera très bientôt.</p>
               </div>
+            )}
 
-              <div className="form-group grid-col-span-3">
-                <label htmlFor="telephone" className="sr-only">Téléphone</label>
-                <input 
-                  type="tel" 
-                  id="telephone" 
-                  name="telephone" // Doit correspondre à {{telephone}}
-                  placeholder="Téléphone e.g +226******* " 
-                  value={formData.telephone}
-                  onChange={handleChange}
-                  required
-                  className={errors.telephone ? 'input-error' : ''}
-                  disabled={isSubmitting}
-                />
-                {errors.telephone && <span className="error-text">{errors.telephone}</span>}
+            {submitError && (
+              <div className="error-message">
+                <FaExclamationCircle size={20} />
+                <p>{submitError}</p>
               </div>
+            )}
+            
+            <form ref={form} className="contact-form" onSubmit={handleSubmit} noValidate>
+              <div className="form-grid">
+                
+                {/* Email */}
+                <div className="form-group">
+                  <label htmlFor="email">Email Professionnel</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email"
+                    placeholder="ex: jean.dupont@entreprise.com" 
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={errors.email ? 'input-error' : ''}
+                    disabled={isSubmitting}
+                  />
+                  {errors.email && <span className="error-text">{errors.email}</span>}
+                </div>
 
-              {/* Ligne 2: Objet (100%) */}
-              <div className="form-group grid-col-span-6">
-                <label htmlFor="subject" className="sr-only">Objet</label>
-                <input 
-                  type="text" 
-                  id="subject" 
-                  name="subject" // Doit correspondre à {{subject}}
-                  placeholder="Objet" 
-                  value={formData.subject}
-                  onChange={handleChange}
-                  disabled={isSubmitting}
-                />
-              </div>
+                {/* Téléphone */}
+                <div className="form-group">
+                  <label htmlFor="telephone">Téléphone</label>
+                  <input 
+                    type="tel" 
+                    id="telephone" 
+                    name="telephone"
+                    placeholder="ex: +226 70 00 00 00" 
+                    value={formData.telephone}
+                    onChange={handleChange}
+                    className={errors.telephone ? 'input-error' : ''}
+                    disabled={isSubmitting}
+                  />
+                  {errors.telephone && <span className="error-text">{errors.telephone}</span>}
+                </div>
 
-              {/* Ligne 3: Message (100%) */}
-              <div className="form-group grid-col-span-6">
-                <label htmlFor="message" className="sr-only">Message</label>
-                <textarea 
-                  id="message" 
-                  name="message" // Doit correspondre à {{message}}
-                  rows="5" 
-                  placeholder="Ecrivez votre Message" 
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  className={errors.message ? 'input-error' : ''}
-                  disabled={isSubmitting}
-                ></textarea>
-                {errors.message && <span className="error-text">{errors.message}</span>}
-              </div>
+                {/* Objet (Prend toute la largeur sur desktop) */}
+                <div className="form-group grid-full">
+                  <label htmlFor="subject">Objet de la demande</label>
+                  <input 
+                    type="text" 
+                    id="subject" 
+                    name="subject"
+                    placeholder="ex: Demande de devis pour application mobile" 
+                    value={formData.subject}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                  />
+                </div>
 
-              {/* Ligne 4: Bouton */}
-              <div className="form-group-submit grid-col-span-6">
-                <button type="submit" className="contact-submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Envoi en cours...' : 'Envoyer'}
-                </button>
+                {/* Message (Prend toute la largeur) */}
+                <div className="form-group grid-full">
+                  <label htmlFor="message">Votre Message</label>
+                  <textarea 
+                    id="message" 
+                    name="message"
+                    placeholder="Détaillez votre besoin..." 
+                    value={formData.message}
+                    onChange={handleChange}
+                    className={errors.message ? 'input-error' : ''}
+                    disabled={isSubmitting}
+                  ></textarea>
+                  {errors.message && <span className="error-text">{errors.message}</span>}
+                </div>
+
+                {/* Bouton Submit */}
+                <div className="grid-full">
+                  <button type="submit" className="contact-submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Envoi en cours...' : (
+                      <>Envoyer le message <FaPaperPlane style={{marginLeft: '10px'}} /></>
+                    )}
+                  </button>
+                </div>
+                
               </div>
-              
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </section>

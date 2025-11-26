@@ -842,12 +842,22 @@ function News() {
   const navigate = useNavigate(); // Ajout de useNavigate
 
   
-  // 1. Récupération des données réelles 
+  // 1. Récupération des données réelles avec délai minimum de 3s
   useEffect(() => {
     async function getNews() {
       setIsLoading(true); // Commencer le chargement
+
       try {
-        const data = await fetchNews();
+        // On lance les deux promesses en parallèle :
+        // 1. La récupération des news
+        const fetchPromise = fetchNews();
+        // 2. Un timer de 3000ms (3 secondes)
+        const timerPromise = new Promise(resolve => setTimeout(resolve, 3000));
+
+        // Promise.all attend que les DEUX soient finies
+        // On récupère uniquement le résultat de la première promesse (data)
+        const [data] = await Promise.all([fetchPromise, timerPromise]);
+
         if (Array.isArray(data)) {
           setNewsData(data.sort((a, b) => new Date(b.date) - new Date(a.date)));
         } else {
@@ -858,7 +868,7 @@ function News() {
         console.error("Erreur lors de la récupération des actualités :", error);
         setNewsData([]); // Mettre à vide en cas d'erreur
       } finally {
-        setIsLoading(false); // Arrêter le chargement
+        setIsLoading(false); // S'exécutera seulement après 3s minimum
       }
     }
     getNews();

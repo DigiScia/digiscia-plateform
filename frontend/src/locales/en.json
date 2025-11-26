@@ -1,0 +1,46 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About",
+        "projects": "Projects",
+        "services": "Services",
+        "blog": "Blog",
+        "team": "Team",
+        "contact": "Contact Us"
+    },
+    "home": {
+        "brand": "DigiScia",
+        "welcome": "supports you in ...",
+        "partnership": "Partnership",
+        "contactUs": "Contact Us"
+    },
+    "news": {
+        "badge": "News",
+        "title": "Latest News",
+        "subtitle": "Stay informed with our latest news, innovations and events at DigiScia",
+        "loading": "Loading news",
+        "loadingSubtext": "Fetching latest information...",
+        "noNews": "No news available.",
+        "readArticle": "Read article",
+        "newsletter": {
+            "title": "Stay Connected",
+            "description": "Subscribe to our newsletter to receive our latest news",
+            "placeholder": "your.email@example.com",
+            "subscribe": "Subscribe",
+            "thankYou": "Thank you for joining our community!",
+            "alreadySubscribed": "You're already subscribed 😉!",
+            "errorGeneric": "An error occurred. Please try again.",
+            "errorServer": "Unable to reach the server."
+        },
+        "loadingTips": {
+            "tip1": "Discover our latest innovations and ongoing projects",
+            "tip2": "Stay informed about tech trends and industry news",
+            "tip3": "Explore our success stories and client testimonials"
+        }
+    },
+    "seo": {
+        "defaultTitle": "DigiScia - AI & Data Expert in Burkina Faso (AES)",
+        "defaultDescription": "Leading ESN in Artificial Intelligence, Data Quality and Automation. Technology innovation center for French-speaking Africa and the AES region.",
+        "defaultKeywords": "startup, Artificial intelligence, data engineering, data quality, automation, ESN, Burkina Faso, AES, French-speaking Africa, digital transformation"
+    }
+}

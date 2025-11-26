@@ -1,18 +1,31 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { 
+  FaRocket, 
+  FaCheckCircle, 
+  FaCode, 
+  FaExternalLinkAlt, 
+  FaArrowRight 
+} from 'react-icons/fa';
 
+// === STYLES CSS (Monochrome Premium) ===
 const styles = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --bg-deep: #00093D;
+  --text-white: #FFFFFF;
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-hover: rgba(255, 255, 255, 0.05);
+  --text-muted: rgba(255, 255, 255, 0.7);
 }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: #00093D;
-  color: #FFFFFF;
+  background: var(--bg-deep);
+  color: var(--text-white);
   overflow-x: hidden;
 }
 
@@ -20,43 +33,26 @@ body {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: #00093D;
-  padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem);
-  overflow: hidden;
-}
-
-/* Fond animé subtil */
-.projects-section::before {
-  content: '';
-  position: fixed;
-  top: -50%;
-  left: -20%;
-  width: 100%;
-  height: 150%;
-  background: radial-gradient(circle, rgba(91, 124, 255, 0.08) 0%, transparent 70%);
-  animation: floatBackground 25s infinite ease-in-out;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes floatBackground {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-20px, -20px) scale(1.05); }
-  66% { transform: translate(20px, 20px) scale(0.95); }
-}
-
-/* Grille de fond */
-.grid-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.02;
+  background: var(--bg-deep);
+  padding: clamp(4rem, 6vw, 8rem) clamp(1rem, 4vw, 2rem);
+  
+  /* Texture Grille Subtile */
   background-image: 
-    linear-gradient(rgba(91, 124, 255, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(91, 124, 255, 0.3) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
+}
+
+/* Lumière d'ambiance */
+.ambient-glow {
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  filter: blur(100px);
   pointer-events: none;
   z-index: 0;
 }
@@ -65,671 +61,358 @@ body {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px; /* Aligné avec About */
   margin: 0 auto;
 }
 
-/* Titre principal */
+/* === HEADER === */
 .projects-header {
   text-align: center;
-  margin-bottom: clamp(3rem, 6vw, 5rem);
-  animation: fadeInUp 0.8s ease-out;
+  margin-bottom: clamp(4rem, 6vw, 6rem);
+  animation: fadeDown 0.8s ease-out;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.badge-pill {
+  display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
 }
 
 .projects-title {
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
   font-family: 'Space Grotesk', sans-serif;
-  color: #FFFFFF;
-  margin-bottom: clamp(0.75rem, 2vw, 1rem);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  color: var(--text-white);
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
 }
 
 .projects-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  color: #B8C5E0;
+  font-size: 1.1rem;
+  color: var(--text-muted);
   font-weight: 300;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
-/* Grille de projets */
+/* === GRILLE === */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-  gap: clamp(1.5rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
   width: 100%;
 }
 
-/* Carte projet */
+/* === CARTE PROJET === */
 .project-card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  animation: cardFadeIn 0.6s ease-out forwards;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-@keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  backdrop-filter: blur(20px);
+  opacity: 0; /* Pour l'anim d'entrée */
+  animation: fadeUp 0.6s ease-out forwards;
 }
 
 .project-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(91, 124, 255, 0.3);
-  box-shadow: 0 20px 60px rgba(91, 124, 255, 0.25);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: var(--glass-hover);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* En-tête de carte avec bande colorée */
-.project-card-header {
+/* Image container */
+.project-image-wrapper {
   position: relative;
-  height: 6px;
-  background: linear-gradient(90deg, var(--card-color) 0%, rgba(91, 124, 255, 0.5) 100%);
-  border-radius: 20px 20px 0 0;
-}
-
-/* Icône de statut */
-.project-status-icon {
-  position: absolute;
-  top: clamp(1rem, 2vw, 1.5rem);
-  right: clamp(1rem, 2vw, 1.5rem);
-  width: clamp(36px, 6vw, 48px);
-  height: clamp(36px, 6vw, 48px);
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(91, 124, 255, 0.2) 0%, rgba(91, 124, 255, 0.05) 100%);
-  border: 2px solid rgba(91, 124, 255, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  transition: all 0.3s ease;
-}
-
-.project-card:hover .project-status-icon {
-  transform: scale(1.1) rotate(10deg);
-  box-shadow: 0 0 20px rgba(91, 124, 255, 0.4);
-}
-
-.project-status-icon svg {
-  width: clamp(18px, 3vw, 24px);
-  height: clamp(18px, 3vw, 24px);
-  color: #5B7CFF;
-}
-
-/* Contenu de la carte */
-.project-card-content {
-  padding: clamp(1.5rem, 3vw, 2rem);
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.project-card-title {
-  font-size: clamp(1.3rem, 3vw, 1.6rem);
-  font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
-  color: #FFFFFF;
-  margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  padding-right: clamp(2.5rem, 4vw, 3.5rem);
-}
-
-.project-description {
-  font-size: clamp(0.95rem, 2vw, 1.05rem);
-  color: #B8C5E0;
-  line-height: 1.7;
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.5rem);
-  font-weight: 300;
-  flex-grow: 1;
-}
-
-/* Image du projet */
-.project-image {
   width: 100%;
-  height: clamp(180px, 30vw, 240px);
-  border-radius: 12px;
+  height: 220px;
   overflow: hidden;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-  position: relative;
-  background: rgba(91, 124, 255, 0.05);
+  border-bottom: 1px solid var(--glass-border);
 }
 
-.project-image img {
+.project-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.6s ease;
+  filter: grayscale(20%); /* Touche premium légèrement désaturée */
 }
 
-.project-card:hover .project-image img {
-  transform: scale(1.08);
+.project-card:hover .project-image {
+  transform: scale(1.05);
+  filter: grayscale(0%);
 }
 
-.project-image::after {
-  content: '';
+.project-status-pill {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 9, 61, 0.3) 100%);
-  pointer-events: none;
-}
-
-/* Métadonnées */
-.project-meta {
-  display: flex;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  flex-wrap: wrap;
-  margin-top: auto;
-  padding-top: clamp(1rem, 2vw, 1.5rem);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.meta-item {
-  flex: 1;
-  min-width: clamp(120px, 30%, 150px);
-}
-
-.meta-label {
-  font-size: clamp(0.75rem, 1.8vw, 0.85rem);
-  color: #7A8AB5;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(0, 9, 61, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: clamp(0.25rem, 0.5vw, 0.5rem);
-  font-weight: 500;
-}
-
-.meta-value {
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  color: #FFFFFF;
-  font-weight: 500;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-/* Badge de statut */
-.status-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: clamp(0.35rem, 1vw, 0.45rem) clamp(0.75rem, 2vw, 1rem);
-  border-radius: 20px;
-  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.status-badge.in-progress {
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(255, 152, 0, 0.1) 100%);
-  color: #FFB74D;
-  border: 1px solid rgba(255, 152, 0, 0.3);
-}
-
-.status-badge.completed {
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(76, 175, 80, 0.1) 100%);
-  color: #81C784;
-  border: 1px solid rgba(76, 175, 80, 0.3);
+  gap: 6px;
+  z-index: 2;
 }
 
 .status-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: currentColor;
-  animation: pulse 2s ease-in-out infinite;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.8); }
+/* Contenu */
+.project-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-/* États de chargement */
+.project-category {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+
+.project-title {
+  font-size: 1.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-white);
+}
+
+.project-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+/* Bouton Lien */
+.project-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: var(--text-white);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.project-link-btn:hover {
+  background: #FFFFFF;
+  color: var(--bg-deep); /* Texte devient bleu sur fond blanc */
+  border-color: #FFFFFF;
+}
+
+/* LOADING & ERROR */
 .loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(3rem, 6vw, 5rem);
-  text-align: center;
+  padding: 4rem;
+  width: 100%;
   grid-column: 1 / -1;
 }
 
 .loading-spinner {
-  width: clamp(40px, 8vw, 50px);
-  height: clamp(40px, 8vw, 50px);
-  border: 3px solid rgba(91, 124, 255, 0.2);
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #FFFFFF;
   border-radius: 50%;
-  border-top-color: #5B7CFF;
-  animation: spin 0.8s linear infinite;
+  animation: spin 1s infinite linear;
   margin-bottom: 1.5rem;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+/* ANIMATIONS */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.loading-text {
-  font-size: clamp(1rem, 2.5vw, 1.1rem);
-  color: #B8C5E0;
-  font-weight: 300;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Message d'erreur */
-.error-message, .no-projects-message {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(2rem, 4vw, 3rem);
-  text-align: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 87, 87, 0.2);
-  border-radius: 20px;
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.no-projects-message {
-  border-color: rgba(91, 124, 255, 0.2);
-}
-
-.error-message p, .no-projects-message p {
-  font-size: clamp(1rem, 2.5vw, 1.1rem);
-  color: #B8C5E0;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.retry-button {
-  padding: clamp(0.75rem, 2vw, 0.9rem) clamp(1.5rem, 3vw, 2rem);
-  font-size: clamp(0.95rem, 2vw, 1rem);
-  font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
-  background: linear-gradient(135deg, #5B7CFF 0%, #8BA3FF 100%);
-  color: #FFFFFF;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  letter-spacing: 0.02em;
-}
-
-.retry-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(91, 124, 255, 0.4);
-}
-
-.retry-button:active {
-  transform: scale(0.95);
-}
-
-/* Responsive Design */
+/* RESPONSIVE */
 @media (max-width: 768px) {
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .project-meta {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .meta-item {
-    flex: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .projects-section {
-    padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem);
-  }
-  
-  .project-image {
-    height: 200px;
-  }
-}
-
-/* Tablettes */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Grands écrans */
-@media (min-width: 1025px) {
-  .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Mode paysage mobile */
-@media (max-height: 600px) and (orientation: landscape) {
-  .projects-section {
-    min-height: auto;
-    padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 4vw, 2rem);
-  }
-  
-  .projects-header {
-    margin-bottom: 2rem;
-  }
-  
-  .project-image {
-    height: 150px;
-  }
-}
-
-/* Préférences utilisateur */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  .project-card {
-    opacity: 1;
-  }
-  
-  .project-card:hover {
-    transform: none;
-  }
-  
-  .project-image img {
-    transform: none;
-  }
-}
-
-/* Contraste élevé */
-@media (prefers-contrast: high) {
-  .project-card {
-    border-width: 2px;
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .project-card-header {
-    height: 8px;
-  }
-}
-
-/* Support des encoches */
-@supports (padding: max(0px)) {
-  .projects-section {
-    padding-left: max(clamp(1rem, 4vw, 2rem), env(safe-area-inset-left));
-    padding-right: max(clamp(1rem, 4vw, 2rem), env(safe-area-inset-right));
-  }
+  .projects-grid { grid-template-columns: 1fr; }
+  .projects-title { font-size: 2.5rem; }
 }
 `;
 
-// Composants d'icônes
-const Icons = {
-  Rocket: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
-    </svg>
-  ),
-  CheckCircle: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-      <polyline points="22 4 12 14.01 9 11.01"/>
-    </svg>
-  ),
-  Code: () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="16 18 22 12 16 6"/>
-      <polyline points="8 6 2 12 8 18"/>
-    </svg>
-  )
-};
-
-// Données de projets simulées pour la démo
+// Données fictives (avec liens ajoutés)
 const mockProjects = [
   {
     id: 1,
     title: "DigiScia Academy",
-    description: "Solution d'analyse prédictive basée sur l'IA pour optimiser les processus métiers et prendre des décisions data-driven en temps réel.",
+    description: "Plateforme EdTech innovante pour former la prochaine génération d'experts en Data & IA.",
     status: "Terminé",
-    date: "2024-01-15",
-    category: "Education",
+    category: "Éducation",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80",
-    color: "#5B7CFF"
+    link: "https://academy.digiscia.com" 
   },
   {
     id: 2,
-    title: "SimpleOQuotidien",
-    description: "Architecture de data lake moderne pour centraliser et gouverner l'ensemble des données de l'entreprise avec une sécurité renforcée.",
-    status: "En cours",
-    date: "2023-12-10",
-    category: "Software Development",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop&q=80",
-    color: "#8BA3FF"
+    title: "DigiScia Media",
+    description: "Suivez l'actualité du secteur de l'IA et de la Data.",
+    status: "Terminé",
+    category: "Media",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80",
+    link: "https://linkedin.com/company/digiscia" 
   },
-  {
-    id: 3,
-    title: "DigiScia Store",
-    description: "Tableaux de bord interactifs en temps réel pour le suivi des KPIs métiers avec visualisations avancées et alertes intelligentes.",
-    status: "En cours",
-    date: "2024-02-20",
-    category: "Software Development",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
-    color: "#B8AEFF"
-  },
-  {
-    id: 4,
-    title: "Domus IA",
-    description: "Tableaux de bord interactifs en temps réel pour le suivi des KPIs métiers avec visualisations avancées et alertes intelligentes.",
-    status: "En cours",
-    date: "2024-02-20",
-    category: "Agentic AI",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
-    color: "#B8AEFF"
-  },
-  {
-    id: 5,
-    title: "Rapidos",
-    description: "Tableaux de bord interactifs en temps réel pour le suivi des KPIs métiers avec visualisations avancées et alertes intelligentes.",
-    status: "En cours",
-    date: "2024-02-20",
-    category: "Agentic AI",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
-    color: "#B8AEFF"
-  },
-  {
-    id: 6,
-    title: "GulmuLLM",
-    description: "Tableaux de bord interactifs en temps réel pour le suivi des KPIs métiers avec visualisations avancées et alertes intelligentes.",
-    status: "En cours",
-    date: "2024-02-20",
-    category: "LLM",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
-    color: "#B8AEFF"
-  }
+  // {
+  //   id: 2,
+  //   title: "DataEcho Hub",
+  //   description: "Tableaux de bord temps réel pour le pilotage stratégique des KPIs industriels.",
+  //   status: "En cours",
+  //   category: "Business Intelligence",
+  //   image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
+  //   link: "#"
+  // },
+  // {
+  //   id: 3,
+  //   title: "SecureLake",
+  //   description: "Architecture Data Lake souveraine pour centraliser et sécuriser les données sensibles.",
+  //   status: "Terminé",
+  //   category: "Infrastructure",
+  //   image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop&q=80",
+  //   link: "#"
+  // },
+  // {
+  //   id: 4,
+  //   title: "AgriTech IA",
+  //   description: "Modèles prédictifs pour optimiser les rendements agricoles et la gestion des ressources.",
+  //   status: "En cours",
+  //   category: "IA Appliquée",
+  //   image: "https://images.unsplash.com/photo-1625246333195-58f214f76328?w=800&h=600&fit=crop&q=80",
+  //   link: "#"
+  // }
 ];
 
 function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const getIconByStatus = useCallback((status) => {
-    switch(status) {
-      case 'En cours':
-        return <Icons.Rocket />;
-      case 'Terminé':
-        return <Icons.CheckCircle />;
-      default:
-        return <Icons.Code />;
-    }
-  }, []);
-
-  const formatDate = useCallback((dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
-  }, []);
 
   useEffect(() => {
-    let isMounted = true;
-    
-    const getProjects = async () => {
-      try {
-        setLoading(true);
-        // Simuler un délai de chargement
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        if (isMounted) {
-          setProjects(mockProjects);
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error("Erreur lors de la récupération des projets:", err);
-        if (isMounted) {
-          setError("Impossible de charger les projets. Veuillez réessayer plus tard.");
-          setLoading(false);
-        }
-      }
-    };
-    
-    getProjects();
-    
-    return () => {
-      isMounted = false;
-    };
+    // Simulation d'appel API
+    const timer = setTimeout(() => {
+      setProjects(mockProjects);
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
   }, []);
-
-  const projectCards = useMemo(() => {
-    if (loading) {
-      return (
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p className="loading-text">Chargement des projets...</p>
-        </div>
-      );
-    }
-
-    if (error) {
-      return (
-        <div className="error-message">
-          <p>{error}</p>
-          <button className="retry-button" onClick={() => window.location.reload()}>
-            Réessayer
-          </button>
-        </div>
-      );
-    }
-
-    if (projects.length === 0) {
-      return (
-        <div className="no-projects-message">
-          <p>Aucun projet disponible pour le moment.</p>
-        </div>
-      );
-    }
-
-    return projects.map((project, index) => (
-      <div 
-        key={project.id}
-        className="project-card"
-        style={{
-          '--card-color': project.color,
-          animationDelay: `${index * 0.1}s`
-        }}
-      >
-        <div className="project-card-header"></div>
-        
-        <div className="project-status-icon">
-          {getIconByStatus(project.status)}
-        </div>
-        
-        <div className="project-card-content">
-          <h2 className="project-card-title">{project.title}</h2>
-          <p className="project-description">{project.description}</p>
-          
-          {project.image && (
-            <div className="project-image">
-              <img src={project.image} alt={project.title} loading="lazy" />
-            </div>
-          )}
-          
-          <div className="project-meta">
-            <div className="meta-item">
-              <div className="meta-label">Statut</div>
-              <div className="meta-value">
-                <span className={`status-badge ${project.status === 'En cours' ? 'in-progress' : 'completed'}`}>
-                  <span className="status-dot"></span>
-                  {project.status}
-                </span>
-              </div>
-            </div>
-            
-            <div className="meta-item">
-              <div className="meta-label">Catégorie</div>
-              <div className="meta-value">{project.category}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ));
-  }, [projects, loading, error, getIconByStatus]);
 
   return (
     <>
       <style>{styles}</style>
       <section id="projects" className="projects-section">
-        <div className="grid-background" aria-hidden="true"></div>
         
+        {/* Glow d'ambiance */}
+        <div className="ambient-glow"></div>
+
         <div className="projects-content">
-          <div className="projects-header">
-            <h1 className="projects-title">Nos Projets Innovants</h1>
-            <p className="projects-subtitle">
-              Découvrez nos réalisations en Data Science et Intelligence Artificielle
-            </p>
-          </div>
           
+          {/* HEADER */}
+          <header className="projects-header">
+            <span className="badge-pill">Portfolio & Réalisations</span>
+            <h1 className="projects-title">Nos Projets et Réalisations</h1>
+            <p className="projects-subtitle">
+              Une sélection de nos projets où la donnée rencontre la performance.
+              Des solutions concrètes pour des défis complexes.
+            </p>
+          </header>
+
+          {/* GRID */}
           <div className="projects-grid">
-            {projectCards}
+            
+            {loading ? (
+              <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p style={{color: 'rgba(255,255,255,0.7)'}}>Chargement des projets...</p>
+              </div>
+            ) : (
+              projects.map((project, index) => (
+                <article 
+                  key={project.id} 
+                  className="project-card"
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  {/* Image Header */}
+                  <div className="project-image-wrapper">
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="project-image"
+                      loading="lazy"
+                    />
+                    <div className="project-status-pill">
+                      <span className="status-dot"></span>
+                      {project.status}
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div className="project-content">
+                    <span className="project-category">{project.category}</span>
+                    <h2 className="project-title">{project.title}</h2>
+                    <p className="project-desc">{project.description}</p>
+                    
+                    {/* Lien Cliquable */}
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="project-link-btn"
+                    >
+                      Voir le projet <FaExternalLinkAlt size={14} />
+                    </a>
+                  </div>
+                </article>
+              ))
+            )}
+            
           </div>
         </div>
       </section>

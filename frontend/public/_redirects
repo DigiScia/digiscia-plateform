@@ -1,0 +1,3 @@
+# Redirige tout ce qui commence par /api/ vers ton backend Fly.io
+# Le code 200 signifie "C'est un proxy, pas une redirection visible"
+/api/* https://digiscia-backend.fly.dev/* 200

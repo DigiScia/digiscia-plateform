@@ -1,14 +1,20 @@
-import React, { useMemo, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
+import { 
+  FaLaptopCode, 
+  FaBrain, 
+  FaDatabase, 
+  FaChartLine, 
+  FaRobot, // Nouvelle icône pour les agents
+  FaArrowRight, 
+  FaCheck,
+  FaTimes
+} from 'react-icons/fa';
 
-// Ajout des styles pour le Modal, fusionnés avec les styles existants
+// === STYLES CSS (Monochrome Premium & Glassmorphism) ===
 const styles = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -22,54 +28,26 @@ body {
   min-height: 100vh;
   width: 100%;
   background: #00093D;
-  padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem);
+  padding: clamp(4rem, 6vw, 8rem) clamp(1rem, 4vw, 2rem);
   overflow: hidden;
-}
-
-/* Fond animé avec gradient */
-.services-section::before {
-  content: '';
-  position: fixed;
-  top: -30%;
-  left: -10%;
-  width: 80%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(91, 124, 255, 0.15) 0%, transparent 70%);
-  animation: floatGradient 30s infinite ease-in-out;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.services-section::after {
-  content: '';
-  position: fixed;
-  bottom: -30%;
-  right: -10%;
-  width: 70%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(139, 163, 255, 0.1) 0%, transparent 70%);
-  animation: floatGradient 25s infinite ease-in-out reverse;
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes floatGradient {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-20px, -30px) scale(1.1); }
-  66% { transform: translate(20px, 30px) scale(0.9); }
-}
-
-/* Grille de points décorative */
-.grid-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  
+  /* Texture subtile */
   background-image: 
-    radial-gradient(circle, rgba(91, 124, 255, 0.15) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
-  opacity: 0.3;
+}
+
+/* Effets de lumière d'ambiance */
+.ambient-glow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 60vh;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  filter: blur(100px);
   pointer-events: none;
   z-index: 0;
 }
@@ -77,343 +55,171 @@ body {
 .services-container {
   position: relative;
   z-index: 1;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
-/* Header de la section */
+/* Header */
 .services-header {
   text-align: center;
-  margin-bottom: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(4rem, 6vw, 6rem);
   animation: fadeInUp 0.8s ease-out;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.services-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(91, 124, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(91, 124, 255, 0.3);
-  padding: clamp(0.5rem, 1.5vw, 0.65rem) clamp(1rem, 2.5vw, 1.25rem);
-  border-radius: 50px;
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
-  font-weight: 500;
-  color: #B8C5E0;
-  margin-bottom: 1.5rem;
+.badge-pill {
+  display: inline-block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.services-badge:hover {
-  transform: translateY(-2px);
-  border-color: #5B7CFF;
-  background: rgba(91, 124, 255, 0.15);
-}
-
-.badge-icon {
-  width: 16px;
-  height: 16px;
-  animation: rotate 3s linear infinite;
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
 }
 
 .services-title {
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
   font-family: 'Space Grotesk', sans-serif;
   color: #FFFFFF;
-  margin-bottom: clamp(0.75rem, 2vw, 1rem);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
 }
 
 .services-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  color: #B8C5E0;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 300;
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
-/* Grille des services */
+/* Grille */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-  gap: clamp(1.5rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
 }
 
-/* Carte de service */
+/* Carte Service */
 .service-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
-  padding: clamp(1.5rem, 3vw, 2rem);
-  min-height: 300px;
+  padding: 2.5rem;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
   opacity: 0;
   animation: cardFadeIn 0.6s ease-out forwards;
-  overflow: hidden;
-}
-
-@keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.service-card.stagger-1 { animation-delay: 0.1s; }
-.service-card.stagger-2 { animation-delay: 0.2s; }
-.service-card.stagger-3 { animation-delay: 0.3s; }
-.service-card.stagger-4 { animation-delay: 0.4s; }
-.service-card.stagger-5 { animation-delay: 0.5s; }
-.service-card.stagger-6 { animation-delay: 0.6s; }
-
-/* Barre de couleur supérieure */
-.service-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--card-gradient-start), var(--card-gradient-end));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.service-card:hover::before {
-  transform: scaleX(1);
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(91, 124, 255, 0.3);
-  box-shadow: 0 20px 60px rgba(91, 124, 255, 0.25);
   background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Icône du service */
-.service-icon {
-  width: clamp(56px, 10vw, 72px);
-  height: clamp(56px, 10vw, 72px);
-  background: linear-gradient(135deg, rgba(91, 124, 255, 0.2) 0%, rgba(91, 124, 255, 0.05) 100%);
-  border: 2px solid rgba(91, 124, 255, 0.3);
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Icon Container */
+.service-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.service-card:hover .service-icon {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 10px 30px rgba(91, 124, 255, 0.3);
-  border-color: #5B7CFF;
-}
-
-.service-icon::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.service-card:hover .service-icon::after {
-  opacity: 1;
-}
-
-.service-icon svg {
-  width: clamp(28px, 5vw, 36px);
-  height: clamp(28px, 5vw, 36px);
-  color: #5B7CFF;
-  z-index: 1;
+  margin-bottom: 2rem;
   transition: all 0.3s ease;
-}
-
-.service-card:hover .service-icon svg {
-  color: #8BA3FF;
-}
-
-/* Contenu de la carte */
-.service-card-title {
-  font-size: clamp(1.2rem, 3vw, 1.4rem);
-  font-weight: 600;
-  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem;
   color: #FFFFFF;
-  margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
-  line-height: 1.3;
-  letter-spacing: -0.01em;
 }
 
-.service-card-description {
-  font-size: clamp(0.95rem, 2vw, 1.05rem);
-  color: #B8C5E0;
-  line-height: 1.7;
-  margin-bottom: clamp(1.25rem, 2.5vw, 1.5rem);
+.service-card:hover .service-icon-wrapper {
+  background: #FFFFFF;
+  color: #00093D; /* Le bleu logo */
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.service-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 1rem;
+}
+
+.service-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
   font-weight: 300;
+  margin-bottom: 2rem;
   flex-grow: 1;
 }
 
-/* Lien "En savoir plus" */
-.service-card-link {
+.service-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  font-weight: 500;
-  color: #5B7CFF;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #FFFFFF;
   text-decoration: none;
-  transition: all 0.3s ease;
   margin-top: auto;
+  opacity: 0.8;
+  transition: 0.3s;
 }
 
-.service-card:hover .service-card-link {
-  gap: 0.75rem;
-  color: #8BA3FF;
-}
-
-.service-card-link svg {
-  width: 18px;
-  height: 18px;
-  transition: transform 0.3s ease;
-}
-
-.service-card:hover .service-card-link svg {
-  transform: translateX(4px);
-}
-
-/* Badge de catégorie */
-.service-category {
-  position: absolute;
-  top: clamp(1rem, 2vw, 1.5rem);
-  right: clamp(1rem, 2vw, 1.5rem);
-  padding: clamp(0.3rem, 1vw, 0.4rem) clamp(0.6rem, 1.5vw, 0.8rem);
-  background: rgba(91, 124, 255, 0.15);
-  border: 1px solid rgba(91, 124, 255, 0.3);
-  border-radius: 20px;
-  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
-  font-weight: 500;
-  color: #8BA3FF;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-}
-
-.service-card:hover .service-category {
+.service-card:hover .service-link {
   opacity: 1;
-  transform: translateY(0);
+  gap: 1rem;
 }
 
-/* Skeleton loading */
-.skeleton-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  padding: clamp(1.5rem, 3vw, 2rem);
-  min-height: 300px;
-  position: relative;
-  overflow: hidden;
-}
-
-.skeleton-card::before {
-  content: '';
+/* Badge Catégorie */
+.service-cat {
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(91, 124, 255, 0.1),
-    transparent
-  );
-  animation: shimmer 2s infinite;
+  top: 2rem;
+  right: 2rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
 }
 
-@keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
-
-.skeleton-icon {
-  width: clamp(56px, 10vw, 72px);
-  height: clamp(56px, 10vw, 72px);
-  background: rgba(91, 124, 255, 0.1);
-  border-radius: 16px;
-  margin-bottom: clamp(1rem, 2vw, 1.5rem);
-}
-
-.skeleton-title {
-  height: 24px;
-  background: rgba(91, 124, 255, 0.1);
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  width: 80%;
-}
-
-.skeleton-text {
-  height: 16px;
-  background: rgba(91, 124, 255, 0.05);
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
-}
-
-.skeleton-text:first-of-type { width: 100%; }
-.skeleton-text:nth-of-type(2) { width: 90%; }
-.skeleton-text:last-of-type { width: 70%; }
-
-/* === STYLES DU MODAL === */
-.service-modal {
+/* === MODAL === */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 9, 61, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 9, 61, 0.9);
+  backdrop-filter: blur(15px);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -424,543 +230,282 @@ body {
   transition: opacity 0.3s ease;
 }
 
-.service-modal.active {
-  opacity: 1;
-  pointer-events: all;
-}
+.modal-overlay.active { opacity: 1; pointer-events: all; }
 
 .modal-content {
-  background: rgba(10, 20, 70, 0.8);
-  border: 1px solid rgba(91, 124, 255, 0.3);
+  background: #00093D;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  padding: clamp(1.5rem, 4vw, 3rem);
-  max-width: 800px;
   width: 100%;
+  max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
-  transform: scale(0.95);
+  padding: 3rem;
+  position: relative;
+  transform: translateY(20px);
   transition: transform 0.3s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-.service-modal.active .modal-content {
-  transform: scale(1);
-}
+.modal-overlay.active .modal-content { transform: translateY(0); }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(91, 124, 255, 0.2);
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .modal-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: #FFFFFF;
-  line-height: 1.2;
 }
 
-.modal-close-btn {
-  background: rgba(91, 124, 255, 0.1);
-  border: 1px solid rgba(91, 124, 255, 0.3);
-  border-radius: 50%;
+.close-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
   width: 40px;
   height: 40px;
-  color: #B8C5E0;
-  cursor: pointer;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.modal-close-btn:hover {
-  background: rgba(91, 124, 255, 0.2);
-  color: #FFFFFF;
-  transform: rotate(90deg);
-}
+.close-btn:hover { background: #FFFFFF; color: #00093D; }
 
-.modal-body {
-  color: #B8C5E0;
-  line-height: 1.7;
-}
+.modal-body { color: rgba(255, 255, 255, 0.8); line-height: 1.8; }
+.modal-intro { font-size: 1.1rem; margin-bottom: 2rem; font-weight: 300; }
 
-.modal-body p {
-  font-size: clamp(1rem, 2vw, 1.1rem);
-  margin-bottom: 1.5rem;
-}
-
-.modal-body h4 {
+.modal-subtitle {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
-  font-weight: 600;
-  color: #8BA3FF;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  letter-spacing: 0.02em;
-}
-
-.modal-body ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.modal-body li {
-  position: relative;
-  padding-left: 1.75rem;
-  margin-bottom: 0.75rem;
-  font-size: clamp(0.95rem, 2vw, 1rem);
-}
-
-.modal-body li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #5B7CFF;
-  font-weight: 600;
   font-size: 1.2rem;
+  color: #FFFFFF;
+  margin: 2rem 0 1rem;
 }
 
-/* === FIN STYLES MODAL === */
+.features-list { list-style: none; display: grid; grid-template-columns: 1fr; gap: 1rem; }
+@media (min-width: 600px) { .features-list { grid-template-columns: 1fr 1fr; } }
 
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+}
 
-/* Responsive Design */
+.check-icon { color: #fff; font-size: 0.8rem; opacity: 0.7; }
+
+/* Skeleton */
+.skeleton {
+  background: rgba(255,255,255,0.03);
+  border-radius: 24px;
+  min-height: 320px;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+/* Responsive */
 @media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .services-section {
-    padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 4vw, 1.5rem);
-  }
-  
-  .service-card {
-    min-height: 260px;
-  }
-  
-  .modal-content {
-    padding: clamp(1.5rem, 5vw, 2rem);
-  }
-}
-
-@media (max-width: 480px) {
-  .service-category {
-    position: static;
-    margin-bottom: 1rem;
-    opacity: 1;
-    transform: none;
-    display: inline-block;
-  }
-}
-
-/* Préférences utilisateur */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  .service-card {
-    opacity: 1;
-  }
-  
-  .service-card:hover {
-    transform: none;
-  }
-  
-  .service-icon {
-    transform: none;
-  }
-}
-
-/* Support des encoches */
-@supports (padding: max(0px)) {
-  .services-section {
-    padding-left: max(clamp(1rem, 4vw, 2rem), env(safe-area-inset-left));
-    padding-right: max(clamp(1rem, 4vw, 2rem), env(safe-area-inset-right));
-  }
+  .services-section { padding-top: 6rem; }
+  .services-title { font-size: 2.5rem; }
+  .modal-content { padding: 1.5rem; }
 }
 `;
 
-// ===== COMPOSANTS D'ICÔNES (du Fichier 1) =====
-const WebIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"/>
-    <line x1="2" y1="12" x2="22" y2="12"/>
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-  </svg>
-);
+// === DONNÉES DES SERVICES ===
+const servicesData = [
+  {
+    id: "web-mobile",
+    title: "Développement Web & Mobile",
+    category: "Engineering",
+    description: "Des applications sur-mesure, performantes et évolutives qui transforment l'expérience de vos utilisateurs.",
+    icon: <FaLaptopCode />,
+    fullDescription: "Dans un monde digital-first, votre présence numérique est votre vitrine principale. Nous ne nous contentons pas d'écrire du code ; nous architecturons des écosystèmes digitaux complets. Que ce soit pour une application métier complexe ou une plateforme grand public, nous allions performance technique, sécurité robuste et design centré utilisateur.",
+    features: [
+      "Architectures Modernes (React, Vue, Node.js)",
+      "Applications Mobiles Cross-Platform (React Native)",
+      "Progressive Web Apps (PWA)",
+      "Refonte UX/UI & Design System",
+      "API REST & GraphQL Scalables"
+    ],
+    useCases: "Plateformes SaaS, Marketplaces, Portails clients sécurisés, MVP pour Startups."
+  },
+  {
+    id: "ai",
+    title: "IA & Data Science",
+    category: "Innovation",
+    description: "Passez de la donnée brute à la prédiction stratégique. Automatisez l'intelligence de votre entreprise.",
+    icon: <FaBrain />,
+    fullDescription: "L'intelligence artificielle n'est plus de la science-fiction, c'est un levier de compétitivité immédiat. Nos Data Scientists transforment vos gisements de données en algorithmes prédictifs puissants. Nous vous aidons à anticiper les tendances, automatiser les tâches cognitives répétitives et personnaliser l'expérience de vos clients à grande échelle.",
+    features: [
+      "Machine Learning & Deep Learning",
+      "Traitement du Langage Naturel (NLP/LLM)",
+      "Vision par Ordinateur (Computer Vision)",
+      "Systèmes de Recommandation",
+      "Maintenance Prédictive"
+    ],
+    useCases: "Chatbots intelligents, Détection de fraude, Analyse de sentiment, Optimisation logistique."
+  },
+  {
+    id: "data-eng",
+    title: "Ingénierie des Données",
+    category: "Infrastructure",
+    description: "Construisez le socle de votre stratégie data. Pipelines robustes, qualité garantie et gouvernance maîtrisée.",
+    icon: <FaDatabase />,
+    fullDescription: "Une stratégie IA efficace repose sur des données saines. Nous construisons les autoroutes de l'information de votre entreprise. De l'ingestion à la mise à disposition, nous concevons des architectures de données (Data Lakes, Warehouses) sécurisées, conformes et capables de traiter des volumes massifs en temps réel.",
+    features: [
+      "Architecture Data Lake & Warehouse",
+      "Pipelines ETL/ELT temps réel",
+      "Gouvernance & Qualité des données (DQM)",
+      "Conformité RGPD & Sécurité",
+      "Migration Cloud (AWS, Azure, GCP)"
+    ],
+    useCases: "Centralisation des données (Single Source of Truth), Nettoyage de bases de données, Migration Legacy."
+  },
+  {
+    id: "bi",
+    title: "Business Intelligence",
+    category: "Analytics",
+    description: "Visualisez pour décider. Des tableaux de bord interactifs qui racontent l'histoire de votre performance.",
+    icon: <FaChartLine />,
+    fullDescription: "Ne conduisez plus à l'aveugle. Nous transformons la complexité de vos métriques en visualisations claires et actionnables. Nos experts BI conçoivent des outils d'aide à la décision qui permettent à vos équipes, du management à l'opérationnel, de suivre les KPIs essentiels et de réagir instantanément aux évolutions du marché.",
+    features: [
+      "Tableaux de bord interactifs (PowerBI, Tableau)",
+      "Storytelling de données",
+      "Reporting automatisé",
+      "Analyse de performance 360°",
+      "Formation à la culture Data"
+    ],
+    useCases: "Pilotage commercial, Suivi financier, Monitoring RH, Analyse de performance marketing."
+  },
+  // MISE À JOUR : AUTOMATISATION MÉTIER & AGENTS
+  {
+    id: "automatisation",
+    title: "Automatisation & Agents IA",
+    category: "Productivité",
+    description: "Libérez vos équipes des tâches répétitives grâce à des agents autonomes et des workflows intelligents.",
+    icon: <FaRobot />,
+    fullDescription: "Boostez votre efficacité opérationnelle en déléguant les processus métiers complexes à nos solutions d'automatisation. Nous déployons des architectures hybrides combinant la fiabilité des scripts programmés (Crons), la connectivité des APIs et l'intelligence des Agents IA capables de prendre des décisions et d'agir. Votre entreprise tourne 24/7, sans erreur humaine.",
+    features: [
+      "Agents IA Autonomes & Chatbots",
+      "Orchestration de tâches planifiées (Crons, Queues)",
+      "Intégration API & Webhooks sur-mesure",
+      "Traitement Intelligent de Documents (OCR/IDP)",
+      "Workflows Multi-plateformes (CRM, ERP, Slack)"
+    ],
+    useCases: "Qualification automatique de leads, Traitement de factures, Support client niveau 1, Synchronisation de stocks."
+  }
+];
 
-const AIIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-    <path d="M2 17l10 5 10-5"/>
-    <path d="M2 12l10 5 10-5"/>
-  </svg>
-);
-
-const DataIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <ellipse cx="12" cy="5" rx="9" ry="3"/>
-    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-  </svg>
-);
-
-const ChartIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="20" x2="12" y2="10"/>
-    <line x1="18" y1="20" x2="18" y2="4"/>
-    <line x1="6" y1="20" x2="6" y2="16"/>
-  </svg>
-);
-
-const CloudIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
-  </svg>
-);
-
-const CodeIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="16 18 22 12 16 6"/>
-    <polyline points="8 6 2 12 8 18"/>
-  </svg>
-);
-
-const ArrowRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"/>
-    <polyline points="12 5 19 12 12 19"/>
-  </svg>
-);
-
-const SparklesIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 3L14 10L21 12L14 14L12 21L10 14L3 12L10 10L12 3Z"/>
-  </svg>
-);
-
-// ===== COMPOSANT MODAL (Nouveau) =====
-const ServiceDetailModal = React.memo(({ service, onClose }) => {
-  // Gère la fermeture en cliquant sur l'overlay
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
-  // Gère la fermeture avec la touche Echap
+// === COMPOSANT MODAL ===
+const ServiceModal = ({ service, onClose }) => {
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    const handleEsc = (e) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-  return (
-    <div
-      className="service-modal active"
-      onClick={handleOverlayClick}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-    >
-      <div className="modal-content" role="document">
-        <div className="modal-header">
-          <h3 id="modal-title" className="modal-title">{service.title}</h3>
-          <button
-            className="modal-close-btn"
-            onClick={onClose}
-            aria-label="Fermer la fenêtre"
-          >
-            &times;
-          </button>
-        </div>
-        <div className="modal-body">
-          <p>{service.fullDescription}</p>
-          
-          {service.features && service.features.length > 0 && (
-            <>
-              <h4>Points Clés</h4>
-              <ul>
-                {service.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-            </>
-          )}
+  if (!service) return null;
 
-          {service.useCases && (
-            <>
-              <h4>Cas d'Usage</h4>
-              <p>{service.useCases}</p>
-            </>
-          )}
+  return (
+    <div className="modal-overlay active" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-header">
+          <div>
+            <span style={{color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textTransform: 'uppercase'}}>{service.category}</span>
+            <h3 className="modal-title">{service.title}</h3>
+          </div>
+          <button className="close-btn" onClick={onClose}><FaTimes /></button>
+        </div>
+        
+        <div className="modal-body">
+          <p className="modal-intro">{service.fullDescription}</p>
+          
+          <h4 className="modal-subtitle">Expertises Clés</h4>
+          <ul className="features-list">
+            {service.features.map((feature, idx) => (
+              <li key={idx} className="feature-item">
+                <span className="check-icon"><FaCheck /></span> {feature}
+              </li>
+            ))}
+          </ul>
+
+          <h4 className="modal-subtitle">Cas d'usage</h4>
+          <p style={{fontStyle: 'italic', opacity: 0.8}}>{service.useCases}</p>
         </div>
       </div>
     </div>
   );
-});
+};
 
-ServiceDetailModal.displayName = 'ServiceDetailModal';
-
-
-// ===== COMPOSANT SKELETON =====
-const ServiceCardSkeleton = React.memo(() => (
-  <div className="skeleton-card" role="status" aria-label="Chargement du service">
-    <div className="skeleton-icon"></div>
-    <div className="skeleton-title"></div>
-    <div className="skeleton-text"></div>
-    <div className="skeleton-text"></div>
-    <div className="skeleton-text"></div>
-  </div>
-));
-
-ServiceCardSkeleton.displayName = 'ServiceCardSkeleton';
-
-// ===== COMPOSANT CARTE DE SERVICE =====
-const ServiceCard = React.memo(({ service, index, onServiceClick }) => {
-  const handleClick = useCallback(() => {
-    onServiceClick?.(service);
-  }, [onServiceClick, service]);
-
-  const handleKeyDown = useCallback((e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      handleClick();
-    }
-  }, [handleClick]);
-
-  return (
-    <article
-      className={`service-card stagger-${index + 1}`}
-      role="button"
-      tabIndex="0"
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      aria-label={`En savoir plus sur ${service.title}`}
-      style={{
-        '--card-gradient-start': service.gradientStart,
-        '--card-gradient-end': service.gradientEnd
-      }}
-    >
-      <div className="service-category">{service.category}</div>
-      <div className="service-icon">
-        {service.icon}
-      </div>
-      <h3 className="service-card-title">{service.title}</h3>
-      <p className="service-card-description">{service.description}</p>
-      <span className="service-card-link">
-        En savoir plus
-        <ArrowRightIcon />
-      </span>
-    </article>
-  );
-});
-
-ServiceCard.displayName = 'ServiceCard';
-
-// ===== COMPOSANT PRINCIPAL =====
+// === COMPOSANT PRINCIPAL ===
 function Services() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [selectedService, setSelectedService] = useState(null); // État pour le modal
+  const [loading, setLoading] = useState(true);
+  const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1200);
-
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
-
-  // Données fusionnées ( riches de Fichier 2 + styles de Fichier 1)
-  const services = useMemo(() => [
-    {
-      id: "web-mobile",
-      title: "Développement Web & Mobile",
-      description: "Applications web modernes et mobiles avec les dernières technologies React, Vue.js et React Native.",
-      icon: <WebIcon />,
-      category: "Développement",
-      gradientStart: "#5B7CFF",
-      gradientEnd: "#8BA3FF",
-      fullDescription: "Nous concevons et développons des applications web robustes et des expériences mobiles fluides, en utilisant des frameworks de pointe comme React, Vue.js pour le web, et React Native pour des applications multiplateformes performantes. Nos solutions sont responsives, optimisées pour la performance et l'expérience utilisateur, et conçues pour évoluer avec vos besoins.",
-      features: [
-        "Développement Front-end (React, Vue.js, Angular)",
-        "Développement Back-end (Node.js, Python, PHP)",
-        "Applications Mobiles NATIVES et Hybrides (React Native, Flutter)",
-        "UX/UI Design intuitif et responsive",
-        "Intégration d'API et microservices"
-      ],
-      useCases: "Sites e-commerce, plateformes SaaS, applications métier, portails clients, MVP de startups."
-    },
-    {
-      id: "ai",
-      title: "Intelligence Artificielle",
-      description: "Solutions d'IA personnalisées, machine learning et deep learning pour automatiser vos processus.",
-      icon: <AIIcon />,
-      category: "IA & ML",
-      gradientStart: "#8B5CF6",
-      gradientEnd: "#A78BFA",
-      fullDescription: "Exploitez le potentiel de l'intelligence artificielle pour transformer vos opérations. Nous développons des modèles de Machine Learning et de Deep Learning sur mesure, de la reconnaissance d'images à l'analyse prédictive, en passant par le traitement du langage naturel (NLP). Nos solutions IA sont intégrées de manière transparente à votre infrastructure existante.",
-      features: [
-        "Machine Learning & Deep Learning",
-        "Traitement du Langage Naturel (NLP)",
-        "Vision par Ordinateur",
-        "Analyse Prédictive et Recommandation",
-        "Bots conversationnels et assistants virtuels"
-      ],
-      useCases: "Optimisation de processus, personnalisation de l'expérience client, détection de fraudes, maintenance prédictive, analyse de données non structurées."
-    },
-    {
-      id: "governance",
-      title: "Governance des Données",
-      description: "Stratégies de gouvernance des données pour assurer qualité, sécurité et conformité.",
-      icon: <DataIcon />,
-      category: "Gouvernance",
-      gradientStart: "#06B6D4",
-      gradientEnd: "#22D3EE",
-      fullDescription: "La gouvernance des données est essentielle pour une gestion efficace et conforme de votre patrimoine informationnel. Nous vous aidons à établir des politiques, des processus et des rôles clairs pour garantir la qualité, la sécurité, la confidentialité et la conformité réglementaire de vos données, tout en maximisant leur valeur pour votre entreprise.",
-      features: [
-        "Audit et Évaluation de la Maturité des Données",
-        "Définition de Politiques de Données",
-        "Gestion de la Qualité des Données (DQM)",
-        "Conformité Réglementaire (RGPD, HIPAA, etc.)",
-        "Sécurité et Confidentialité des Données"
-      ],
-      useCases: "Mise en conformité RGPD, amélioration de la fiabilité des rapports, réduction des risques liés aux données, optimisation des processus décisionnels."
-    },
-    {
-      id: "bi",
-      title: "Business Intelligence",
-      description: "Tableaux de bord interactifs et rapports analytiques pour une prise de décision éclairée.",
-      icon: <ChartIcon />, // Utilisation de ChartIcon (Fichier 1)
-      category: "Analytics",
-      gradientStart: "#10B981",
-      gradientEnd: "#34D399",
-      fullDescription: "Transformez vos données brutes en informations exploitables avec nos solutions de Business Intelligence. Nous concevons et implémentons des tableaux de bord interactifs, des rapports personnalisés et des outils d'analyse avancés qui vous offrent une vue à 360 degrés de vos performances, facilitant ainsi la prise de décisions stratégiques.",
-      features: [
-        "Conception et Développement de Tableaux de Bord",
-        "Reporting Automatisé",
-        "Analyse Ad-hoc et Exploration de Données",
-        "Intégration de Sources de Données Multiples",
-        "Formation et Support aux Utilisateurs"
-      ],
-      useCases: "Suivi des ventes, analyse financière, optimisation marketing, performance opérationnelle, compréhension du comportement client."
-    },
-    {
-      id: "data-management",
-      title: "Management des données",
-      description: "Architecture et gestion de bases de données scalables pour optimiser vos performances.",
-      icon: <CloudIcon />, // Utilisation de CloudIcon (Fichier 1)
-      category: "Infrastructure",
-      gradientStart: "#F59E0B",
-      gradientEnd: "#FBBF24",
-      fullDescription: "Une gestion de données efficace est le pilier de toute stratégie digitale réussie. Nous vous accompagnons dans la conception, l'implémentation et la maintenance de vos infrastructures de données, qu'il s'agisse de bases de données relationnelles, NoSQL, ou de data lakes. Nous nous assurons que vos données sont accessibles, sécurisées et performantes.",
-      features: [
-        "Modélisation et Conception de Bases de Données",
-        "Optimisation des Performances (SQL/NoSQL)",
-        "Migration de Données",
-        "Sécurité et Sauvegarde des Données",
-        "Intégration et ETL (Extract, Transform, Load)"
-      ],
-      useCases: "Centralisation des données, amélioration des temps de réponse des applications, préparation des données pour l'analyse, réduction des coûts de stockage."
-    },
-    {
-      id: "devops",
-      title: "DevOps & Cloud",
-      description: "Infrastructure cloud moderne, CI/CD et automatisation pour accélérer vos déploiements.",
-      icon: <CodeIcon />, // Utilisation de CodeIcon (Fichier 1)
-      category: "Cloud",
-      gradientStart: "#EF4444",
-      gradientEnd: "#F87171",
-      fullDescription: "Accélérez le cycle de vie de vos applications et optimisez votre infrastructure avec nos services DevOps et Cloud. Nous mettons en place des pipelines CI/CD robustes, des infrastructures as Code (IaC) et des stratégies de déploiement continu sur les principales plateformes cloud (AWS, Azure, GCP), garantissant rapidité, fiabilité et scalabilité.",
-      features: [
-        "Mise en place de CI/CD (Jenkins, GitLab CI, GitHub Actions)",
-        "Infrastructure as Code (Terraform, Ansible)",
-        "Conteneurisation (Docker, Kubernetes)",
-        "Migration et Optimisation Cloud (AWS, Azure, GCP)",
-        "Surveillance et Logging (Prometheus, Grafana, ELK Stack)"
-      ],
-      useCases: "Déploiement rapide de nouvelles fonctionnalités, réduction des erreurs de production, scalabilité des applications, optimisation des coûts cloud."
-    },
-  ], []);
-
-  // Ouvre le modal
-  const handleServiceClick = useCallback((service) => {
-    setSelectedService(service);
-  }, []);
-
-  // Ferme le modal
-  const handleCloseModal = useCallback(() => {
-    setSelectedService(null);
-  }, []);
-
-  const serviceGrid = useMemo(() => (
-    <div className="services-grid" role="list">
-      {services.map((service, index) => (
-        <ServiceCard
-          key={service.id}
-          service={service}
-          index={index}
-          onServiceClick={handleServiceClick}
-        />
-      ))}
-    </div>
-  ), [services, handleServiceClick]);
-
-  const skeletonGrid = useMemo(() => (
-    <div className="services-grid" aria-busy="true">
-      {Array.from({ length: 6 }, (_, index) => (
-        <ServiceCardSkeleton key={`skeleton-${index}`} />
-      ))}
-    </div>
-  ), []);
 
   return (
     <>
       <style>{styles}</style>
-      <section
-        className="services-section"
-        id="services"
-        aria-labelledby="services-title"
-      >
-        <div className="grid-overlay" aria-hidden="true"></div>
-        
-        <div className="services-container">
-          <header className="services-header">
-            <div className="services-badge">
-              <SparklesIcon className="badge-icon" />
-              Nos Expertises
-            </div>
-            <h2 id="services-title" className="services-title">
-              Services & Solutions
-            </h2>
-            <p className="services-subtitle">
-              Des solutions technologiques sur mesure pour transformer votre vision en réalité digitale et propulser votre entreprise vers le futur
-            </p>
-          </header>
+      <section className="services-section" id="services">
+        <div className="ambient-glow"></div>
 
-          {isLoading ? skeletonGrid : serviceGrid}
+        <div className="services-container">
+          {/* HEADER */}
+          <div className="services-header">
+            <span className="badge-pill">Savoir-Faire & Innovation</span>
+            <h2 className="services-title">Nos Domaines d'Expertise</h2>
+            <p className="services-subtitle">
+              Nous combinons ingénierie logicielle rigoureuse et science des données avancée pour bâtir les fondations numériques de votre succès futur.
+            </p>
+          </div>
+
+          {/* GRID */}
+          <div className="services-grid">
+            {loading ? (
+              // SKELETON LOADING
+              Array(3).fill(0).map((_, i) => <div key={i} className="skeleton"></div>)
+            ) : (
+              // SERVICE CARDS
+              servicesData.map((service, index) => (
+                <div 
+                  key={service.id} 
+                  className="service-card"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                  onClick={() => setSelectedService(service)}
+                >
+                  <span className="service-cat">{service.category}</span>
+                  <div className="service-icon-wrapper">
+                    {service.icon}
+                  </div>
+                  <h3 className="service-title">{service.title}</h3>
+                  <p className="service-desc">{service.description}</p>
+                  <span className="service-link">
+                    Explorer l'offre <FaArrowRight />
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
         </div>
-        
-        {/* Le modal est rendu ici, en dehors du container principal pour un z-index correct */}
+
+        {/* MODAL */}
         {selectedService && (
-          <ServiceDetailModal
-            service={selectedService}
-            onClose={handleCloseModal}
+          <ServiceModal 
+            service={selectedService} 
+            onClose={() => setSelectedService(null)} 
           />
         )}
       </section>
