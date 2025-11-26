@@ -62,9 +62,11 @@ function About() {
             Nous transformons la complexité technologique en levier de croissance. 
             Une expertise ESN de pointe, axée sur la transparence et la performance.
           </p>
-          <button className="btn-white">
-            Démarrer un projet <FaArrowRight />
-          </button>
+          <a href="#contacts">
+            <button classNam  e="btn-white">
+              Démarrer un projet <FaArrowRight />
+            </button>
+          </a>
         </header>
 
         {/* GRILLE BENTO (Architecture principale) */}
