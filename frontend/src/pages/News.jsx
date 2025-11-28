@@ -884,7 +884,7 @@ function News() {
     event.preventDefault();
     try {
       // **IMPORTANT**: Remplacez par l'URL de votre API
-      await axios.post("http://127.0.0.1:8000/api/v1/suscribers/create", { email });
+      await axios.post("http://127.0.0.1:8000/api/v1/suscribers/create/", { email });
       setShowThankYou(true);
       setEmail('');
       setErrorMessage('');

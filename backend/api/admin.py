@@ -1,7 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers  # , Projects, Contacts,
+from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers
+
+# ==========================================================
+# CONFIGURATION GLOBALE
+# ==========================================================
+admin.site.site_header = "Administration Digiscia"
+admin.site.site_title = "Admin Digiscia"
+admin.site.index_title = "Bienvenue sur le panneau d'administration"
+
+# ==========================================================
+# ADMIN CLASSES
+# ==========================================================
 
 # Admin pour AdminProfile
 class AdminProfileAdmin(admin.ModelAdmin):
@@ -16,29 +27,17 @@ class AdminProfileAdmin(admin.ModelAdmin):
 
 # Admin pour UserPerso
 class UserPersoAdmin(UserAdmin):
-    # model = UserPerso
     list_display = ('email', 'username', 'date_joined', 'last_login', 'is_staff', 'is_active')
     list_filter = ['is_staff', 'is_active', 'date_joined']
     search_fields = ['email', 'username']
     ordering = ['-date_joined']
+    
+    # Configuration des fieldsets pour supporter le modèle User personnalisé
     fieldsets = (
         ('Informations personnelles', {'fields': ('username', 'email', 'password')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Dates importantes', {'fields': ('last_login', 'date_joined')}),
     )
-
-# Admin pour Contact
-# class ContactAdmin(admin.ModelAdmin):
-#     list_display = ('fullname', 'email', 'phone', 'objet', 'sexe', 'created_at') 
-#     list_filter = ['created_at', 'sexe']
-#     search_fields = ['fullname', 'email', 'message']
-#     readonly_fields = ('created_at',)
-#     date_hierarchy = 'created_at'
-#     fieldsets = (
-#         ('Informations personnelles', {'fields': ('fullname', 'email', 'phone', 'sexe', 'birthday')}), 
-#         ('Message', {'fields': ('objet', 'message')}),
-#         ('Métadonnées', {'fields': ('created_at',)}),
-#     )
 
 # Admin pour Services
 class ServicesAdmin(admin.ModelAdmin):
@@ -49,27 +48,6 @@ class ServicesAdmin(admin.ModelAdmin):
     def short_description(self, obj):
         return obj.description[:100] + '...' if len(obj.description) > 100 else obj.description
     short_description.short_description = 'Description'
-    
-    def display_image(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="100" />', obj.image.url)
-        return "Pas d'image"
-    display_image.short_description = 'Image'
-
-# Admin pour Projects
-class ProjectsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'short_description', 'start_date', 'created_at', 'display_image')
-    list_filter = ['status', 'created_at']
-    search_fields = ['title', 'description']
-    readonly_fields = ('created_at', 'display_image')
-    date_hierarchy = 'created_at'
-    
-    def short_description(self, obj):
-        if obj.description:
-            return obj.description[:100] + '...' if len(obj.description) > 100 else obj.description
-        return "Pas de description"
-    short_description.short_description = 'Description'
-
     
     def display_image(self, obj):
         if obj.image:
@@ -101,19 +79,11 @@ class NewsLetterSuscribersAdmin(admin.ModelAdmin):
     readonly_fields = ('subscribed_at',)
     date_hierarchy = 'subscribed_at'
 
-
-class CustomAdminSite(admin.AdminSite):
-    site_header = " Administration Digiscia"
-    site_title = "Admin Digiscia"
-    index_title = "Bienvenue sur le panneau d'administration"
-
-custom_admin_site = CustomAdminSite(name="custom_admin")
-
-# Enregistrer tous les modèles
-custom_admin_site.register(UserPerso, UserPersoAdmin)
-custom_admin_site.register(AdminProfile, AdminProfileAdmin)
-# custom_admin_site.register(Contacts, ContactAdmin)
-custom_admin_site.register(Services, ServicesAdmin)
-# custom_admin_site.register(Projects, ProjectsAdmin)
-custom_admin_site.register(News, NewsAdmin)
-custom_admin_site.register(NewsLetterSuscribers, NewsLetterSuscribersAdmin)
+# ==========================================================
+# ENREGISTREMENT (Sur le site par défaut)
+# ==========================================================
+admin.site.register(UserPerso, UserPersoAdmin)
+admin.site.register(AdminProfile, AdminProfileAdmin)
+admin.site.register(Services, ServicesAdmin)
+admin.site.register(News, NewsAdmin)
+admin.site.register(NewsLetterSuscribers, NewsLetterSuscribersAdmin)
