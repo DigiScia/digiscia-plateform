@@ -7,6 +7,9 @@ import {
   FaArrowRight 
 } from 'react-icons/fa';
 
+import academy from "../assets/projects /academy.png";
+import media from "../assets/projects /media.png";
+
 // === STYLES CSS (Monochrome Premium) ===
 const styles = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
@@ -287,9 +290,9 @@ const mockProjects = [
   {
     id: 1,
     title: "DigiScia Academy",
-    description: "Plateforme EdTech innovante pour former la prochaine génération d'experts en Data & IA.",
+    description: "Notre EdTech innovante pour former la prochaine génération d'experts en Data & IA avec une approche pédagogique pratique et immersive.",
     category: "Éducation",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80",
+    image: academy,
     link: "https://academy.digiscia.com" 
   },
   {
@@ -297,8 +300,8 @@ const mockProjects = [
     title: "DigiScia Media",
     description: "Suivez l'actualité du secteur de l'IA et de la Data.",
     category: "Media",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop&q=80",
-    link: "https://linkedin.com/company/digiscia" 
+    image: media,
+    link: "https://media.digiscia.com" 
   },
   // {
   //   id: 2,
