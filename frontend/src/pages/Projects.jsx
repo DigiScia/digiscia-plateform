@@ -7,8 +7,8 @@ import {
   FaArrowRight 
 } from 'react-icons/fa';
 
-import academy from "../assets/projects /academy.png";
-import media from "../assets/projects /media.png";
+import academy from "../assets/projects/academy.png";
+import media from "../assets/projects/media.png";
 
 // === STYLES CSS (Monochrome Premium) ===
 const styles = `
