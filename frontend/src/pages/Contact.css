@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 
 :root {
   /* CHARTE STRICTE */
-  --bg-deep: #00093D;
+  --bg-deep: var(--bg-primary);
   --text-white: #FFFFFF;
   
   /* Glassmorphism */
@@ -289,4 +289,76 @@
   .contact-content { grid-template-columns: 1fr; }
   .social-container { border-right: none; border-bottom: 1px solid var(--glass-border); text-align: center; }
   .contact-submit { width: 100%; }
+}
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] {
+  --bg-deep: #FFFFFF;
+  --text-white: #00093D;
+  --glass-bg: rgba(0, 9, 61, 0.02);
+  --glass-border: rgba(0, 9, 61, 0.15);
+  --glass-input: rgba(0, 9, 61, 0.05);
+  --glass-hover: rgba(0, 9, 61, 0.08);
+  --text-muted: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .contact-section {
+  background-color: var(--bg-deep);
+  color: var(--text-white);
+  background-image: 
+    linear-gradient(rgba(0, 9, 61, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.02) 1px, transparent 1px);
+}
+
+[data-theme="light"] .contact-title {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .contact-subtitle {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .social-container {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+[data-theme="light"] .social-container h3 {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .social-item {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .form-group label {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+  background: var(--glass-input);
+  border-color: var(--glass-border);
+  color: var(--text-white);
+}
+
+[data-theme="light"] .form-group input::placeholder,
+[data-theme="light"] .form-group textarea::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+  border-color: var(--text-white);
+  background: rgba(0, 9, 61, 0.1);
+  box-shadow: 0 0 0 4px rgba(0, 9, 61, 0.05);
+}
+
+[data-theme="light"] .contact-submit {
+  background: var(--text-white);
+  color: var(--bg-deep);
+}
+
+[data-theme="light"] .contact-submit:hover:not(:disabled) {
+  box-shadow: 0 10px 30px rgba(0, 9, 61, 0.3);
 }

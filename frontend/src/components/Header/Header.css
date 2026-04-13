@@ -1,9 +1,9 @@
 /* --- Import des polices --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap');
+
 
 :root {
   /* --- Palette DigiScia --- */
-  --header-bg: #00093D;       /* Bleu Profond */
+  --header-bg: var(--bg-primary);
   --header-text: #FFFFFF;     /* Blanc Pur */
   --header-accent: #5B7CFF;   /* Bleu clair pour les accents */
   
@@ -43,7 +43,7 @@
 }
 
 .header.scrolled {
-  background-color: rgba(0, 9, 61, 0.9);
+  background-color: rgba(0, 8, 40, 0.95); /* #000828 avec 95% opacité */
   backdrop-filter: blur(10px);
   height: 60px;
 }
@@ -285,5 +285,90 @@ input:checked + .slider:before {
     margin-left: 0;
     padding-left: 1.5rem;
     border-left: 1px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] {
+  /* Variables d'override pour le light mode */
+  --header-bg: #FFFFFF;       /* Blanc au lieu de Bleu Profond */
+  --header-text: #00093D;     /* Bleu Profond au lieu de Blanc */
+  --menu-bg: rgba(255, 255, 255, 0.95);  /* Blanc translucide */
+  --glass-border: rgba(0, 9, 61, 0.1);   /* Bordure bleu foncé translucide */
+}
+
+[data-theme="light"] .header {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  border-bottom-color: rgba(0, 9, 61, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .header.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] .header-navbar {
+  background-color: var(--menu-bg);
+}
+
+[data-theme="light"] .header-navbar a {
+  color: var(--header-text);
+}
+
+[data-theme="light"] .header-menu-toggle {
+  background: rgba(0, 9, 61, 0.1);
+  border-color: rgba(0, 9, 61, 0.2);
+}
+
+[data-theme="light"] .header-menu-toggle span {
+  background-color: var(--header-text);
+}
+
+[data-theme="light"] .switch {
+  /* Le switch va changer de style automatiquement via ses variables */
+}
+
+[data-theme="light"] .slider {
+  background-color: rgba(0, 9, 61, 0.2);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .slider:before {
+  background-color: #00093D;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] input:checked + .slider {
+  background-color: var(--header-accent);
+}
+
+[data-theme="light"] input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+@media (min-width: 900px) {
+  [data-theme="light"] .header-navbar {
+    background: transparent;
+  }
+
+  [data-theme="light"] .header-navbar a {
+    color: var(--header-text);
+  }
+
+  [data-theme="light"] .header-navbar li:last-child a {
+    background: var(--header-text);
+    color: var(--header-bg);
+    box-shadow: 0 4px 15px rgba(0, 9, 61, 0.15);
+  }
+
+  [data-theme="light"] .header-navbar li:last-child a:hover {
+    box-shadow: 0 6px 20px rgba(0, 9, 61, 0.25);
+    background: var(--header-text);
+    color: var(--header-accent);
+  }
+
+  [data-theme="light"] .header-actions {
+    border-left-color: rgba(0, 9, 61, 0.15);
   }
 }

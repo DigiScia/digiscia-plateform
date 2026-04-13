@@ -10,6 +10,8 @@ urlpatterns = [
     path('robots.txt', lambda x: HttpResponse("User-agent: *\nDisallow: /", content_type="text/plain")),
     # 1. Admin Django
     path('gestion-interne-secure/digiscia/admin/', admin.site.urls),
+    # Alias d'administration
+    path('administration.digiscia/', admin.site.urls),
 
     # 2. Browser Reload (si installé)
     path("__reload__/", include("django_browser_reload.urls")),

@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
-import emailjs from '@emailjs/browser';
+import api from "../api";
 import "./Contact.css"; 
 import SocialMediaLinks from "../components/SocialMedia/SocialMediaLinks.jsx";
 import { FaPaperPlane, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 // État initial
 const initialFormState = {
@@ -13,6 +14,7 @@ const initialFormState = {
 };
 
 function Contact() {
+  const { t } = useTranslation();
   const form = useRef();
   const [formData, setFormData] = useState(initialFormState);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -30,9 +32,9 @@ function Contact() {
   
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.telephone) newErrors.telephone = 'Le téléphone est requis';
-    if (!formData.email) newErrors.email = 'L\'email est requis';
-    if (!formData.message) newErrors.message = 'Un message est requis';
+    if (!formData.telephone) newErrors.telephone = t('contact.validation.phone');
+    if (!formData.email) newErrors.email = t('contact.validation.email');
+    if (!formData.message) newErrors.message = t('contact.validation.message');
     return newErrors;
   };
 
@@ -51,20 +53,17 @@ function Contact() {
     setIsSubmitting(true);
     setShowConfirmation(false);
 
-    emailjs.sendForm(
-      'service_fcvhskh', 
-      'template_wglutjo', 
-      form.current,
-      '7XluHeKjHpwQ_1CfB' 
-    )
-    .then((result) => {
-        console.log('E-mail envoyé!', result.text);
+    api.post('/api/v1/contact/', formData)
+    .then((response) => {
+        console.log('E-mail envoyé via backend!', response.data);
         setShowConfirmation(true);
         setFormData(initialFormState);
         setTimeout(() => setShowConfirmation(false), 5000);
-    }, (error) => {
-        console.error('Erreur d\'envoi:', error.text);
-        setSubmitError('Une erreur est survenue. Veuillez réessayer plus tard.');
+    })
+    .catch((error) => {
+        console.error('Erreur d\'envoi backend:', error);
+        const errorMsg = error.response?.data?.error || t('contact.error');
+        setSubmitError(errorMsg);
     })
     .finally(() => {
         setIsSubmitting(false);
@@ -81,11 +80,10 @@ function Contact() {
         
         {/* En-tête de page */}
         <header className="contact-header">
-          <span className="badge-pill">Contact & Support</span>
-          <h1 className="contact-title-main">Parlons de votre projet</h1>
+          <span className="badge-pill">{t('contact.badge')}</span>
+          <h1 className="contact-title-main">{t('contact.titleMain')}</h1>
           <p className="contact-subtitle-main">
-            Vous avez une vision ? Nous avons l'expertise technique pour la réaliser.
-            Contactez notre équipe pour une consultation personnalisée.
+            {t('contact.subtitleMain')}
           </p>
         </header>
 
@@ -94,21 +92,21 @@ function Contact() {
           
           {/* Colonne Gauche : Social & Infos */}
           <div className="social-container">
-            <h2 className="social-title">Restons connectés</h2>
+            <h2 className="social-title">{t('contact.socialTitle')}</h2>
             <p className="social-subtitle">
-              Suivez nos dernières actualités et rejoignez la communauté DigiScia sur les réseaux sociaux.
+              {t('contact.socialSubtitle')}
             </p>
             <SocialMediaLinks />
           </div>
           
           {/* Colonne Droite : Formulaire */}
           <div className="contact-form-container">
-            <h2 className="contact-title">Envoyez-nous un message</h2>
+            <h2 className="contact-title">{t('contact.formTitle')}</h2>
             
             {showConfirmation && (
               <div className="confirmation-message">
                 <FaCheckCircle size={20} />
-                <p>Message envoyé ! Notre équipe vous recontactera très bientôt.</p>
+                <p>{t('contact.success')}</p>
               </div>
             )}
 
@@ -124,12 +122,12 @@ function Contact() {
                 
                 {/* Email */}
                 <div className="form-group">
-                  <label htmlFor="email">Email Professionnel</label>
+                  <label htmlFor="email">{t('contact.labels.email')}</label>
                   <input 
                     type="email" 
                     id="email" 
                     name="email"
-                    placeholder="ex: jean.dupont@entreprise.com" 
+                    placeholder={t('contact.placeholders.email')} 
                     value={formData.email}
                     onChange={handleChange}
                     className={errors.email ? 'input-error' : ''}
@@ -140,12 +138,12 @@ function Contact() {
 
                 {/* Téléphone */}
                 <div className="form-group">
-                  <label htmlFor="telephone">Téléphone</label>
+                  <label htmlFor="telephone">{t('contact.labels.phone')}</label>
                   <input 
                     type="tel" 
                     id="telephone" 
                     name="telephone"
-                    placeholder="ex: +226 70 00 00 00" 
+                    placeholder={t('contact.placeholders.phone')} 
                     value={formData.telephone}
                     onChange={handleChange}
                     className={errors.telephone ? 'input-error' : ''}
@@ -156,12 +154,12 @@ function Contact() {
 
                 {/* Objet (Prend toute la largeur sur desktop) */}
                 <div className="form-group grid-full">
-                  <label htmlFor="subject">Objet de la demande</label>
+                  <label htmlFor="subject">{t('contact.labels.subject')}</label>
                   <input 
                     type="text" 
                     id="subject" 
                     name="subject"
-                    placeholder="ex: Demande de devis pour application mobile" 
+                    placeholder={t('contact.placeholders.subject')} 
                     value={formData.subject}
                     onChange={handleChange}
                     disabled={isSubmitting}
@@ -170,11 +168,11 @@ function Contact() {
 
                 {/* Message (Prend toute la largeur) */}
                 <div className="form-group grid-full">
-                  <label htmlFor="message">Votre Message</label>
+                  <label htmlFor="message">{t('contact.labels.message')}</label>
                   <textarea 
                     id="message" 
                     name="message"
-                    placeholder="Détaillez votre besoin..." 
+                    placeholder={t('contact.placeholders.message')} 
                     value={formData.message}
                     onChange={handleChange}
                     className={errors.message ? 'input-error' : ''}
@@ -186,8 +184,8 @@ function Contact() {
                 {/* Bouton Submit */}
                 <div className="grid-full">
                   <button type="submit" className="contact-submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Envoi en cours...' : (
-                      <>Envoyer le message <FaPaperPlane style={{marginLeft: '10px'}} /></>
+                    {isSubmitting ? t('contact.sending') : (
+                      <>{t('contact.submit')} <FaPaperPlane style={{marginLeft: '10px'}} /></>
                     )}
                   </button>
                 </div>

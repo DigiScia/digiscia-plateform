@@ -9,15 +9,195 @@
         "contact": "Contact Us"
     },
     "home": {
-        "brand": "DigiScia",
-        "welcome": "supports you in ...",
-        "partnership": "Partnership",
-        "contactUs": "Contact Us"
+        "badge": "Digital Services Company",
+        "subtitle": "Expert in",
+        "intro": "We transform your data into a growth lever and accompany you in your digital transformation.",
+        "ctaDevis": "Request a Quote",
+        "ctaContact": "Contact us",
+        "taglines": {
+            "ds": "Data Science",
+            "cyber": "Cybersecurity",
+            "ai": "AI & Automation",
+            "data": "Data Engineering",
+            "web": "Web & Mobile Solutions",
+            "cloud": "Cloud"
+        }
+    },
+    "about": {
+        "badge": "DigiScia • Digital Excellence",
+        "title": "Your data, <br/> our priority.",
+        "intro": "DigiScia is a Burkinabe start-up specializing in data science and engineering as well as digital transformation. It supports companies and institutions in the exploitation of their data and the optimization of their processes through innovative solutions based on data, artificial intelligence and software engineering, in order to improve their performance and competitiveness.",
+        "cta": "Request a Quote",
+        "mission": {
+            "title": "Our Mission",
+            "text": "Propel companies towards total digital sovereignty. We design fluid data architectures that stand the test of time and volume.",
+            "pills": ["Performance", "Result-Oriented", "Security"]
+        },
+        "stats": {
+            "compliance": "Compliance",
+            "support": "Support"
+        },
+        "tech": {
+            "title": "Rigorous Engineering",
+            "text": "We deliver clean, documented, and maintainable code for your teams."
+        },
+        "ai": {
+            "title": "Artificial Intelligence",
+            "text": "Create and integrate AI solutions tailored to your needs. Move from raw data to informed decisions for more strategic decision-making."
+        },
+        "values": {
+            "sovereignty": {
+                "title": "Sovereignty",
+                "text": "Your data is your most precious asset. We guarantee its absolute integrity and security."
+            },
+            "performance": {
+                "title": "Performance",
+                "text": "Measurable solutions. We don't sell buzzwords, but concrete results."
+            },
+            "partnership": {
+                "title": "Partnership",
+                "text": "We co-build with your teams to ensure a real transfer of skills."
+            }
+        }
+    },
+    "services": {
+        "badge": "Expertise & Innovation",
+        "title": "Our Areas of Expertise",
+        "subtitle": "We combine rigorous software engineering and advanced data science to build the digital foundations of your future success.",
+        "explore": "Explore the offer",
+        "modal": {
+            "expertise": "Key Expertise",
+            "usecases": "Use cases"
+        },
+        "items": {
+            "web": {
+                "title": "Web & Mobile Solutions",
+                "cat": "Engineering",
+                "desc": "Tailor-made, high-performance and scalable applications that transform your users' experience.",
+                "full": "In a digital-first world, your digital presence is your main showcase. We don't just write code; we architect complete digital ecosystems.",
+                "features": ["Modern Architectures (React, Vue, Node.js)", "Cross-Platform Mobile Apps", "PWA", "UX/UI Design", "REST & GraphQL APIs"],
+                "cases": "SaaS Platforms, Marketplaces, Client Portals, MVPs."
+            },
+            "ai": {
+                "title": "AI & Data Science",
+                "cat": "Innovation",
+                "desc": "Move from raw data to strategic prediction. Automate your business intelligence.",
+                "full": "Artificial intelligence is an immediate competitive lever. Our Data Scientists transform your data deposits into powerful predictive algorithms.",
+                "features": ["ML & Deep Learning", "NLP / LLM", "Computer Vision", "Recommendation Systems", "Predictive Maintenance"],
+                "cases": "Smart Chatbots, Fraud Detection, Sentiment Analysis, Logistics."
+            },
+            "data": {
+                "title": "Data Engineering",
+                "cat": "Infrastructure",
+                "desc": "Build the foundation of your data strategy. Robust pipelines and guaranteed quality.",
+                "full": "An effective AI strategy relies on healthy data. We build the information highways of your business.",
+                "features": ["Data Lake & Warehouse Architecture", "ETL/ELT Pipelines", "Governance & DQM", "Compliance & Security", "Cloud Migration"],
+                "cases": "Data Centralization, Cleaning, Legacy Migration."
+            },
+            "bi": {
+                "title": "Business Intelligence",
+                "cat": "Analytics",
+                "desc": "Visualize to decide. Interactive dashboards that tell the story of your performance.",
+                "full": "Don't drive blind anymore. We transform the complexity of your metrics into clear and actionable visualizations.",
+                "features": ["Dashboards (PowerBI, Tableau)", "Data Storytelling", "Automated Reporting", "360° Performance Analysis", "Data Culture"],
+                "cases": "Sales, Financial, HR, Marketing monitoring."
+            },
+            "auto": {
+                "title": "Automation & AI Agents",
+                "cat": "Productivity",
+                "desc": "Free your teams from repetitive tasks with autonomous agents.",
+                "full": "Boost your operational efficiency by delegating complex business processes to our automation solutions.",
+                "features": ["Autonomous AI Agents", "Cron & Queue Orchestration", "Custom API & Webhooks", "OCR / IDP", "Multi-platform Workflows"],
+                "cases": "Automatic lead qualification, Invoicing, Level 1 support, Stocks."
+            }
+        }
+    },
+    "projects": {
+        "badge": "Portfolio & Achievements",
+        "title": "Our Projects and Achievements",
+        "subtitle": "A selection of our projects and solutions. Concrete solutions for our challenges and those of our clients.",
+        "loading": "Loading projects...",
+        "viewProject": "View project",
+        "items": {
+            "academy": {
+                "title": "DigiScia Academy",
+                "desc": "Our innovative EdTech to train the next generation of Data & AI experts.",
+                "cat": "Education"
+            },
+            "media": {
+                "title": "DigiScia Media",
+                "desc": "Our Media to popularize technology and facilitate technological monitoring.",
+                "cat": "Media"
+            }
+        }
+    },
+    "team": {
+        "badge": "Talents & Leadership",
+        "title": "Our Team",
+        "subtitle": "A synergy of experts passionate about data, engineering and innovation, united to propel your digital transformation.",
+        "members": {
+            "fidele": { "role": "CEO & Innovation", "skills": "Full Stack Web Developer | Big Data Engineer | AI/GenAI Engineer" },
+            "souleymane": { "role": "CTO & Lead Dev", "skills": "Fullstack Web/Mobile Developer, AI Engineer. Architect of robust solutions." },
+            "abdel": { "role": "Media Manager", "skills": "Fullstack Developer & Network Expert. Digital communication management." },
+            "sylvius": { "role": "Academy Manager", "skills": "Geosciences Expert, Geospatial data management." },
+            "phil": { "role": "Project Lead", "skills": "IT project management expert. Strategic steering." },
+            "narcisse": { "role": "Store Manager", "skills": "Production & Mechatronics Engineer, Automation Expert." },
+            "honore": { "role": "CFO & Partners", "skills": "Financial Communication, Investor Relations. FMVA Certified." }
+        }
+    },
+    "contact": {
+        "badge": "Contact & Support",
+        "titleMain": "Let's talk about your project",
+        "subtitleMain": "You have a vision? We have the technical expertise to realize it. Contact our team for a personalized consultation.",
+        "socialTitle": "Stay connected",
+        "socialSubtitle": "Follow our latest news and join the DigiScia community.",
+        "formTitle": "Send us a message",
+        "success": "Message sent! Our team will get back to you very soon.",
+        "error": "An error occurred while sending the message.",
+        "sending": "Sending in progress...",
+        "submit": "Send message",
+        "labels": {
+            "email": "Professional Email",
+            "phone": "Phone",
+            "subject": "Request Subject",
+            "message": "Your Message"
+        },
+        "placeholders": {
+            "email": "e.g.: john.doe@company.com",
+            "phone": "e.g.: +226 70 00 00 00",
+            "subject": "e.g.: Quote request for mobile app",
+            "message": "Detail your need..."
+        },
+        "validation": {
+            "phone": "Phone is required",
+            "email": "Email is required",
+            "message": "A message is required"
+        }
+    },
+    "article": {
+        "back": "Back",
+        "backToNews": "Back to news",
+        "loading": "Loading article...",
+        "error": "Error",
+        "notFound": "Article not found",
+        "notFoundText": "The article you are looking for does not exist or has been moved.",
+        "by": "By",
+        "noContent": "No content available for this article.",
+        "related": "Related articles"
+    },
+    "footer": {
+        "description": "Excellence in digital solutions. We transform your ideas into digital reality with cutting-edge expertise in Data, IA and Development.",
+        "contactTitle": "Contact us",
+        "followTitle": "Follow us",
+        "rights": "All rights reserved.",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "legal": "Legal notice"
     },
     "news": {
         "badge": "News",
         "title": "Latest News",
-        "subtitle": "Stay informed with our latest news, innovations and events at DigiScia",
+        "subtitle": "Stay informed about the latest news, innovations and events at DigiScia",
         "loading": "Loading news",
         "loadingSubtext": "Fetching latest information...",
         "noNews": "No news available.",

@@ -43,6 +43,5 @@ main {
 section {
   padding: 80px 20px; /* Ajuste selon la taille du header */
   min-height: 100vh; /* Chaque section prend toute la hauteur de l'écran */
-  border-bottom: 1px solid #ddd; /* Pour bien séparer visuellement */
 }
 

@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import fetchNews from "../services/newsService.js"; 
+import LoadingWrapper from '../components/SplashScreen/LoadingWrapper.jsx';
+import SplashScreen from '../components/SplashScreen/SplashScreen.jsx';
 
 // --- Composant de l'animation de chargement sophistiquée ---
 function LoadingAnimation() {
+  const { t } = useTranslation();
   return (
     <>
       <style>{`
@@ -328,8 +332,8 @@ function LoadingAnimation() {
 
         {/* Loading Content */}
         <div className="la-loading-content">
-          <div className="la-loading-text">Chargement des actualités</div>
-          <div className="la-loading-subtext">Récupération des dernières informations...</div>
+          <div className="la-loading-text">{t('news.loading')}</div>
+          <div className="la-loading-subtext">{t('news.loadingSubtext')}</div>
           
           <div className="la-progress-dots">
             <div className="la-dot"></div>
@@ -343,19 +347,19 @@ function LoadingAnimation() {
           <div className="la-tip-card">
             <div className="la-tip-icon">📰</div>
             <div className="la-tip-text">
-              Découvrez nos dernières innovations et projets en cours
+              {t('news.loadingTips.tip1')}
             </div>
           </div>
           <div className="la-tip-card">
             <div className="la-tip-icon">🚀</div>
             <div className="la-tip-text">
-              Restez informé des tendances tech et des actualités du secteur
+              {t('news.loadingTips.tip2')}
             </div>
           </div>
           <div className="la-tip-card">
             <div className="la-tip-icon">💡</div>
             <div className="la-tip-text">
-              Explorez nos success stories et témoignages clients
+              {t('news.loadingTips.tip3')}
             </div>
           </div>
         </div>
@@ -368,7 +372,7 @@ function LoadingAnimation() {
 // --- Composant News (utilise LoadingAnimation) ---
 
 const newsStyles = `
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 
 * {
   margin: 0;
@@ -378,7 +382,7 @@ const newsStyles = `
 
 body {
   font-family: 'Inter', sans-serif;
-  background: #00093D;
+  background: var(--bg-primary);
   color: #FFFFFF;
   overflow-x: hidden;
 }
@@ -387,7 +391,7 @@ body {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: #00093D;
+  background: var(--bg-primary);
   padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem);
   overflow: hidden;
 }
@@ -396,14 +400,15 @@ body {
 .news-section::before {
   content: '';
   position: fixed;
-  top: -40%;
-  right: -10%;
-  width: 70%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(91, 124, 255, 0.12) 0%, transparent 70%);
+  top: -30%;
+  left: -20%;
+  width: 140vw;
+  height: 140vh;
+  background: radial-gradient(circle at center, rgba(91, 124, 255, 0.08) 0%, transparent 75%);
   animation: float 25s infinite ease-in-out;
   pointer-events: none;
   z-index: 0;
+  filter: blur(120px);
 }
 
 @keyframes float {
@@ -417,11 +422,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.02;
+  opacity: 0.05;
   background-image: 
-    linear-gradient(rgba(91, 124, 255, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(91, 124, 255, 0.3) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
   pointer-events: none;
   z-index: 0;
 }
@@ -814,6 +819,126 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] body {
+  background: #FFFFFF;
+  color: #00093D;
+}
+
+[data-theme="light"] .news-section {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] .news-section::before {
+  background: radial-gradient(circle, rgba(0, 9, 61, 0.12) 0%, transparent 70%);
+}
+
+[data-theme="light"] .grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 9, 61, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.3) 1px, transparent 1px);
+}
+
+[data-theme="light"] .news-badge {
+  background: rgba(0, 9, 61, 0.1);
+  border-color: rgba(0, 9, 61, 0.3);
+  color: #5B7CFF;
+}
+
+[data-theme="light"] .news-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .news-subtitle {
+  color: #5B7CFF;
+}
+
+[data-theme="light"] .news-carousel::-webkit-scrollbar-track {
+  background: rgba(0, 9, 61, 0.05);
+}
+
+[data-theme="light"] .news-carousel::-webkit-scrollbar-thumb {
+  background: rgba(0, 9, 61, 0.3);
+}
+
+[data-theme="light"] .news-carousel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 9, 61, 0.5);
+}
+
+[data-theme="light"] .carousel-nav {
+  background: rgba(0, 9, 61, 0.2);
+  border-color: rgba(0, 9, 61, 0.3);
+  color: #00093D;
+}
+
+[data-theme="light"] .carousel-nav:hover {
+  background: rgba(0, 9, 61, 0.4);
+  border-color: #5B7CFF;
+}
+
+[data-theme="light"] .news-card {
+  background: rgba(0, 9, 61, 0.03);
+  border-color: rgba(0, 9, 61, 0.08);
+}
+
+[data-theme="light"] .news-card:hover {
+  border-color: rgba(0, 9, 61, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 9, 61, 0.15);
+  background: rgba(0, 9, 61, 0.05);
+}
+
+[data-theme="light"] .news-image-container {
+  background: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .read-more-btn {
+  background: linear-gradient(135deg, #5B7CFF 0%, #8BA3FF 100%);
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .news-date {
+  color: #7A8AB5;
+}
+
+[data-theme="light"] .date-icon {
+  color: #5B7CFF;
+}
+
+[data-theme="light"] .news-card-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .news-card-description {
+  color: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .newsletter-section {
+  background: rgba(0, 9, 61, 0.02);
+}
+
+[data-theme="light"] .newsletter-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .newsletter-subtitle {
+  color: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .newsletter-input {
+  background: rgba(0, 9, 61, 0.05);
+  border-color: rgba(0, 9, 61, 0.1);
+  color: #00093D;
+}
+
+[data-theme="light"] .newsletter-input::placeholder {
+  color: rgba(0, 9, 61, 0.5);
+}
+
+[data-theme="light"] .newsletter-button {
+  background: linear-gradient(135deg, #5B7CFF 0%, #8BA3FF 100%);
+  color: #FFFFFF;
+}
 `;
 
 
@@ -833,6 +958,7 @@ const CheckIcon = () => (
 );
 
 function News() {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [showThankYou, setShowThankYou] = useState(false);
   const [newsData, setNewsData] = useState([]);
@@ -883,7 +1009,6 @@ function News() {
   const handleSubscribe = async (event) => {
     event.preventDefault();
     try {
-      // **IMPORTANT**: Remplacez par l'URL de votre API
       await axios.post("http://127.0.0.1:8000/api/v1/suscribers/create/", { email });
       setShowThankYou(true);
       setEmail('');
@@ -892,19 +1017,18 @@ function News() {
       console.error("Erreur lors de l'inscription à la newsletter :", error);
       if (error.response && error.response.data) {
         if (error.response.data.email && Array.isArray(error.response.data.email)) {
-          setErrorMessage('Vous êtes déjà inscrit 😉!'); 
+          setErrorMessage(t('news.newsletter.alreadySubscribed')); 
         } else {
-          setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
+          setErrorMessage(t('news.newsletter.errorGeneric'));
         }
       } else if (error.request) {
-        setErrorMessage('Impossible de joindre le serveur.');
+        setErrorMessage(t('news.newsletter.errorServer'));
       } else {
-        setErrorMessage('Une erreur s\'est produite. Veuillez réessayer.');
+        setErrorMessage(t('news.newsletter.errorGeneric'));
       }
     }
   };
 
-  // 3. Logique de navigation (de Fichier 2)
   const scrollCarousel = (direction) => {
     // Utilisation de la valeur de défilement du Fichier 1 (plus grande)
     const scrollAmount = direction === 'left' ? -350 : 350;
@@ -926,13 +1050,12 @@ function News() {
     window.scrollTo(0, 0);
   };
 
-  // 4. Formatage de la date (de Fichier 1 - plus simple et stylé)
+  // 4. Formatage de la date (utilisant les locales i18next)
   const formatDate = (dateString) => {
     if (!dateString) return "";
     try {
       const date = new Date(dateString);
-      // Retourne un format plus lisible comme "10 novembre 2024, 14:30"
-      return date.toLocaleDateString('fr-FR', { 
+      return date.toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-US', { 
         year: 'numeric', 
         month: 'long', 
         day: 'numeric',
@@ -941,7 +1064,7 @@ function News() {
       });
     } catch (error) {
        console.error("Erreur formatage date:", error, dateString);
-       return "Date invalide";
+       return t('article.error');
     }
   };
 
@@ -955,11 +1078,11 @@ function News() {
         <div className="news-container">
           <header className="news-header">
             <div className="news-badge">
-              📰 Actualités
+              📰 {t('news.badge')}
             </div>
-            <h2 className="news-title">Dernières Nouvelles</h2>
+            <h2 className="news-title">{t('news.title')}</h2>
             <p className="news-subtitle">
-              Restez informé des dernières actualités, innovations et événements de DigiScia
+              {t('news.subtitle')}
             </p>
           </header>
 
@@ -972,49 +1095,48 @@ function News() {
               ‹
             </button>
             
-            <div className="news-carousel" ref={carouselRef}>
-              {isLoading ? (
-                // Utilisation du composant de chargement sophistiqué
-                <LoadingAnimation />
-              ) : newsData.length > 0 ? (
-                newsData.map((news) => (
-                  <article key={news.id} className="news-card">
-                    <div className="news-image-container">
-                      <img 
-                        src={news.image} 
-                        alt={news.title} 
-                        className="news-image"
-                        loading="lazy"
-                        // Ajout du fallback de Fichier 2
-                        onError={(e) => { e.target.src = "/images/placeholder.jpg"; }}
-                      />
-                      <div className="news-overlay">
-                        <button 
-                          className="read-more-btn"
-                          aria-label={`Lire: ${news.title}`}
-                          // Ajout de l'action de Fichier 2
-                          onClick={() => handleReadArticle(news)} 
-                        >
-                          Lire l'article
-                        </button>
+            <LoadingWrapper isLoading={isLoading} minDuration={1200}>
+              <div className="news-carousel" ref={carouselRef}>
+                {newsData.length > 0 ? (
+                  newsData.map((news) => (
+                    <article key={news.id} className="news-card">
+                      <div className="news-image-container">
+                        <img 
+                          src={news.image} 
+                          alt={news.title} 
+                          className="news-image"
+                          loading="lazy"
+                          // Ajout du fallback de Fichier 2
+                          onError={(e) => { e.target.src = "/images/placeholder.jpg"; }}
+                        />
+                        <div className="news-overlay">
+                          <button 
+                            className="read-more-btn"
+                            aria-label={`Lire: ${news.title}`}
+                            // Ajout de l'action de Fichier 2
+                            onClick={() => handleReadArticle(news)} 
+                          >
+                            {t('news.readArticle')}
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="news-content">
-                      <div className="news-date">
-                        <CalendarIcon />
-                        {formatDate(news.date)}
+                      <div className="news-content">
+                        <div className="news-date">
+                          <CalendarIcon />
+                          {formatDate(news.date)}
+                        </div>
+                        <h3 className="news-card-title">{news.title}</h3>
                       </div>
-                      <h3 className="news-card-title">{news.title}</h3>
-                    </div>
-                  </article>
-                ))
-              ) : (
-                // Message si aucune actualité n'est trouvée (de Fichier 1)
-                <div className="loading-state">
-                  <p className="loading-text">Aucune actualité disponible.</p>
-                </div>
-              )}
-            </div>
+                    </article>
+                  ))
+                ) : (
+                  // Message si aucune actualité n'est trouvée (de Fichier 1)
+                  <div className="loading-state">
+                    <p className="loading-text">{t('news.noNews')}</p>
+                  </div>
+                )}
+              </div>
+            </LoadingWrapper>
 
             <button 
               className="carousel-nav carousel-next" 
@@ -1025,17 +1147,17 @@ function News() {
             </button>
           </div>
 
-          {/* Section Newsletter (Design de Fichier 1, Logique de Fichier 2) */}
+          {/* Section Newsletter */}
           <div className="newsletter-section">
-            <h3 className="newsletter-title">Restez Connecté</h3>
+            <h3 className="newsletter-title">{t('news.newsletter.title')}</h3>
             <p className="newsletter-description">
-              Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités
+              {t('news.newsletter.description')}
             </p>
 
             {showThankYou ? (
               <div className="thank-you-message">
                 <CheckIcon />
-                Merci de faire partie de notre communauté !
+                {t('news.newsletter.thankYou')}
               </div>
             ) : (
               <div>
@@ -1045,16 +1167,16 @@ function News() {
                     type="email" 
                     value={email}
                     onChange={handleEmailChange}
-                    placeholder="votre.email@exemple.com" 
+                    placeholder={t('news.newsletter.placeholder')} 
                     className="newsletter-input"
-                    aria-label="Adresse email"
+                    aria-label="Email"
                     required
                   />
                   <button 
                     type="submit"
                     className="newsletter-btn"
                   >
-                    S'inscrire
+                    {t('news.newsletter.subscribe')}
                   </button>
                 </form>
                 {errorMessage && (

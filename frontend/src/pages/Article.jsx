@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import fetchNews from '../services/newsService';
+import LoadingWrapper from '../components/SplashScreen/LoadingWrapper.jsx';
 import './Article.css';
 
 function Article() {
   const { id } = useParams();
+  const { t } = useTranslation();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -90,19 +93,7 @@ function Article() {
   }, [getArticleById]);
 
   const handleReturnToNews = () => {
-    // Navigation vers la page d'accueil
-    navigate('/');
-    
-    // Option 1: Utiliser un délai avant de scroller vers la section news
-    setTimeout(() => {
-      const newsSection = document.getElementById('news');
-      if (newsSection) {
-        newsSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
-    
-    // Option 2 (alternative): Ajouter un paramètre de requête pour indiquer où scroller
-    // navigate('/?scrollTo=news');
+    navigate('/?scrollTo=news');
   };
 
   const handleReadRelatedArticle = (relatedArticle) => {
@@ -160,19 +151,7 @@ function Article() {
     }
   };
 
-  // Rendu conditionnel pour le chargement
-  if (loading) {
-    return (
-      <div className="article-page full-width">
-        <div className="article-container full-width-container">
-          <div className="article-loading">
-            <div className="loading-spinner"></div>
-            <p>Chargement de l'article...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // L'affichage est géré par LoadingWrapper ci-dessous
 
   // Rendu conditionnel pour les erreurs
   if (error) {
@@ -181,10 +160,10 @@ function Article() {
         <div className="article-container full-width-container">
           <div className="article-error">
             <span className="error-icon">⚠️</span>
-            <h2>Erreur</h2>
+            <h2>{t('article.error')}</h2>
             <p>{error}</p>
             <button className="return-button" onClick={handleReturnToNews}>
-              Retourner aux actualités
+              {t('article.backToNews')}
             </button>
           </div>
         </div>
@@ -199,10 +178,10 @@ function Article() {
         <div className="article-container full-width-container">
           <div className="article-error">
             <span className="error-icon">🔍</span>
-            <h2>Article introuvable</h2>
-            <p>L'article que vous recherchez n'existe pas ou a été déplacé.</p>
+            <h2>{t('article.notFound')}</h2>
+            <p>{t('article.notFoundText')}</p>
             <button className="return-button" onClick={handleReturnToNews}>
-              Retourner aux actualités
+              {t('article.backToNews')}
             </button>
           </div>
         </div>
@@ -211,105 +190,107 @@ function Article() {
   }
 
   return (
-    <div className="article-page full-width">
-      <div className="article-container full-width-container">
-        <article className="article-content">
-          {/* Bouton de retour en haut pour mobile */}
-          <div className="mobile-return">
-            <button className="back-button" onClick={handleReturnToNews} aria-label="Retour aux actualités">
-              &#10094; Retour
-            </button>
-          </div>
+    <LoadingWrapper isLoading={loading}>
+      <div className="article-page full-width">
+        <div className="article-container full-width-container">
+          <article className="article-content">
+            {/* Bouton de retour en haut pour mobile */}
+            <div className="mobile-return">
+              <button className="back-button" onClick={handleReturnToNews} aria-label={t('article.backToNews')}>
+                &#10094; {t('article.back')}
+              </button>
+            </div>
 
-          <header className="article-header">
-            <h1 className="article-title">{article.title}</h1>
-            <p className="article-date">{formatDate(article.date)}</p>
-            {article.author && (
-              <p className="article-author-header">Par {article.author}</p>
-            )}
-          </header>
-          
-          <div className="article-featured-image-container">
-            <img 
-              src={article.image} 
-              alt={article.title || "Image de l'article"} 
-              className="article-featured-image"
-              onError={(e) => { e.target.src = "/images/placeholder.jpg"; }}
-              loading="lazy"
-            />
-          </div>
-          
-          <div className="article-body">
-            {article.content ? (
-              <div dangerouslySetInnerHTML={{ __html: article.content }} />
-            ) : article.excerpt ? (
-              <div className="article-excerpt">{article.excerpt}</div>
-            ) : (
-              <div className="article-no-content">
-                <p>Aucun contenu disponible pour cet article.</p>
-              </div>
-            )}
-          </div>
-          
-          <footer className="article-footer">
-            <div className="article-meta">
-              {article.author && (
-                <div className="article-author">
-                  <strong>Auteur:</strong> {article.author}
-                </div>
+            <header className="article-header">
+              <h1 className="article-title">{article?.title}</h1>
+              <p className="article-date">{formatDate(article?.date)}</p>
+              {article?.author && (
+                <p className="article-author-header">{t('article.by')} {article?.author}</p>
               )}
-              
-              {article.tags && article.tags.length > 0 && (
-                <div className="article-tags">
-                  <strong>Tags:</strong>
-                  <div className="tags-container">
-                    {article.tags.map((tag, index) => (
-                      <span key={index} className="tag-item">{tag}</span>
-                    ))}
-                  </div>
+            </header>
+            
+            <div className="article-featured-image-container">
+              <img 
+                src={article?.image} 
+                alt={article?.title || "Image de l'article"} 
+                className="article-featured-image"
+                onError={(e) => { e.target.src = "/images/placeholder.jpg"; }}
+                loading="lazy"
+              />
+            </div>
+            
+            <div className="article-body">
+              {article?.content ? (
+                <div dangerouslySetInnerHTML={{ __html: article.content }} />
+              ) : article?.excerpt ? (
+                <div className="article-excerpt">{article.excerpt}</div>
+              ) : (
+                <div className="article-no-content">
+                  <p>{t('article.noContent')}</p>
                 </div>
               )}
             </div>
             
-            <button className="return-button" onClick={handleReturnToNews}>
-              Retourner aux actualités
-            </button>
-          </footer>
-        </article>
-        
-        {/* Section pour les articles connexes */}
-        {relatedArticles.length > 0 && (
-          <div className="related-articles-section">
-            <h3 className="related-title">Articles similaires</h3>
-            <div className="related-articles-container">
-              {relatedArticles.map(relatedArticle => (
-                <div 
-                  key={relatedArticle.id} 
-                  className="related-article-card"
-                  onClick={() => handleReadRelatedArticle(relatedArticle)}
-                >
-                  <div className="related-article-image-container">
-                    <img 
-                      src={relatedArticle.image} 
-                      alt={relatedArticle.title} 
-                      className="related-article-image"
-                      onError={(e) => { e.target.src = "/images/placeholder.jpg"; }}
-                      loading="lazy"
-                    />
+            <footer className="article-footer">
+              <div className="article-meta">
+                {article?.author && (
+                  <div className="article-author">
+                    <strong>Auteur:</strong> {article.author}
                   </div>
-                  <div className="related-article-content">
-                    <h4 className="related-article-title">{relatedArticle.title}</h4>
-                    <p className="related-article-date">
-                      {formatDate(relatedArticle.date)}
-                    </p>
+                )}
+                
+                {article?.tags && article.tags.length > 0 && (
+                  <div className="article-tags">
+                    <strong>Tags:</strong>
+                    <div className="tags-container">
+                      {article.tags.map((tag, index) => (
+                        <span key={index} className="tag-item">{tag}</span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )}
+              </div>
+              
+              <button className="return-button" onClick={handleReturnToNews}>
+                {t('article.backToNews')}
+              </button>
+            </footer>
+          </article>
+          
+          {/* Section pour les articles connexes */}
+          {relatedArticles.length > 0 && (
+            <div className="related-articles-section">
+              <h3 className="related-title">{t('article.related')}</h3>
+              <div className="related-articles-container">
+                {relatedArticles.map(relatedArticle => (
+                  <div 
+                    key={relatedArticle.id} 
+                    className="related-article-card"
+                    onClick={() => handleReadRelatedArticle(relatedArticle)}
+                  >
+                    <div className="related-article-image-container">
+                      <img 
+                        src={relatedArticle.image} 
+                        alt={relatedArticle.title} 
+                        className="related-article-image"
+                        onError={(e) => { e.target.src = "/images/placeholder.jpg"; }}
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="related-article-content">
+                      <h4 className="related-article-title">{relatedArticle.title}</h4>
+                      <p className="related-article-date">
+                        {formatDate(relatedArticle.date)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </LoadingWrapper>
   );
 }
 

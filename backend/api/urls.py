@@ -44,6 +44,11 @@ urlpatterns = [
     path("api/v1/suscribers/<uuid:pk>/", views.NewsLetterSuscribersDetailAPIView.as_view(), name="subscriber-detail"),
     
     # ============================================
+    # ✉️ CONTACT
+    # ============================================
+    path("api/v1/contact/", views.ContactAPIView.as_view(), name="contact"),
+
+    # ============================================
     # 🏥 HEALTH CHECK
     # ============================================
     path("health/", views.health_check, name="health_check"),

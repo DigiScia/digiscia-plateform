@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 
 :root {
-  --bg-deep: #00093D;
+  --bg-deep: var(--bg-primary);
   --text-white: #FFFFFF;
   --glass-border: rgba(255, 255, 255, 0.15);
   --glass-bg: rgba(255, 255, 255, 0.02);
@@ -218,4 +218,60 @@
 @media (max-width: 768px) {
   .team-title { font-size: 2.5rem; }
   .team-grid { grid-template-columns: 1fr; }
+}
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] {
+  --bg-deep: #FFFFFF;
+  --text-white: #00093D;
+  --glass-border: rgba(0, 9, 61, 0.15);
+  --glass-bg: rgba(0, 9, 61, 0.02);
+  --glass-hover: rgba(0, 9, 61, 0.05);
+  --text-muted: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .team-section {
+  background-color: var(--bg-deep);
+  color: var(--text-white);
+  background-image: 
+    linear-gradient(rgba(0, 9, 61, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.02) 1px, transparent 1px);
+}
+
+[data-theme="light"] .team-title {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .team-subtitle {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .team-card {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+[data-theme="light"] .team-card:hover {
+  background: var(--glass-hover);
+  border-color: var(--text-white);
+}
+
+[data-theme="light"] .member-name {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .member-role {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .divider {
+  background: rgba(0, 9, 61, 0.3);
+}
+
+[data-theme="light"] .team-card:hover .divider {
+  background: var(--text-white);
+}
+
+[data-theme="light"] .member-skills {
+  color: var(--text-muted);
 }

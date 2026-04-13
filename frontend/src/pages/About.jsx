@@ -8,9 +8,11 @@ import {
   FaChartLine,
   FaArrowRight
 } from 'react-icons/fa';
+import { useTranslation } from "react-i18next";
 import "./About.css"; 
 
 function About() {
+  const { t } = useTranslation();
   const cardsRef = useRef([]);
 
   // Animation simple d'apparition au scroll
@@ -53,18 +55,14 @@ function About() {
         
         {/* EN-TÊTE */}
         <header className="about-header" ref={addToRefs}>
-          <span className="badge-pill">DigiScia • Excellence Numérique</span>
-          <h1 className="about-title">
-            Vos données, <br/>
-            notre priorité.
-          </h1>
+          <span className="badge-pill">{t('about.badge')}</span>
+          <h1 className="about-title" dangerouslySetInnerHTML={{ __html: t('about.title') }}></h1>
           <p className="about-intro">
-            Nous transformons la complexité technologique en levier de croissance. 
-            Une expertise ESN de pointe, axée sur la transparence et la performance.
+           {t('about.intro')}
           </p>
           <a href="#contacts">
-            <button classNam  e="btn-white">
-              Démarrer un projet <FaArrowRight />
+            <button className="btn-white">
+              {t('about.cta')} <FaArrowRight />
             </button>
           </a>
         </header>
@@ -75,15 +73,14 @@ function About() {
           {/* 1. Carte Mission */}
           <div className="bento-card card-mission" ref={addToRefs}>
             <div className="icon-box"><FaRocket /></div>
-            <h2 className="card-title">Notre Mission</h2>
+            <h2 className="card-title">{t('about.mission.title')}</h2>
             <p className="card-text">
-              Propulser les entreprises vers une souveraineté numérique totale. 
-              Nous concevons des architectures de données fluides qui résistent à l'épreuve du temps et des volumes.
+              {t('about.mission.text')}
             </p>
             <div className="tech-stack">
-              <span className="tech-pill">Audit & Stratégie</span>
-              <span className="tech-pill">Architecture Data</span>
-              <span className="tech-pill">Cloud Sécurisé</span>
+              {t('about.mission.pills', { returnObjects: true }).map((pill, idx) => (
+                <span key={idx} className="tech-pill">{pill}</span>
+              ))}
             </div>
           </div>
 
@@ -92,35 +89,29 @@ function About() {
             <div className="stats-container">
               <div className="stat-item">
                 <span className="stat-number">100%</span>
-                <span className="stat-label">Conformité RGPD</span>
+                <span className="stat-label">{t('about.stats.compliance')}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-number">24/7</span>
-                <span className="stat-label">Monitoring Actif</span>
+                <span className="stat-label">{t('about.stats.support')}</span>
               </div>
             </div>
           </div>
 
-          {/* 3. Carte Ingénierie */}
           <div className="bento-card card-tech" ref={addToRefs}>
             <div className="icon-box"><FaCodeBranch /></div>
-            <h2 className="card-title">Ingénierie Pure</h2>
+            <h2 className="card-title">{t('about.tech.title')}</h2>
             <p className="card-text">
-              Pas de "Black Box". Nous livrons un code propre, documenté et maintenable par vos équipes.
+              {t('about.tech.text')}
             </p>
-            <div className="tech-stack">
-              <span className="tech-pill">Python</span>
-              <span className="tech-pill">React</span>
-              <span className="tech-pill">DevOps</span>
-            </div>
           </div>
 
           {/* 4. Carte Intelligence Artificielle */}
           <div className="bento-card card-culture" ref={addToRefs}>
             <div className="icon-box"><FaBrain /></div>
-            <h2 className="card-title">Intelligence Artificielle</h2>
+            <h2 className="card-title">{t('about.ai.title')}</h2>
             <p className="card-text">
-              Passez de la donnée brute à la décision éclairée. Nos modèles de Machine Learning valorisent votre capital numérique pour prédire demain.
+              {t('about.ai.text')}
             </p>
           </div>
 
@@ -131,20 +122,20 @@ function About() {
           
           <div className="value-card" ref={addToRefs}>
             <FaShieldAlt style={{ fontSize: '2rem', color: '#fff', marginBottom: '1rem' }} />
-            <h3>Souveraineté</h3>
-            <p>Vos données sont votre actif le plus précieux. Nous garantissons leur intégrité et leur sécurité absolue.</p>
+            <h3>{t('about.values.sovereignty.title')}</h3>
+            <p>{t('about.values.sovereignty.text')}</p>
           </div>
 
           <div className="value-card" ref={addToRefs}>
             <FaChartLine style={{ fontSize: '2rem', color: '#fff', marginBottom: '1rem' }} />
-            <h3>Performance</h3>
-            <p>Des solutions mesurables. Nous ne vendons pas de buzzwords, mais des résultats concrets.</p>
+            <h3>{t('about.values.performance.title')}</h3>
+            <p>{t('about.values.performance.text')}</p>
           </div>
 
           <div className="value-card" ref={addToRefs}>
             <FaHandshake style={{ fontSize: '2rem', color: '#fff', marginBottom: '1rem' }} />
-            <h3>Partenariat</h3>
-            <p>Nous co-construisons avec vos équipes pour assurer un transfert de compétences réel.</p>
+            <h3>{t('about.values.partnership.title')}</h3>
+            <p>{t('about.values.partnership.text')}</p>
           </div>
 
         </div>

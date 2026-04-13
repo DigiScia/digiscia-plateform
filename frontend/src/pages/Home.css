@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 
 /* === RESET & VARIABLES === */
 :root {
-  --primary-dark: #020617; /* Plus profond que le bleu marine */
+  --primary-dark: var(--bg-primary);
   --primary-blue: #0A1640;
   --accent-glow: #4F46E5;  /* Indigo vibrant pour les effets */
   --accent-cyan: #06b6d4;  /* Cyan pour les détails data */
@@ -24,7 +24,7 @@
 
 body {
   font-family: var(--font-body);
-  background: var(--primary-dark);
+  background: var(--bg-primary);
   color: var(--text-main);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -39,8 +39,12 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Texture subtile de bruit pour éviter le banding des dégradés */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  background-color: var(--bg-primary);
+  /* Texture Grille Standard DigiScia 50px */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
 }
 
 /* Canvas des particules */
@@ -59,20 +63,29 @@ body {
 /* Orbes lumineux d'arrière-plan (Atmosphère) */
 .ambient-glow {
   position: absolute;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  opacity: 0.15;
-  filter: blur(100px);
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.12;
+  filter: blur(120px);
   z-index: 0;
-  animation: pulseGlow 10s ease-in-out infinite alternate;
+  animation: pulseGlow 15s ease-in-out infinite alternate;
+  pointer-events: none;
 }
-.ambient-glow.top-left { top: -20%; left: -10%; background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 60%); }
-.ambient-glow.bottom-right { bottom: -20%; right: -10%; }
+.ambient-glow.top-left { 
+  top: -30%; 
+  left: -20%; 
+  background: radial-gradient(circle at center, var(--accent-cyan) 0%, transparent 70%); 
+}
+.ambient-glow.bottom-right { 
+  bottom: -30%; 
+  right: -20%; 
+}
 
 @keyframes pulseGlow {
-  0% { opacity: 0.1; transform: scale(1); }
-  100% { opacity: 0.2; transform: scale(1.1); }
+  0% { opacity: 0.1; transform: scale(1) translate(0, 0); }
+  50% { opacity: 0.15; transform: scale(1.1) translate(5%, 5%); }
+  100% { opacity: 0.1; transform: scale(1) translate(0, 0); }
 }
 
 /* === HERO SECTION LAYOUT === */
@@ -363,4 +376,120 @@ body {
     width: clamp(200px, 60vw, 300px);
     padding: 2rem;
   }
+}
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] {
+  /* Override des variables pour le light mode */
+  --primary-dark: #FFFFFF;    /* Blanc au lieu de noir profond */
+  --primary-blue: #00093D;    /* Blue foncé au lieu de bleu clair */
+  --accent-glow: #5B7CFF;     /* Bleu clair pour les accents */
+  --accent-cyan: #0284C7;     /* Bleu plus intense en light mode */
+  --text-main: #00093D;       /* Bleu foncé pour le texte principal */
+  --text-muted: #475569;      /* Gris-bleu pour le texte secondaire */
+  
+  --glass-bg: rgba(0, 9, 61, 0.03);    /* Bleu foncé translucide */
+  --glass-border: rgba(0, 9, 61, 0.1); /* Bordure bleu foncé */
+  --glass-blur: 12px;
+}
+
+[data-theme="light"] body {
+  background: var(--primary-dark);
+  color: var(--text-main);
+}
+
+[data-theme="light"] .home-container {
+  background: #FFFFFF;
+  color: var(--text-main);
+}
+
+[data-theme="light"] .brand-title {
+  background: linear-gradient(180deg, #00093D 0%, #5B7CFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .hero-badge {
+  background: rgba(2, 132, 199, 0.1);
+  border-color: rgba(2, 132, 199, 0.2);
+}
+
+[data-theme="light"] .badge-dot {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+[data-theme="light"] .badge-text {
+  color: var(--accent-cyan);
+}
+
+[data-theme="light"] .tagline-container {
+  color: var(--accent-cyan);
+}
+
+[data-theme="light"] .tagline-cursor {
+  background-color: var(--accent-cyan);
+}
+
+[data-theme="light"] .btn-primary {
+  background: rgba(0, 9, 61, 0.1);
+  color: var(--text-main);
+  border-color: rgba(0, 9, 61, 0.2);
+}
+
+[data-theme="light"] .btn-primary:hover {
+  background: rgba(0, 9, 61, 0.15);
+  border-color: rgba(0, 9, 61, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(91, 124, 255, 0.5);
+}
+
+[data-theme="light"] .btn-secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  color: var(--text-main);
+  background: rgba(0, 9, 61, 0.05);
+}
+
+[data-theme="light"] .logo-glass-card {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 9, 61, 0.2),
+    inset 0 0 0 1px rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .logo-glass-card::after {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 9, 61, 0.05), transparent 70%);
+}
+
+[data-theme="light"] .hero-logo {
+  filter: drop-shadow(0 0 20px rgba(91, 124, 255, 0.2));
+}
+
+[data-theme="light"] .scroll-mouse {
+  border-color: rgba(0, 9, 61, 0.2);
+}
+
+[data-theme="light"] .scroll-wheel {
+  background: var(--text-main);
+}
+
+[data-theme="light"] .scroll-mouse:hover {
+  border-color: var(--accent-cyan);
+}
+
+[data-theme="light"] .ambient-glow {
+  opacity: 0.1;
+}
+
+[data-theme="light"] .ambient-glow.top-left {
+  background: radial-gradient(circle, #5B7CFF 0%, transparent 60%);
+}
+
+[data-theme="light"] .constellation-canvas {
+  mix-blend-mode: multiply;
 }

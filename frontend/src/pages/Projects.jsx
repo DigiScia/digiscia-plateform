@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { 
   FaRocket, 
   FaCheckCircle, 
@@ -12,22 +13,12 @@ import media from "../assets/projects/media.png";
 
 // === STYLES CSS (Monochrome Premium) ===
 const styles = `
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 
 :root {
-  --bg-deep: #00093D;
-  --text-white: #FFFFFF;
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-bg: rgba(255, 255, 255, 0.02);
-  --glass-hover: rgba(255, 255, 255, 0.05);
-  --text-muted: rgba(255, 255, 255, 0.7);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--bg-deep);
+  background: var(--bg-primary);
   color: var(--text-white);
   overflow-x: hidden;
 }
@@ -36,7 +27,7 @@ body {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: var(--bg-deep);
+  background: var(--bg-primary);
   padding: clamp(4rem, 6vw, 8rem) clamp(1rem, 4vw, 2rem);
   
   /* Texture Grille Subtile */
@@ -50,14 +41,14 @@ body {
 .ambient-glow {
   position: fixed;
   top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80vw;
-  height: 60vh;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  filter: blur(100px);
-  pointer-events: none;
+  left: -20%;
+  width: 140vw;
+  height: 140vh;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  filter: blur(150px);
   z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .projects-content {
@@ -265,6 +256,10 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.loading-text {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 /* ANIMATIONS */
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-20px); }
@@ -283,53 +278,120 @@ body {
   .projects-grid { grid-template-columns: 1fr; }
   .projects-title { font-size: 2.5rem; }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] {
+  --bg-deep: #FFFFFF;
+  --text-white: #00093D;
+  --glass-border: rgba(0, 9, 61, 0.15);
+  --glass-bg: rgba(0, 9, 61, 0.02);
+  --glass-hover: rgba(0, 9, 61, 0.05);
+  --text-muted: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] body {
+  background: var(--bg-deep);
+  color: var(--text-white);
+}
+
+[data-theme="light"] .projects-section {
+  background: var(--bg-deep);
+  background-image: 
+    linear-gradient(rgba(0, 9, 61, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.03) 1px, transparent 1px);
+}
+
+[data-theme="light"] .ambient-glow {
+  background: radial-gradient(circle, rgba(0, 9, 61, 0.08) 0%, transparent 70%);
+}
+
+[data-theme="light"] .badge-pill {
+  color: var(--text-white);
+  background: rgba(0, 9, 61, 0.1);
+  border-color: rgba(0, 9, 61, 0.25);
+}
+
+[data-theme="light"] .projects-title {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .project-card {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+[data-theme="light"] .project-card:hover {
+  background: var(--glass-hover);
+  border-color: var(--text-white);
+}
+
+[data-theme="light"] .project-title {
+  color: var(--text-white);
+}
+
+[data-theme="light"] .project-description {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .project-features {
+  color: var(--text-muted);
+}
+
+[data-theme="light"] .feature-tag {
+  background: rgba(0, 9, 61, 0.05);
+  color: var(--text-white);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .project-link {
+  color: var(--text-white);
+  border-color: var(--glass-border);
+}
+
+[data-theme="light"] .project-link:hover {
+  background: rgba(0, 9, 61, 0.1);
+  border-color: var(--text-white);
+}
+
+[data-theme="light"] .project-link-btn:hover {
+  background: #00093D;
+  color: #FFFFFF;
+  border-color: #00093D;
+}
+
+[data-theme="light"] .loading-spinner {
+  border-color: rgba(0, 9, 61, 0.1);
+  border-top-color: #00093D;
+}
+
+[data-theme="light"] .loading-text {
+  color: rgba(0, 9, 61, 0.7);
+}
 `;
 
-// Données fictives (avec liens ajoutés)
-const mockProjects = [
-  {
-    id: 1,
-    title: "DigiScia Academy",
-    description: "Notre EdTech innovante pour former la prochaine génération d'experts en Data & IA avec une approche pédagogique pratique et immersive.",
-    category: "Éducation",
-    image: academy,
-    link: "https://academy.digiscia.com" 
-  },
-  {
-    id: 2,
-    title: "DigiScia Media",
-    description: "Suivez l'actualité du secteur de l'IA et de la Data.",
-    category: "Media",
-    image: media,
-    link: "https://media.digiscia.com" 
-  },
-  // {
-  //   id: 2,
-  //   title: "DataEcho Hub",
-  //   description: "Tableaux de bord temps réel pour le pilotage stratégique des KPIs industriels.",
-  //   category: "Business Intelligence",
-  //   image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop&q=80",
-  //   link: "#"
-  // },
-  // {
-  //   id: 3,
-  //   title: "SecureLake",
-  //   description: "Architecture Data Lake souveraine pour centraliser et sécuriser les données sensibles.",
-  //   category: "Infrastructure",
-  //   image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop&q=80",
-  //   link: "#"
-  // },
-  // {
-  //   id: 4,
-  //   title: "AgriTech IA",
-  //   description: "Modèles prédictifs pour optimiser les rendements agricoles et la gestion des ressources.",
-  //   category: "IA Appliquée",
-  //   image: "https://images.unsplash.com/photo-1625246333195-58f214f76328?w=800&h=600&fit=crop&q=80",
-  //   link: "#"
-  // }
-];
-
 function Projects() {
+  const { t } = useTranslation();
+  
+  // Données fictives (avec liens ajoutés) - Traduit via useMemo pour la réactivité
+  const mockProjects = useMemo(() => [
+    {
+      id: 1,
+      title: t('projects.items.academy.title'),
+      description: t('projects.items.academy.desc'),
+      category: t('projects.items.academy.cat'),
+      image: academy,
+      link: "https://academy.digiscia.com" 
+    },
+    {
+      id: 2,
+      title: t('projects.items.media.title'),
+      description: t('projects.items.media.desc'),
+      category: t('projects.items.media.cat'),
+      image: media,
+      link: "https://media.digiscia.com" 
+    }
+  ], [t]);
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -354,11 +416,10 @@ function Projects() {
           
           {/* HEADER */}
           <header className="projects-header">
-            <span className="badge-pill">Portfolio & Réalisations</span>
-            <h1 className="projects-title">Nos Projets et Réalisations</h1>
+            <span className="badge-pill">{t('projects.badge')}</span>
+            <h1 className="projects-title">{t('projects.title')}</h1>
             <p className="projects-subtitle">
-              Une sélection de nos projets où la donnée rencontre la performance.
-              Des solutions concrètes pour des défis complexes.
+              {t('projects.subtitle')}
             </p>
           </header>
 
@@ -368,7 +429,7 @@ function Projects() {
             {loading ? (
               <div className="loading-container">
                 <div className="loading-spinner"></div>
-                <p style={{color: 'rgba(255,255,255,0.7)'}}>Chargement des projets...</p>
+                <p className="loading-text">{t('projects.loading')}</p>
               </div>
             ) : (
               projects.map((project, index) => (
@@ -404,7 +465,7 @@ function Projects() {
                       rel="noopener noreferrer"
                       className="project-link-btn"
                     >
-                      Voir le projet <FaExternalLinkAlt size={14} />
+                      {t('projects.viewProject')} <FaExternalLinkAlt size={14} />
                     </a>
                   </div>
                 </article>

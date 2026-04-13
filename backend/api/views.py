@@ -7,6 +7,8 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.reverse import reverse
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .permissions import IsAdminOrCommunityManager, IsContentManager
 from .models import UserPerso, Services, News, NewsLetterSuscribers
@@ -394,3 +396,56 @@ class NewsLetterSuscribersDetailAPIView(generics.RetrieveDestroyAPIView):
     serializer_class = NewsLetterSuscriberSerializer
     authentication_classes = [JWTAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated, IsAdminOrCommunityManager]
+
+
+# ============================================
+# CONTACT FORM
+# ============================================
+class ContactAPIView(APIView):
+    """
+    Endpoint pour recevoir le formulaire de contact
+    Envoie un email via SMTP
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email', '')
+        telephone = request.data.get('telephone', '')
+        subject = request.data.get('subject', 'Nouveau message de contact')
+        message = request.data.get('message', '')
+
+        if not email or not message or not telephone:
+            return Response(
+                {"error": "L'email, le téléphone et le message sont requis."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Construction du mail pour l'administrateur
+        full_message = f"""
+        Nouveau message de contact reçu de DigiScia Plateforme:
+        
+        Sujet: {subject}
+        Email: {email}
+        Téléphone: {telephone}
+        
+        Message:
+        {message}
+        """
+
+        try:
+            send_mail(
+                subject=f"Contact Web: {subject}",
+                message=full_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL_RECIPIENT],
+                fail_silently=False,
+            )
+            return Response(
+                {"message": "Votre message a été envoyé avec succès !"},
+                status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            return Response(
+                {"error": f"Erreur lors de l'envoi : {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

@@ -1,21 +1,26 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "../../context/ThemeContext.jsx";
 import LanguageSelector from "../LanguageSelector";
 import "./Header.css";
 
 function Header() {
   const { t } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("dark");
-  const [scrolled, setScrolled] = useState(false); // Pour l'effet au scroll
+  const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Initialisation du thème
+  // Initialisation du thème depuis localStorage (pour la synchronisation avec d'autres onglets)
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "dark";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  }, []);
+    if (savedTheme !== theme) {
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  }, [theme]);
 
   // Gestion du scroll pour l'effet de fond
   useEffect(() => {
@@ -27,15 +32,19 @@ function Header() {
   }, []);
 
   // Toggle thème
-  const toggleTheme = useCallback(() => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  }, [theme]);
+  const handleToggleTheme = useCallback(() => {
+    toggleTheme();
+  }, [toggleTheme]);
 
-  // Navigation fluide
+  // Navigation fluide (améliorée pour gérer le cross-page)
   const handleNavClick = useCallback((id) => {
+    // Si on n'est pas sur la page d'accueil
+    if (location.pathname !== "/") {
+      navigate(`/?scrollTo=${id}`);
+      setMenuOpen(false);
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -43,7 +52,7 @@ function Header() {
         setMenuOpen(false);
       }
     }
-  }, []);
+  }, [location.pathname, navigate]);
 
   // Fermeture au clic dehors
   useEffect(() => {
@@ -70,9 +79,13 @@ function Header() {
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''}`}>
       {/* 1. Logo */}
-      <a href="#home" className="header-logo" onClick={(e) => {
+      <a href="/" className="header-logo" onClick={(e) => {
         e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (location.pathname !== "/") {
+          navigate("/");
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }}>
         DigiScia
       </a>
@@ -109,7 +122,7 @@ function Header() {
             id="themeToggle"
             type="checkbox"
             checked={theme === "light"}
-            onChange={toggleTheme}
+            onChange={handleToggleTheme}
             aria-label="Basculer thème sombre/clair"
           />
           <span className="slider"></span>

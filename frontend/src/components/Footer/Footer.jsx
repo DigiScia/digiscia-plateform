@@ -1,10 +1,12 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import "./Footer.css"; 
 // Vous pouvez remplacer ces SVGs par des icônes de react-icons pour alléger le code
 import { FaLinkedinIn, FaInstagram, FaFacebookF, FaDiscord } from "react-icons/fa";
 import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
 
 function Footer() {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -46,13 +48,13 @@ function Footer() {
               <span className="footer-logo-text">DigiScia.</span>
             </div>
             <p className="footer-description">
-              Excellence en solutions numériques. Nous transformons vos idées en réalité digitale avec une expertise de pointe en Data, IA et Développement.
+              {t('footer.description')}
             </p>
           </div>
 
           {/* 2. Coordonnées */}
           <div className="footer-section">
-            <h3 className="footer-title">Nous contacter</h3>
+            <h3 className="footer-title">{t('footer.contactTitle')}</h3>
             {contactInfo.map((item, index) => (
               <div key={index} className="contact-item">
                 <span className="contact-icon">{item.icon}</span>
@@ -71,7 +73,7 @@ function Footer() {
 
           {/* 3. Réseaux Sociaux */}
           <div className="footer-section">
-            <h3 className="footer-title">Suivez-nous</h3>
+            <h3 className="footer-title">{t('footer.followTitle')}</h3>
             <div className="social-links">
               {socialLinks.map((social) => (
                 <a
@@ -95,12 +97,12 @@ function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-copyright">
-            © {currentYear} DigiScia. Tous droits réservés.
+            © {currentYear} DigiScia. {t('footer.rights')}
           </div>
           <div className="footer-links">
-            <a href="#privacy" className="footer-link">Confidentialité</a>
-            <a href="#terms" className="footer-link">Conditions</a>
-            <a href="#legal" className="footer-link">Mentions légales</a>
+            <a href="#privacy" className="footer-link">{t('footer.privacy')}</a>
+            <a href="#terms" className="footer-link">{t('footer.terms')}</a>
+            <a href="#legal" className="footer-link">{t('footer.legal')}</a>
           </div>
         </div>
 

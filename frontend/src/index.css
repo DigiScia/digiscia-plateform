@@ -25,8 +25,8 @@
 
   /* DigiScia Brand Colors */
   --digiscia-primary: #5B7CFF;
-  --digiscia-dark-bg: #00093D;
-  --digiscia-dark-surface: #0A1854;
+  --digiscia-dark-bg: #000828;
+  --digiscia-dark-surface: #0c1236;
   --digiscia-light-bg: #FFFFFF;
   --digiscia-light-surface: #F9FAFB;
 
@@ -99,16 +99,25 @@
 
 /* Controlled Light Mode Theme (via toggle) */
 [data-theme="light"] {
-  --bg-primary: var(--digiscia-light-bg);
-  --bg-secondary: var(--digiscia-light-surface);
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F7;
   --bg-accent: #E5E7EB;
-  --text-primary: #111827;
-  --text-secondary: #6B7280;
-  --text-tertiary: #9CA3AF;
+  --text-primary: #00093D;
+  --text-secondary: #475569;
+  --text-tertiary: #64748B;
   --accent-color: var(--digiscia-primary);
   --accent-hover: #747bff;
-  --border-color: #E5E7EB;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-color: rgba(0, 9, 61, 0.1);
+  --shadow-color: rgba(0, 9, 61, 0.1);
+
+  /* Legacy variables */
+  --color-text: #00093D;
+  --color-bg: #FFFFFF;
+  --color-surface: #F9FAFB;
+  --color-primary: #5B7CFF;
+  --color-primary-hover: #747bff;
+  --color-border: rgba(0, 9, 61, 0.1);
+  --color-shadow: rgba(0, 9, 61, 0.1);
 }
 
 /* Auto Dark Mode (system preference) - Fallback only */

@@ -1,23 +1,27 @@
 /* Variables (compatibles avec les autres pages) */
 :root {
-  --primary-color: #0a0a45;
-  --secondary-color: #ffffff;
-  --accent-color: #64ffda;
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --light-gray: #f5f5f5;
-  --border-color: rgba(10, 10, 69, 0.1);
+  --bg-deep: var(--bg-primary);
+  --text-white: #FFFFFF;
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-hover: rgba(255, 255, 255, 0.05);
+  --text-muted: rgba(255, 255, 255, 0.7);
   --transition-speed: 0.3s;
-  --border-radius: 8px;
-  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --border-radius: 20px;
 }
 
 /* Style de base pour la page article */
 .article-page {
   width: 100%;
-  background-color: var(--light-gray);
-  padding: clamp(1rem, 5vw, 3rem) 0;
-  min-height: 80vh;
+  background-color: var(--bg-deep);
+  /* Texture Grille Standard DigiScia 50px */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  /* Compenser le header fixe */
+  padding: calc(var(--header-height, 80px) + 3rem) 0 5rem;
+  min-height: 100vh;
 }
 
 /* Nouvelles classes pour pleine largeur */
@@ -42,12 +46,14 @@
 }
 
 .article-content {
-  background-color: var(--secondary-color);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  padding: clamp(1.5rem, 5vw, 3rem);
-  margin-bottom: 2rem;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  margin-bottom: 3rem;
   width: 100%;
+  color: var(--text-white);
 }
 
 /* Bouton retour mobile */
@@ -59,7 +65,7 @@
 .back-button {
   background: none;
   border: none;
-  color: var(--primary-color);
+  color: var(--text-white);
   font-family: 'Rajdhani', sans-serif;
   font-size: 1rem;
   font-weight: 600;
@@ -85,7 +91,7 @@
 .article-title {
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.8rem, 5vw, 3rem);
-  color: var(--primary-color);
+  color: var(--text-white);
   margin-bottom: 0.8rem;
   line-height: 1.2;
 }
@@ -93,7 +99,7 @@
 .article-date {
   font-family: 'Rajdhani', sans-serif;
   font-size: 1.1rem;
-  color: #666;
+  color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
 
@@ -101,7 +107,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 1.1rem;
   font-style: italic;
-  color: #555;
+  color: var(--text-muted);
 }
 
 /* Image principale */
@@ -131,21 +137,21 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: clamp(1rem, 3vw, 1.1rem);
   line-height: 1.6;
-  color: var(--text-color);
+  color: var(--text-muted);
   margin-bottom: 2.5rem;
   width: 100%;
 }
 
 .article-body h2 {
   font-family: 'Orbitron', sans-serif;
-  color: var(--primary-color);
+  color: var(--text-white);
   margin: 1.8rem 0 1rem;
   font-size: clamp(1.4rem, 4vw, 1.8rem);
 }
 
 .article-body h3 {
   font-family: 'Orbitron', sans-serif;
-  color: var(--primary-color);
+  color: var(--text-white);
   margin: 1.5rem 0 0.8rem;
   font-size: clamp(1.2rem, 3vw, 1.5rem);
 }
@@ -155,7 +161,7 @@
 }
 
 .article-body a {
-  color: var(--primary-color);
+  color: var(--text-white);
   text-decoration: underline;
   text-underline-offset: 2px;
   transition: color var(--transition-speed);
@@ -215,7 +221,7 @@
 
 .article-author, .article-tags {
   margin-bottom: 1rem;
-  color: #444;
+  color: var(--text-muted);
 }
 
 .tags-container {
@@ -236,7 +242,7 @@
 
 .tag-item:hover {
   background-color: var(--accent-color);
-  color: var(--primary-color);
+  color: var(--text-white);
 }
 
 /* Bouton de retour */
@@ -257,7 +263,7 @@
 
 .return-button:hover {
   background-color: var(--accent-color);
-  color: var(--primary-color);
+  color: var(--text-white);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -280,7 +286,7 @@
 
 .article-loading p {
   font-size: 1.2rem;
-  color: var(--primary-color);
+  color: var(--text-white);
   margin-top: 1rem;
 }
 
@@ -320,7 +326,7 @@
 .related-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.8rem;
-  color: var(--primary-color);
+  color: var(--text-white);
   margin-bottom: 1.5rem;
   text-align: center;
   width: 100%;
@@ -370,7 +376,7 @@
 .related-article-title {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.1rem;
-  color: var(--primary-color);
+  color: var(--text-white);
   margin-bottom: 0.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;

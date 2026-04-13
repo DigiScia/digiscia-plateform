@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useCallback, memo, useRef } from "react";
-import logoImage from "../assets/logobleu.jpg";
+import logoBluImage from "../assets/logobleu.jpg";
+import logoWhiteImage from "../assets/logoblanc.jpg";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "../context/ThemeContext.jsx";
 import "./Home.css";
 
 // --- Composant TaglineRotator ---
 const TaglineRotator = memo(() => {
+  const { t } = useTranslation();
   const texts = [
-    "Data Science",
-    "Intelligence Artificielle",
-    "Automatisation",
-    "Business Intelligence",
-    "Sécurité des Données",
-    "Solutions Web & Mobile"
+    t('home.taglines.ds'),
+    t('home.taglines.cyber'),
+    t('home.taglines.ai'),
+    t('home.taglines.data'),
+    t('home.taglines.web'),
+    t('home.taglines.cloud')
   ];
 
   const [index, setIndex] = useState(0);
@@ -65,7 +69,10 @@ TaglineRotator.displayName = "TaglineRotator";
 
 // --- Composant Home Principal ---
 function Home() {
+  const { t } = useTranslation();
   const canvasRef = useRef(null);
+  const { theme } = useTheme();
+  const logoImage = theme === 'light' ? logoWhiteImage : logoBluImage;
 
   // --- Animation Canvas (Particules subtiles) ---
   useEffect(() => {
@@ -77,6 +84,8 @@ function Home() {
     let width, height;
     let particles = [];
     const particleCount = window.innerWidth < 768 ? 30 : 60;
+    let animationId;
+    let isIntersecting = true;
     
     const resize = () => {
       width = canvas.width = window.innerWidth;
@@ -120,6 +129,7 @@ function Home() {
     };
 
     const animate = () => {
+      if (!isIntersecting) return;
       ctx.clearRect(0, 0, width, height);
       
       // Dessiner les connexions
@@ -144,18 +154,37 @@ function Home() {
           }
         }
       });
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
 
+    // duplicated init removed
+
     init();
-    animate();
+    
+    // Performance: Observer si le canvas est visible pour ne pas boucler l'animation dans le vide 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting) {
+          animate();
+        } else {
+          cancelAnimationFrame(animationId);
+        }
+      });
+    }, { threshold: 0.01 });
+
+    observer.observe(canvas);
     window.addEventListener('resize', init);
     
-    return () => window.removeEventListener('resize', init);
+    return () => {
+      window.removeEventListener('resize', init);
+      observer.disconnect();
+      cancelAnimationFrame(animationId);
+    };
   }, []);
 
   const handleSponsoringClick = useCallback(() => {
-    window.open('https://wa.me/212716990681', '_blank');
+    window.open('https://wa.me/212605109876', '_blank');
   }, []);
 
   const handleScrollClick = useCallback(() => {
@@ -176,26 +205,26 @@ function Home() {
           {/* Badge Status */}
           <div className="hero-badge">
             <span className="badge-dot"></span>
-            <span className="badge-text">ESN & Centre d'Innovation</span>
+            <span className="badge-text">{t('home.badge')}</span>
           </div>
 
           <h1 className="brand-title">DigiScia</h1>
           
           <h2 className="hero-subtitle">
-            Experts en <TaglineRotator />
+            {t('home.subtitle')} <TaglineRotator />
           </h2>
           
           <p style={{ color: '#94A3B8', fontSize: '1.1rem', marginBottom: '2rem', lineHeight: '1.6', maxWidth: '90%' }}>
-            Nous transformons vos données en leviers de croissance. Une approche sur-mesure pour propulser votre entreprise dans l'ère numérique.
+            {t('home.intro')}
           </p>
 
           <div className="cta-group">
             <button className="btn btn-primary" onClick={handleSponsoringClick}>
-              <span>Démarrer un projet</span>
+              <span>{t('home.ctaDevis')}</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
             <a href="#contacts" className="btn btn-secondary">
-              Nous contacter
+              {t('home.ctaContact')}
             </a>
           </div>
         </div>

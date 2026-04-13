@@ -1,0 +1,86 @@
+
+<div style="min-height:600px;background:#00093D;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-radius:16px;">
+
+  <div style="position:absolute;inset:0;pointer-events:none;">
+    <div style="position:absolute;top:-120px;left:-120px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(91,124,255,0.08) 0%,transparent 70%);"></div>
+    <div style="position:absolute;bottom:-100px;right:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(91,124,255,0.06) 0%,transparent 70%);"></div>
+    <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0M0 48V0" stroke="#fff" stroke-width="0.5" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.04);"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:520px;height:520px;border-radius:50%;border:0.5px solid rgba(255,255,255,0.06);"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:340px;height:340px;border-radius:50%;border:0.5px solid rgba(91,124,255,0.12);"></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;gap:0;text-align:center;z-index:2;padding:3rem;" id="splash-content">
+
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:2.5rem;">
+      <div style="width:56px;height:56px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="34" height="34" rx="8" fill="#fff"/>
+          <path d="M22 17c0 2.761-2.239 5-5 5s-5-2.239-5-5 2.239-5 5-5c1.38 0 2.63.559 3.535 1.465" stroke="#00093D" stroke-width="3" stroke-linecap="round"/>
+          <path d="M22 12v5h-5" stroke="#00093D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',system-ui,sans-serif;font-size:2.6rem;font-weight:700;color:#fff;letter-spacing:-1.5px;line-height:1;display:flex;align-items:center;gap:2px;">
+          Digi<span style="color:#5B7CFF;">Scia</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:1px;height:40px;background:linear-gradient(to bottom,transparent,rgba(91,124,255,0.6),transparent);margin-bottom:2rem;" id="divider-line"></div>
+
+    <p style="font-family:'Inter',system-ui,sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.4);letter-spacing:6px;text-transform:uppercase;margin:0 0 2.5rem;font-weight:500;" id="tagline">Excellence Digital Solutions</p>
+
+    <div style="position:relative;width:220px;height:2px;background:rgba(255,255,255,0.07);border-radius:99px;overflow:hidden;margin-bottom:2.5rem;">
+      <div id="progress-bar" style="position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,rgba(91,124,255,0.3),#5B7CFF,#8BA4FF);border-radius:99px;transition:width 0.05s linear;"></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;" id="status-row">
+      <div id="pulse-dot" style="width:6px;height:6px;background:#5B7CFF;border-radius:50%;"></div>
+      <span style="font-family:'Inter',system-ui,sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:3px;text-transform:uppercase;" id="status-text">Initializing</span>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Inter:wght@400;500&display=swap');
+  @keyframes pulseGlow {
+    0%,100%{opacity:0.5;transform:scale(1);}
+    50%{opacity:1;transform:scale(1.6);}
+  }
+  @keyframes fadeUp {
+    from{opacity:0;transform:translateY(8px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  #tagline{animation:fadeUp 0.8s ease 0.4s both;}
+  #status-row{animation:fadeUp 0.8s ease 0.6s both;}
+  #pulse-dot{animation:pulseGlow 2s infinite ease-in-out;}
+</style>
+
+<script>
+const bar = document.getElementById('progress-bar');
+const statusText = document.getElementById('status-text');
+const steps = [
+  {pct: 22, label: 'Loading assets'},
+  {pct: 55, label: 'Connecting'},
+  {pct: 78, label: 'Securing session'},
+  {pct: 100, label: 'Ready'},
+];
+let current = 0;
+let pct = 0;
+function tick() {
+  if(current >= steps.length) return;
+  const target = steps[current].pct;
+  if(pct < target) {
+    pct = Math.min(pct + 1, target);
+    bar.style.width = pct + '%';
+    setTimeout(tick, 18);
+  } else {
+    statusText.textContent = steps[current].label;
+    current++;
+    setTimeout(tick, 480);
+  }
+}
+setTimeout(tick, 700);
+</script>

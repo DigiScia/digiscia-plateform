@@ -9,16 +9,17 @@ import {
   FaCheck,
   FaTimes
 } from 'react-icons/fa';
+import { useTranslation } from "react-i18next";
 
 // === STYLES CSS (Monochrome Premium & Glassmorphism) ===
 const styles = `
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: #00093D;
+  background: var(--bg-primary);
   color: #FFFFFF;
   overflow-x: hidden;
 }
@@ -27,7 +28,7 @@ body {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background: #00093D;
+  background: var(--bg-primary);
   padding: clamp(4rem, 6vw, 8rem) clamp(1rem, 4vw, 2rem);
   overflow: hidden;
   
@@ -39,18 +40,17 @@ body {
 }
 
 /* Effets de lumière d'ambiance */
-.ambient-glow {
+.services-glow {
   position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80vw;
-  height: 60vh;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-  filter: blur(100px);
-  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(91, 124, 255, 0.12) 0%, transparent 75%);
+  filter: blur(120px);
   z-index: 0;
+  pointer-events: none;
 }
+.services-glow--1 { top: -20%; left: -20%; }
+.services-glow--2 { bottom: -20%; right: -20%; }
 
 .services-container {
   position: relative;
@@ -318,95 +318,134 @@ body {
   .services-title { font-size: 2.5rem; }
   .modal-content { padding: 1.5rem; }
 }
-`;
 
-// === DONNÉES DES SERVICES ===
-const servicesData = [
-  {
-    id: "web-mobile",
-    title: "Développement Web & Mobile",
-    category: "Engineering",
-    description: "Des applications sur-mesure, performantes et évolutives qui transforment l'expérience de vos utilisateurs.",
-    icon: <FaLaptopCode />,
-    fullDescription: "Dans un monde digital-first, votre présence numérique est votre vitrine principale. Nous ne nous contentons pas d'écrire du code ; nous architecturons des écosystèmes digitaux complets. Que ce soit pour une application métier complexe ou une plateforme grand public, nous allions performance technique, sécurité robuste et design centré utilisateur.",
-    features: [
-      "Architectures Modernes (React, Vue, Node.js)",
-      "Applications Mobiles Cross-Platform (React Native)",
-      "Progressive Web Apps (PWA)",
-      "Refonte UX/UI & Design System",
-      "API REST & GraphQL Scalables"
-    ],
-    useCases: "Plateformes SaaS, Marketplaces, Portails clients sécurisés, MVP pour Startups."
-  },
-  {
-    id: "ai",
-    title: "IA & Data Science",
-    category: "Innovation",
-    description: "Passez de la donnée brute à la prédiction stratégique. Automatisez l'intelligence de votre entreprise.",
-    icon: <FaBrain />,
-    fullDescription: "L'intelligence artificielle n'est plus de la science-fiction, c'est un levier de compétitivité immédiat. Nos Data Scientists transforment vos gisements de données en algorithmes prédictifs puissants. Nous vous aidons à anticiper les tendances, automatiser les tâches cognitives répétitives et personnaliser l'expérience de vos clients à grande échelle.",
-    features: [
-      "Machine Learning & Deep Learning",
-      "Traitement du Langage Naturel (NLP/LLM)",
-      "Vision par Ordinateur (Computer Vision)",
-      "Systèmes de Recommandation",
-      "Maintenance Prédictive"
-    ],
-    useCases: "Chatbots intelligents, Détection de fraude, Analyse de sentiment, Optimisation logistique."
-  },
-  {
-    id: "data-eng",
-    title: "Ingénierie des Données",
-    category: "Infrastructure",
-    description: "Construisez le socle de votre stratégie data. Pipelines robustes, qualité garantie et gouvernance maîtrisée.",
-    icon: <FaDatabase />,
-    fullDescription: "Une stratégie IA efficace repose sur des données saines. Nous construisons les autoroutes de l'information de votre entreprise. De l'ingestion à la mise à disposition, nous concevons des architectures de données (Data Lakes, Warehouses) sécurisées, conformes et capables de traiter des volumes massifs en temps réel.",
-    features: [
-      "Architecture Data Lake & Warehouse",
-      "Pipelines ETL/ELT temps réel",
-      "Gouvernance & Qualité des données (DQM)",
-      "Conformité RGPD & Sécurité",
-      "Migration Cloud (AWS, Azure, GCP)"
-    ],
-    useCases: "Centralisation des données (Single Source of Truth), Nettoyage de bases de données, Migration Legacy."
-  },
-  {
-    id: "bi",
-    title: "Business Intelligence",
-    category: "Analytics",
-    description: "Visualisez pour décider. Des tableaux de bord interactifs qui racontent l'histoire de votre performance.",
-    icon: <FaChartLine />,
-    fullDescription: "Ne conduisez plus à l'aveugle. Nous transformons la complexité de vos métriques en visualisations claires et actionnables. Nos experts BI conçoivent des outils d'aide à la décision qui permettent à vos équipes, du management à l'opérationnel, de suivre les KPIs essentiels et de réagir instantanément aux évolutions du marché.",
-    features: [
-      "Tableaux de bord interactifs (PowerBI, Tableau)",
-      "Storytelling de données",
-      "Reporting automatisé",
-      "Analyse de performance 360°",
-      "Formation à la culture Data"
-    ],
-    useCases: "Pilotage commercial, Suivi financier, Monitoring RH, Analyse de performance marketing."
-  },
-  // MISE À JOUR : AUTOMATISATION MÉTIER & AGENTS
-  {
-    id: "automatisation",
-    title: "Automatisation & Agents IA",
-    category: "Productivité",
-    description: "Libérez vos équipes des tâches répétitives grâce à des agents autonomes et des workflows intelligents.",
-    icon: <FaRobot />,
-    fullDescription: "Boostez votre efficacité opérationnelle en déléguant les processus métiers complexes à nos solutions d'automatisation. Nous déployons des architectures hybrides combinant la fiabilité des scripts programmés (Crons), la connectivité des APIs et l'intelligence des Agents IA capables de prendre des décisions et d'agir. Votre entreprise tourne 24/7, sans erreur humaine.",
-    features: [
-      "Agents IA Autonomes & Chatbots",
-      "Orchestration de tâches planifiées (Crons, Queues)",
-      "Intégration API & Webhooks sur-mesure",
-      "Traitement Intelligent de Documents (OCR/IDP)",
-      "Workflows Multi-plateformes (CRM, ERP, Slack)"
-    ],
-    useCases: "Qualification automatique de leads, Traitement de factures, Support client niveau 1, Synchronisation de stocks."
-  }
-];
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] body {
+  background: #FFFFFF;
+  color: #00093D;
+}
+
+[data-theme="light"] .services-section {
+  background: #FFFFFF;
+  background-image: 
+    linear-gradient(rgba(0, 9, 61, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.03) 1px, transparent 1px);
+}
+
+[data-theme="light"] .ambient-glow {
+  background: radial-gradient(circle, rgba(0, 9, 61, 0.08) 0%, transparent 70%);
+}
+
+[data-theme="light"] .badge-pill {
+  color: #00093D;
+  background: rgba(0, 9, 61, 0.1);
+  border-color: rgba(0, 9, 61, 0.25);
+}
+
+[data-theme="light"] .services-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .services-subtitle {
+  color: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .service-card {
+  background: rgba(0, 9, 61, 0.02);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .service-card:hover {
+  background: rgba(0, 9, 61, 0.05);
+  border-color: rgba(0, 9, 61, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .service-icon-wrapper {
+  background: rgba(0, 9, 61, 0.05);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .service-icon {
+  color: #00093D;
+}
+
+[data-theme="light"] .service-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .service-desc {
+  color: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .service-cat {
+  color: rgba(0, 9, 61, 0.5);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .service-link {
+  color: #00093D;
+}
+
+[data-theme="light"] .service-icon-wrapper {
+  background: rgba(0, 9, 61, 0.05);
+  border-color: rgba(0, 9, 61, 0.1);
+  color: #00093D;
+}
+
+[data-theme="light"] .check-icon {
+  color: #00093D;
+}
+
+[data-theme="light"] .skeleton {
+  background: rgba(0, 9, 61, 0.03);
+}
+
+[data-theme="light"] .modal-content {
+  background: #FFFFFF;
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .modal-header {
+  color: #00093D;
+  border-bottom-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .modal-body {
+  color: #00093D;
+}
+
+[data-theme="light"] .close-btn:hover {
+  background: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .service-card:hover .service-icon-wrapper {
+  background: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .modal-cat {
+  color: rgba(0, 9, 61, 0.5) !important;
+}
+
+[data-theme="light"] .modal-usecases {
+  color: #00093D;
+}
+
+[data-theme="light"] .feature-item {
+  color: #00093D;
+}
+
+[data-theme="light"] .check-icon {
+  color: #00093D !important;
+}
+`;
 
 // === COMPOSANT MODAL ===
 const ServiceModal = ({ service, onClose }) => {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     const handleEsc = (e) => e.key === 'Escape' && onClose();
     window.addEventListener('keydown', handleEsc);
@@ -420,7 +459,7 @@ const ServiceModal = ({ service, onClose }) => {
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span style={{color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem', textTransform: 'uppercase'}}>{service.category}</span>
+            <span className="modal-cat" style={{fontSize: '0.8rem', textTransform: 'uppercase'}}>{service.category}</span>
             <h3 className="modal-title">{service.title}</h3>
           </div>
           <button className="close-btn" onClick={onClose}><FaTimes /></button>
@@ -429,7 +468,7 @@ const ServiceModal = ({ service, onClose }) => {
         <div className="modal-body">
           <p className="modal-intro">{service.fullDescription}</p>
           
-          <h4 className="modal-subtitle">Expertises Clés</h4>
+          <h4 className="modal-subtitle">{t('services.modal.expertise')}</h4>
           <ul className="features-list">
             {service.features.map((feature, idx) => (
               <li key={idx} className="feature-item">
@@ -438,8 +477,8 @@ const ServiceModal = ({ service, onClose }) => {
             ))}
           </ul>
 
-          <h4 className="modal-subtitle">Cas d'usage</h4>
-          <p style={{fontStyle: 'italic', opacity: 0.8}}>{service.useCases}</p>
+          <h4 className="modal-subtitle">{t('services.modal.usecases')}</h4>
+          <p style={{fontStyle: 'italic', opacity: 0.8}} className="modal-usecases">{service.useCases}</p>
         </div>
       </div>
     </div>
@@ -448,8 +487,63 @@ const ServiceModal = ({ service, onClose }) => {
 
 // === COMPOSANT PRINCIPAL ===
 function Services() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [selectedService, setSelectedService] = useState(null);
+
+  // === DONNÉES DES SERVICES (Traduit) ===
+  const servicesData = [
+    {
+      id: "web-mobile",
+      title: t('services.items.web.title'),
+      category: t('services.items.web.cat'),
+      description: t('services.items.web.desc'),
+      icon: <FaLaptopCode />,
+      fullDescription: t('services.items.web.full'),
+      features: t('services.items.web.features', { returnObjects: true }),
+      useCases: t('services.items.web.cases')
+    },
+    {
+      id: "ai",
+      title: t('services.items.ai.title'),
+      category: t('services.items.ai.cat'),
+      description: t('services.items.ai.desc'),
+      icon: <FaBrain />,
+      fullDescription: t('services.items.ai.full'),
+      features: t('services.items.ai.features', { returnObjects: true }),
+      useCases: t('services.items.ai.cases')
+    },
+    {
+      id: "data-eng",
+      title: t('services.items.data.title'),
+      category: t('services.items.data.cat'),
+      description: t('services.items.data.desc'),
+      icon: <FaDatabase />,
+      fullDescription: t('services.items.data.full'),
+      features: t('services.items.data.features', { returnObjects: true }),
+      useCases: t('services.items.data.cases')
+    },
+    {
+      id: "bi",
+      title: t('services.items.bi.title'),
+      category: t('services.items.bi.cat'),
+      description: t('services.items.bi.desc'),
+      icon: <FaChartLine />,
+      fullDescription: t('services.items.bi.full'),
+      features: t('services.items.bi.features', { returnObjects: true }),
+      useCases: t('services.items.bi.cases')
+    },
+    {
+      id: "automatisation",
+      title: t('services.items.auto.title'),
+      category: t('services.items.auto.cat'),
+      description: t('services.items.auto.desc'),
+      icon: <FaRobot />,
+      fullDescription: t('services.items.auto.full'),
+      features: t('services.items.auto.features', { returnObjects: true }),
+      useCases: t('services.items.auto.cases')
+    }
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -465,10 +559,10 @@ function Services() {
         <div className="services-container">
           {/* HEADER */}
           <div className="services-header">
-            <span className="badge-pill">Savoir-Faire & Innovation</span>
-            <h2 className="services-title">Nos Domaines d'Expertise</h2>
+            <span className="badge-pill">{t('services.badge')}</span>
+            <h2 className="services-title">{t('services.title')}</h2>
             <p className="services-subtitle">
-              Nous combinons ingénierie logicielle rigoureuse et science des données avancée pour bâtir les fondations numériques de votre succès futur.
+              {t('services.subtitle')}
             </p>
           </div>
 
@@ -493,7 +587,7 @@ function Services() {
                   <h3 className="service-title">{service.title}</h3>
                   <p className="service-desc">{service.description}</p>
                   <span className="service-link">
-                    Explorer l'offre <FaArrowRight />
+                    {t('services.explore')} <FaArrowRight />
                   </span>
                 </div>
               ))
