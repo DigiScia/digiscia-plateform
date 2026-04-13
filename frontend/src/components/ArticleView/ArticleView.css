@@ -258,3 +258,65 @@
     font-size: 1rem;
   }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+/* ArticleView est conçu light-first. Overrides pour cohérence globale. */
+[data-theme="light"] .article-view-wrapper {
+  background-color: #FFFFFF;
+  color: #334155;
+}
+
+[data-theme="light"] .article-back-btn {
+  background-color: #F1F5F9;
+  color: #00093D;
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .article-back-btn:hover {
+  background-color: #00093D;
+  color: #FFFFFF;
+}
+
+/* === DARK MODE (data-theme="dark") === */
+/* ArticleView doit aussi s'adapter au dark mode */
+[data-theme="dark"] .article-view-wrapper {
+  background-color: #000828;
+  color: #B8C5E0;
+}
+
+[data-theme="dark"] .article-title {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .article-back-btn {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #B8C5E0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .article-back-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .article-content a {
+  color: #5B7CFF;
+}
+
+[data-theme="dark"] .article-content h2,
+[data-theme="dark"] .article-content h3 {
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .article-content {
+  color: #B8C5E0;
+}
+
+[data-theme="dark"] .article-image-container {
+  background-color: #0c1236;
+}
+
+[data-theme="dark"] .article-content blockquote {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: #FFFFFF;
+}

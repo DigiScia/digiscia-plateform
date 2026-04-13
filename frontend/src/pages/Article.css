@@ -447,3 +447,98 @@
     max-width: 1600px;
   }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] {
+  --bg-deep: #FFFFFF;
+  --text-white: #00093D;
+  --glass-border: rgba(0, 9, 61, 0.15);
+  --glass-bg: rgba(0, 9, 61, 0.02);
+  --glass-hover: rgba(0, 9, 61, 0.05);
+  --text-muted: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .article-page {
+  background-color: #FFFFFF;
+  background-image:
+    linear-gradient(rgba(0, 9, 61, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.02) 1px, transparent 1px);
+}
+
+[data-theme="light"] .article-content {
+  background: rgba(0, 9, 61, 0.02);
+  border-color: rgba(0, 9, 61, 0.15);
+  color: #00093D;
+}
+
+[data-theme="light"] .article-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .article-date,
+[data-theme="light"] .article-author-header {
+  color: rgba(0, 9, 61, 0.6);
+}
+
+[data-theme="light"] .article-body {
+  color: rgba(0, 9, 61, 0.7);
+}
+
+[data-theme="light"] .article-body h2,
+[data-theme="light"] .article-body h3 {
+  color: #00093D;
+}
+
+[data-theme="light"] .article-body a {
+  color: #5B7CFF;
+}
+
+[data-theme="light"] .back-button {
+  color: #00093D;
+}
+
+[data-theme="light"] .back-button:hover {
+  background-color: rgba(0, 9, 61, 0.05);
+}
+
+[data-theme="light"] .related-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .related-article-card {
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 9, 61, 0.08);
+}
+
+[data-theme="light"] .related-article-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .return-button {
+  background-color: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .return-button:hover {
+  background-color: #5B7CFF;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .article-loading p {
+  color: #00093D;
+}
+
+[data-theme="light"] .article-error,
+[data-theme="light"] .no-projects-message {
+  background-color: #FFFFFF;
+  color: #00093D;
+}
+
+[data-theme="light"] .error-message button {
+  background-color: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .error-message button:hover {
+  background-color: #5B7CFF;
+}

@@ -86,3 +86,17 @@
     opacity: 1;
   }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] .socialContainer {
+  background-color: rgba(0, 9, 61, 0.05);
+  border: 1px solid rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .socialSvg path {
+  fill: #00093D;
+}
+
+[data-theme="light"] .socialContainer:hover .socialSvg path {
+  fill: #FFFFFF;
+}

@@ -298,3 +298,67 @@
     font-size: 1.2rem;
   }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] .news-section {
+  background-color: #FFFFFF;
+  color: #00093D;
+}
+
+[data-theme="light"] .news-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .news-loading {
+  color: #00093D;
+}
+
+[data-theme="light"] .news-card {
+  background-color: #FFFFFF;
+  border-color: rgba(0, 9, 61, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 9, 61, 0.08);
+}
+
+[data-theme="light"] .news-card-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .news-card-date {
+  color: #475569;
+}
+
+[data-theme="light"] .carousel-nav {
+  background-color: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .newsletter-subscribe {
+  border-top-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .newsletter-email-input {
+  border-color: rgba(0, 9, 61, 0.2);
+  background-color: #FFFFFF;
+  color: #00093D;
+}
+
+[data-theme="light"] .subscribe-button {
+  background-color: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .subscribe-button:hover {
+  background-color: #5B7CFF;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .thank-you-message {
+  color: #00093D;
+  border-color: rgba(0, 9, 61, 0.2);
+  background-color: rgba(0, 9, 61, 0.04);
+}
+
+[data-theme="light"] .read-more-button {
+  background-color: #5B7CFF;
+  color: #FFFFFF;
+}

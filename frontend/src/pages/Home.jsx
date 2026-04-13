@@ -214,7 +214,7 @@ function Home() {
             {t('home.subtitle')} <TaglineRotator />
           </h2>
           
-          <p style={{ color: '#94A3B8', fontSize: '1.1rem', marginBottom: '2rem', lineHeight: '1.6', maxWidth: '90%' }}>
+          <p className="hero-intro">
             {t('home.intro')}
           </p>
 

@@ -80,6 +80,11 @@ body {
   backdrop-filter: blur(10px);
 }
 
+[data-theme="light"] .badge-pill {
+  background: rgba(0, 9, 61, 0.08);
+  border-color: rgba(0, 9, 61, 0.2);
+}
+
 .projects-title {
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
@@ -161,6 +166,7 @@ body {
   border-radius: 100px;
   font-size: 0.75rem;
   font-weight: 600;
+  color: #FFFFFF;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: flex;
@@ -173,7 +179,7 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: white;
+  background-color: #FFFFFF;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
@@ -230,9 +236,26 @@ body {
 }
 
 .project-link-btn:hover {
-  background: #FFFFFF;
-  color: var(--bg-deep); /* Texte devient bleu sur fond blanc */
-  border-color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-white);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="light"] .project-link-btn {
+  background: rgba(0, 9, 61, 0.04);
+  border-color: rgba(0, 9, 61, 0.2);
+}
+
+[data-theme="light"] .project-link-btn:hover {
+  background: #00093D;
+  color: #FFFFFF;
+  border-color: #00093D;
+}
+
+[data-theme="light"] .project-status-pill {
+  background: rgba(0, 9, 61, 0.85);
+  border-color: rgba(0, 9, 61, 0.3);
+  color: #FFFFFF;
 }
 
 /* LOADING & ERROR */

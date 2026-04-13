@@ -209,7 +209,7 @@
 
 .bento-card:hover .tech-pill {
   background: rgba(255, 255, 255, 0.15);
-  border-color: #FFFFFF;
+  border-color: var(--glass-border);
 }
 
 /* Stats (Focus Typographique) */
@@ -258,7 +258,7 @@
 }
 
 .value-card:hover {
-  border-top-color: #FFFFFF;
+  border-top-color: var(--text-white);
   background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
 }
 

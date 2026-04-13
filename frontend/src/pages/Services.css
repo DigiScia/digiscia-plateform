@@ -155,7 +155,7 @@
 .service-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-large);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .service-card:focus {
@@ -550,4 +550,49 @@
     background: white !important;
     border: 1px solid #ccc !important;
   }
+}
+
+/* ===== LIGHT MODE (data-theme="light") ===== */
+[data-theme="light"] .services-section {
+  background: linear-gradient(135deg, #F1F5FF 0%, #EFF4FF 100%);
+}
+
+[data-theme="light"] .services-section::before {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(91, 124, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(91, 124, 255, 0.08) 0%, transparent 50%);
+}
+
+[data-theme="light"] .services-title {
+  background: linear-gradient(135deg, #00093D 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .services-subtitle {
+  color: #475569;
+}
+
+[data-theme="light"] .services-badge {
+  background: rgba(255, 255, 255, 0.9);
+  color: #475569;
+}
+
+[data-theme="light"] .service-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .service-card:hover {
+  border-color: rgba(91, 124, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 9, 61, 0.12);
+}
+
+[data-theme="light"] .service-card-title {
+  color: #00093D;
+}
+
+[data-theme="light"] .service-card-description {
+  color: #475569;
 }

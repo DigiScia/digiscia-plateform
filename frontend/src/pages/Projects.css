@@ -430,3 +430,46 @@
     padding-bottom: max(var(--section-padding), env(safe-area-inset-bottom));
   }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] .projects-section {
+  background-color: #FFFFFF;
+}
+
+[data-theme="light"] .projects-title {
+  color: #0a0a45;
+}
+
+[data-theme="light"] .project-card {
+  background-color: #FFFFFF;
+  box-shadow: 0 5px 15px rgba(0, 9, 61, 0.08);
+}
+
+[data-theme="light"] .project-card h2 {
+  color: #00093D;
+}
+
+[data-theme="light"] .project-description {
+  color: #475569;
+}
+
+[data-theme="light"] .meta-item h3 {
+  color: #475569;
+  opacity: 1;
+}
+
+[data-theme="light"] .error-message,
+[data-theme="light"] .no-projects-message {
+  background-color: #FFFFFF;
+  color: #00093D;
+}
+
+[data-theme="light"] .error-message button {
+  background-color: #00093D;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .error-message button:hover {
+  background-color: #5B7CFF;
+  color: #FFFFFF;
+}

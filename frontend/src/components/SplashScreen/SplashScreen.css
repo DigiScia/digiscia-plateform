@@ -388,3 +388,34 @@
   .splash-bracket--bl { bottom: 16px; left: 16px; }
   .splash-bracket--br { bottom: 16px; right: 16px; }
 }
+
+/* === LIGHT MODE (data-theme="light") === */
+[data-theme="light"] .splash-screen {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] .splash-wordmark,
+[data-theme="light"] .splash-word-digi {
+  color: #00093D;
+}
+
+[data-theme="light"] .splash-loader-track {
+  background: rgba(0, 9, 61, 0.1);
+}
+
+[data-theme="light"] .splash-bracket::before,
+[data-theme="light"] .splash-bracket::after {
+  background: rgba(0, 9, 61, 0.15);
+}
+
+[data-theme="light"] .splash-footer {
+  color: rgba(0, 9, 61, 0.4);
+}
+
+[data-theme="light"] .splash-bg-grid {
+  background-image: radial-gradient(circle, rgba(0, 9, 61, 0.08) 1px, transparent 1px);
+}
+
+[data-theme="light"] .splash-sep-line {
+  background: linear-gradient(90deg, transparent, rgba(0, 9, 61, 0.15), transparent);
+}

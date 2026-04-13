@@ -47,6 +47,14 @@ body {
   background-size: 50px 50px;
 }
 
+[data-theme="light"] .home-container {
+  background-color: #FFFFFF;
+  background-image:
+    linear-gradient(rgba(0, 9, 61, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 9, 61, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
 /* Canvas des particules */
 .constellation-canvas {
   position: absolute;
@@ -173,6 +181,14 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
+}
+
+.hero-intro {
+  color: #94A3B8;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  max-width: 90%;
 }
 
 /* Effet Typing */
@@ -429,6 +445,10 @@ body {
 
 [data-theme="light"] .tagline-cursor {
   background-color: var(--accent-cyan);
+}
+
+[data-theme="light"] .hero-intro {
+  color: var(--text-muted);
 }
 
 [data-theme="light"] .btn-primary {

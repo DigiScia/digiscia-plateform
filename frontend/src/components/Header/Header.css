@@ -316,6 +316,11 @@ input:checked + .slider:before {
   color: var(--header-text);
 }
 
+[data-theme="light"] .header-navbar li:last-child a {
+  background: rgba(0, 9, 61, 0.05);
+  border-color: rgba(0, 9, 61, 0.2);
+}
+
 [data-theme="light"] .header-menu-toggle {
   background: rgba(0, 9, 61, 0.1);
   border-color: rgba(0, 9, 61, 0.2);
