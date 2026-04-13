@@ -419,3 +419,7 @@
 [data-theme="light"] .splash-sep-line {
   background: linear-gradient(90deg, transparent, rgba(0, 9, 61, 0.15), transparent);
 }
+
+[data-theme="light"] .splash-tagline {
+  color: #00093D;
+}
