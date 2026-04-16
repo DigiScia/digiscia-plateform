@@ -24,46 +24,46 @@
         }
     },
     "about": {
-        "badge": "DigiScia • Excellence Numérique",
-        "title": "Vos données, <br/> notre priorité.",
-        "intro": "DigiScia est une start-up burkinabé spécialisée en science et ingénierie des données ainsi qu’en transformation numérique. Elle accompagne les entreprises et institutions dans l’exploitation de leurs données et l’optimisation de leurs processus grâce à des solutions innovantes basées sur la data, l’intelligence artificielle et l’ingénierie logicielle, afin d’améliorer leur performance et leur compétitivité.",
-        "cta": "Demander un Devis",
+        "badge": "L'Histoire de DigiScia",
+        "title": "Chaque donnée a <br/> <span class='text-highlight'>une histoire</span> à raconter.",
+        "intro": "Née d'une conviction profonde, DigiScia n'est pas qu'une entreprise technologique. C'est l'histoire de visionnaires passionnés qui ont compris que derrière chaque dataset se cache le futur de votre activité. Nous transformons le chaos de l'information en une clarté stratégique absolue.",
+        "cta": "Écrire votre histoire",
         "mission": {
-            "title": "Notre Mission",
-            "text": "Propulser les entreprises vers une souveraineté numérique totale. Nous concevons des architectures de données fluides qui résistent à l'épreuve du temps et des volumes.",
-            "pills": ["Performance", "Orienté Résultats", "Sécurité"]
+            "title": "Notre Promesse",
+            "text": "Faire de vous les maîtres incontestés de votre destin numérique. Nous forgeons des architectures de données invulnérables qui libèrent votre véritable potentiel de croissance.",
+            "pills": ["Innovation", "Excellence", "Sécurité"]
         },
         "stats": {
-            "compliance": "Conformité",
-            "support": "Support"
+            "compliance": "Souveraineté",
+            "support": "Engagement"
         },
         "tech": {
-            "title": "Ingénierie Rigoureuse",
-            "text": "Nous livrons un code propre, documenté et maintenable par vos équipes."
+            "title": "L'Art de l'Ingénierie",
+            "text": "Là où d'autres voient du code, nous voyons de l'art. Notre ingénierie allie robustesse et élégance pour un écosystème qui évolue avec votre ambition."
         },
         "ai": {
-            "title": "Intelligence Artificielle",
-            "text": "Créez et intégrez des solutions d'IA adaptées à vos besoins. Passez de la donnée brute à la décision éclairée pour des prises de décisions plus stratégiques."
+            "title": "L'Intelligence comme Levier",
+            "text": "L'IA n'est plus de la science-fiction, c'est votre avantage concurrentiel. Nous intégrons des algorithmes de pointe pour anticiper le marché et vous laisser innover."
         },
         "values": {
             "sovereignty": {
-                "title": "Souveraineté",
-                "text": "Vos données sont votre actif le plus précieux. Nous garantissons leur intégrité et leur sécurité absolue."
+                "title": "Souveraineté Absolue",
+                "text": "Vos idées sont votre patrimoine. Nous érigeons des forteresses numériques assurant que vous seul en gardez le contrôle."
             },
             "performance": {
-                "title": "Performance",
-                "text": "Des solutions mesurables. Nous ne vendons pas de buzzwords, mais des résultats concrets."
+                "title": "Performance Mesurable",
+                "text": "L'impact avant tout. Notre succès se mesure à la courbe de votre croissance et à vos victoires sur le marché."
             },
             "partnership": {
-                "title": "Partenariat",
-                "text": "Nous co-construisons avec vos équipes pour assurer un transfert de compétences réel."
+                "title": "Alliance Stratégique",
+                "text": "Plus qu'un prestataire, nous sommes votre partenaire d'armes numériques, bâtissant avec vous les fondations de demain."
             }
         }
     },
     "services": {
-        "badge": "Savoir-Faire & Innovation",
-        "title": "Nos Domaines d'Expertise",
-        "subtitle": "Nous combinons ingénierie logicielle rigoureuse et science des données avancée pour bâtir les fondations numériques de votre succès futur.",
+        "badge": "Notre Arsenal Technologique",
+        "title": "Forger l'avenir <br/><span class='text-highlight'>de votre entreprise.</span>",
+        "subtitle": "Nous fusionnons l'art du code pur avec la puissance brute de la donnée pour sculpter les leviers de votre domination numérique.",
         "explore": "Explorer l'offre",
         "modal": {
             "expertise": "Expertises Clés",
@@ -78,44 +78,36 @@
                 "features": ["Architectures Modernes (React, Vue, Node.js)", "Applications Mobiles Cross-Platform", "PWA", "UX/UI Design", "API REST & GraphQL"],
                 "cases": "Plateformes SaaS, Marketplaces, Portails clients, MVP."
             },
-            "ai": {
-                "title": "IA & Data Science",
-                "cat": "Innovation",
-                "desc": "Passez de la donnée brute à la prédiction stratégique. Automatisez l'intelligence de votre entreprise.",
-                "full": "L'intelligence artificielle est un levier de compétitivité immédiat. Nos Data Scientists transforment vos gisements de données en algorithmes prédictifs puissants.",
-                "features": ["ML & Deep Learning", "NLP / LLM", "Computer Vision", "Systèmes de Recommandation", "Maintenance Prédictive"],
-                "cases": "Chatbots, Détection de fraude, Analyse de sentiment, Logistique."
-            },
-            "data": {
-                "title": "Ingénierie des Données",
-                "cat": "Infrastructure",
-                "desc": "Construisez le socle de votre stratégie data. Pipelines robustes et qualité garantie.",
-                "full": "Une stratégie IA efficace repose sur des données saines. Nous construisons les autoroutes de l'information de votre entreprise.",
-                "features": ["Architecture Data Lake & Warehouse", "Pipelines ETL/ELT", "Gouvernance & DQM", "Conformité & Sécurité", "Migration Cloud"],
-                "cases": "Centralisation des données, Nettoyage, Migration Legacy."
-            },
             "bi": {
-                "title": "Business Intelligence",
+                "title": "Analyse des données & Business Intelligence",
                 "cat": "Analytics",
                 "desc": "Visualisez pour décider. Des tableaux de bord interactifs qui racontent votre performance.",
                 "full": "Ne conduisez plus à l'aveugle. Nous transformons la complexité de vos métriques en visualisations claires et actionnables.",
-                "features": ["Dashboard (PowerBI, Tableau)", "Storytelling de données", "Reporting automatisé", "Analyse 360°", "Culture Data"],
-                "cases": "Suivi commercial, financier, RH, Marketing."
+                "features": ["Dashboards (PowerBI, Tableau)", "Storytelling de données", "Reporting automatisé", "Analytique Predictive", "Gouvernance de la Vue 360°"],
+                "cases": "Suivi commercial, financier, RH, Marketing, Opérations logistiques."
             },
-            "auto": {
-                "title": "Automatisation & Agents IA",
-                "cat": "Productivité",
-                "desc": "Libérez vos équipes des tâches répétitives grâce à des agents autonomes.",
-                "full": "Boostez votre efficacité opérationnelle en déléguant les processus métiers complexes à nos solutions d'automatisation.",
-                "features": ["Agents IA Autonomes", "Orchestration Crons & Queues", "API & Webhooks", "OCR / IDP", "Workflows Multi-plateformes"],
-                "cases": "Qualification de leads, Facturation, Support client, Stocks."
+            "data": {
+                "title": "Ingénierie des Données & Big Data & Cloud",
+                "cat": "Infrastructure",
+                "desc": "Construisez le socle de votre stratégie data. Pipelines robustes et architecture Cloud garantie.",
+                "full": "Une stratégie d'Intelligence Artificielle efficace repose sur des données irréprochables et une infrastructure sans faille. Nous érigeons les pipelines massifs de votre entreprise.",
+                "features": ["Data Lakes & Cloud Warehousing", "Pipelines Batch & Temps-Réel (ETL/ELT)", "Big Data & Scalabilité", "Conformité & Sécurité Absolue", "Migration d'Infrastructures Legacy"],
+                "cases": "Centralisation unifiée des données, Nettoyage massif de data, Traitement Cloud scalable."
+            },
+            "ai_agents": {
+                "title": "IA & Data Science & ML-Deep Learning & Agents IA",
+                "cat": "Innovation",
+                "desc": "Passez à l'ère prédictive stratégique et déléguez vos tâches à des agents IA autonomes.",
+                "full": "L'Intelligence Artificielle n'est plus optionnelle. Nous infusons vos processus d'algorithmes de pointe et concevons des agents cognitifs capables d'accomplir des tâches métiers complexes en totale autonomie.",
+                "features": ["Prédictions Machine & Deep Learning", "Large Language Models & GenAI", "Déploiement d'Agents IA Autonomes", "Computer Vision & Reconnaissance", "Automatisation de l'Information (IDP/OCR)"],
+                "cases": "Assistants opérationnels autonomes, Prédiction de ventes, Contrôle qualité visuel, Classification automatique."
             }
         }
     },
     "projects": {
-        "badge": "Portfolio & Réalisations",
-        "title": "Nos Projets et Réalisations",
-        "subtitle": "Une sélection de nos projets et solutions. Des solutions concrètes pour nos défis et ceux de nos clients.",
+        "badge": "Nos Réalisations",
+        "title": "Là où les idées <br/><span class='text-highlight'>prennent vie.</span>",
+        "subtitle": "Découvrez comment nous avons transformé des visions audacieuses en écosystèmes numériques tangibles. Voici l'avant-garde de nos réalisations.",
         "loading": "Chargement des projets...",
         "viewProject": "Voir le projet",
         "items": {

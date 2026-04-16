@@ -24,46 +24,46 @@
         }
     },
     "about": {
-        "badge": "DigiScia • Digital Excellence",
-        "title": "Your data, <br/> our priority.",
-        "intro": "DigiScia is a Burkinabe start-up specializing in data science and engineering as well as digital transformation. It supports companies and institutions in the exploitation of their data and the optimization of their processes through innovative solutions based on data, artificial intelligence and software engineering, in order to improve their performance and competitiveness.",
-        "cta": "Request a Quote",
+        "badge": "The DigiScia Story",
+        "title": "Every dataset has <br/> <span class='text-highlight'>a story</span> to tell.",
+        "intro": "Born from a deep conviction, DigiScia is more than a tech company. It's the story of passionate visionaries who understand that behind every dataset lies the future of your business. We transform the chaos of information into absolute strategic clarity.",
+        "cta": "Write your story",
         "mission": {
-            "title": "Our Mission",
-            "text": "Propel companies towards total digital sovereignty. We design fluid data architectures that stand the test of time and volume.",
-            "pills": ["Performance", "Result-Oriented", "Security"]
+            "title": "Our Promise",
+            "text": "Making you the undisputed masters of your digital destiny. We forge invulnerable data architectures that unlock your true growth potential.",
+            "pills": ["Innovation", "Excellence", "Security"]
         },
         "stats": {
-            "compliance": "Compliance",
-            "support": "Support"
+            "compliance": "Sovereignty",
+            "support": "Commitment"
         },
         "tech": {
-            "title": "Rigorous Engineering",
-            "text": "We deliver clean, documented, and maintainable code for your teams."
+            "title": "The Art of Engineering",
+            "text": "Where others see code, we see art. Our engineering combines robustness and elegance for an ecosystem that scales with your ambition."
         },
         "ai": {
-            "title": "Artificial Intelligence",
-            "text": "Create and integrate AI solutions tailored to your needs. Move from raw data to informed decisions for more strategic decision-making."
+            "title": "Intelligence as a Lever",
+            "text": "AI is no longer science fiction; it's your competitive advantage. We integrate cutting-edge algorithms to anticipate the market and let you innovate."
         },
         "values": {
             "sovereignty": {
-                "title": "Sovereignty",
-                "text": "Your data is your most precious asset. We guarantee its absolute integrity and security."
+                "title": "Absolute Sovereignty",
+                "text": "Your ideas are your heritage. We build digital fortresses ensuring that you alone retain control."
             },
             "performance": {
-                "title": "Performance",
-                "text": "Measurable solutions. We don't sell buzzwords, but concrete results."
+                "title": "Measurable Performance",
+                "text": "Impact above all. Our success is measured by your growth curve and your victories in the market."
             },
             "partnership": {
-                "title": "Partnership",
-                "text": "We co-build with your teams to ensure a real transfer of skills."
+                "title": "Strategic Alliance",
+                "text": "More than a provider, we are your digital arm-brothers, building the foundations of tomorrow with you."
             }
         }
     },
     "services": {
-        "badge": "Expertise & Innovation",
-        "title": "Our Areas of Expertise",
-        "subtitle": "We combine rigorous software engineering and advanced data science to build the digital foundations of your future success.",
+        "badge": "Our Technological Arsenal",
+        "title": "Forging the future <br/><span class='text-highlight'>of your business.</span>",
+        "subtitle": "We fuse the art of clean code with raw data power to sculpt the levers of your digital dominance.",
         "explore": "Explore the offer",
         "modal": {
             "expertise": "Key Expertise",
@@ -73,49 +73,41 @@
             "web": {
                 "title": "Web & Mobile Solutions",
                 "cat": "Engineering",
-                "desc": "Tailor-made, high-performance and scalable applications that transform your users' experience.",
-                "full": "In a digital-first world, your digital presence is your main showcase. We don't just write code; we architect complete digital ecosystems.",
+                "desc": "Tailor-made, high-performance, and scalable applications that transform your users' experience.",
+                "full": "In a digital-first world, your digital presence is your main storefront. We don't just write code; we architect complete digital ecosystems.",
                 "features": ["Modern Architectures (React, Vue, Node.js)", "Cross-Platform Mobile Apps", "PWA", "UX/UI Design", "REST & GraphQL APIs"],
                 "cases": "SaaS Platforms, Marketplaces, Client Portals, MVPs."
             },
-            "ai": {
-                "title": "AI & Data Science",
-                "cat": "Innovation",
-                "desc": "Move from raw data to strategic prediction. Automate your business intelligence.",
-                "full": "Artificial intelligence is an immediate competitive lever. Our Data Scientists transform your data deposits into powerful predictive algorithms.",
-                "features": ["ML & Deep Learning", "NLP / LLM", "Computer Vision", "Recommendation Systems", "Predictive Maintenance"],
-                "cases": "Smart Chatbots, Fraud Detection, Sentiment Analysis, Logistics."
+            "bi": {
+                "title": "Data Analysis & Business Intelligence",
+                "cat": "Analytics",
+                "desc": "Visualize to decide. Interactive dashboards that tell your performance story.",
+                "full": "Stop driving blind. We transform the complexity of your metrics into clear and actionable visualizations.",
+                "features": ["Dashboards (PowerBI, Tableau)", "Data Storytelling", "Automated Reporting", "Predictive Analytics", "360° View Governance"],
+                "cases": "Sales, financial, HR, Marketing, and Logistical tracking."
             },
             "data": {
-                "title": "Data Engineering",
+                "title": "Data Engineering & Big Data & Cloud",
                 "cat": "Infrastructure",
-                "desc": "Build the foundation of your data strategy. Robust pipelines and guaranteed quality.",
-                "full": "An effective AI strategy relies on healthy data. We build the information highways of your business.",
-                "features": ["Data Lake & Warehouse Architecture", "ETL/ELT Pipelines", "Governance & DQM", "Compliance & Security", "Cloud Migration"],
-                "cases": "Data Centralization, Cleaning, Legacy Migration."
+                "desc": "Build the foundation of your data strategy. Robust pipelines and guaranteed Cloud architecture.",
+                "full": "An effective Artificial Intelligence strategy relies on flawless data and infallible infrastructure. We build your company's massive information highways.",
+                "features": ["Data Lakes & Cloud Warehousing", "Batch & Real-Time Pipelines (ETL/ELT)", "Big Data Scalability", "Absolute Security & Compliance", "Legacy Infrastructure Migration"],
+                "cases": "Unified data centralization, Massive data cleansing, Scalable cloud processing."
             },
-            "bi": {
-                "title": "Business Intelligence",
-                "cat": "Analytics",
-                "desc": "Visualize to decide. Interactive dashboards that tell the story of your performance.",
-                "full": "Don't drive blind anymore. We transform the complexity of your metrics into clear and actionable visualizations.",
-                "features": ["Dashboards (PowerBI, Tableau)", "Data Storytelling", "Automated Reporting", "360° Performance Analysis", "Data Culture"],
-                "cases": "Sales, Financial, HR, Marketing monitoring."
-            },
-            "auto": {
-                "title": "Automation & AI Agents",
-                "cat": "Productivity",
-                "desc": "Free your teams from repetitive tasks with autonomous agents.",
-                "full": "Boost your operational efficiency by delegating complex business processes to our automation solutions.",
-                "features": ["Autonomous AI Agents", "Cron & Queue Orchestration", "Custom API & Webhooks", "OCR / IDP", "Multi-platform Workflows"],
-                "cases": "Automatic lead qualification, Invoicing, Level 1 support, Stocks."
+            "ai_agents": {
+                "title": "AI & Data Science & ML-Deep Learning & AI Agents",
+                "cat": "Innovation",
+                "desc": "Transition to the strategic predictive era and delegate your tasks to autonomous AI agents.",
+                "full": "Artificial Intelligence is no longer optional. We infuse your processes with cutting-edge algorithms and design cognitive agents capable of completing complex business tasks fully autonomously.",
+                "features": ["Machine & Deep Learning Predictions", "Large Language Models & GenAI", "Autonomous AI Agents Deployment", "Computer Vision & Visual AI", "Information Automation (IDP/OCR)"],
+                "cases": "Autonomous operational assistants, Sales forecasting, Visual quality control, Automatic classification."
             }
         }
     },
     "projects": {
-        "badge": "Portfolio & Achievements",
-        "title": "Our Projects and Achievements",
-        "subtitle": "A selection of our projects and solutions. Concrete solutions for our challenges and those of our clients.",
+        "badge": "Our Achievements",
+        "title": "Where ideas <br/><span class='text-highlight'>come to life.</span>",
+        "subtitle": "Discover how we transformed bold visions into tangible digital ecosystems. Here is the vanguard of our achievements.",
         "loading": "Loading projects...",
         "viewProject": "View project",
         "items": {
