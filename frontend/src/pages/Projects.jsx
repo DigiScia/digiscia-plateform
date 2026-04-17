@@ -10,6 +10,7 @@ import {
 
 import academy from "../assets/projects/academy.png";
 import media from "../assets/projects/media.png";
+import store from "../assets/projects/store.svg";
 
 import "./Projects.css";
 
@@ -35,6 +36,14 @@ function Projects() {
       category: t('projects.items.media.cat'),
       image: media,
       link: "https://media.digiscia.com" 
+    },
+    {
+      id: 3,
+      title: t('projects.items.store.title'),
+      description: t('projects.items.store.desc'),
+      category: t('projects.items.store.cat'),
+      image: store,
+      link: "https://store.digiscia.com" 
     }
   ], [t]);
 

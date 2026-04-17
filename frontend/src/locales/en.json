@@ -120,6 +120,11 @@
                 "title": "DigiScia Media",
                 "desc": "Our Media to popularize technology and facilitate technological monitoring.",
                 "cat": "Media"
+            },
+            "store": {
+                "title": "DigiScia Store",
+                "desc": "E-commerce platform for computer hardware, electronics and digital products.",
+                "cat": "E-commerce"
             }
         }
     },
