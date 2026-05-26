@@ -11,10 +11,11 @@ from django.core.mail import send_mail
 from django.conf import settings
 
 from .permissions import IsAdminOrCommunityManager, IsContentManager
-from .models import UserPerso, Services, News, NewsLetterSuscribers
+from .models import UserPerso, Services, News, NewsLetterSuscribers, JobOffer, JobApplication
 from .serializers import (
     UserSerializer, ServiceSerializer, NewsSerializer,
-    NewsLetterSuscriberSerializer, UserRegistrationSerializer
+    NewsLetterSuscriberSerializer, UserRegistrationSerializer,
+    JobOfferSerializer, JobApplicationSerializer
 )
 
 
@@ -448,4 +449,68 @@ class ContactAPIView(APIView):
             return Response(
                 {"error": f"Erreur lors de l'envoi : {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            )
+
+# ============================================
+# CRUD CARRIERES (JOB OFFERS & APPLICATIONS)
+# ============================================
+
+class JobOfferListCreateAPIView(generics.ListCreateAPIView):
+    """
+    GET: Liste publique des offres d'emploi actives
+    POST: Création par un admin
+    """
+    serializer_class = JobOfferSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return JobOffer.objects.all().order_by('-created_at')
+        return JobOffer.objects.filter(is_active=True).order_by('-created_at')
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated(), IsAdminOrCommunityManager()]
+
+
+class JobOfferDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Détail, modification et suppression d'une offre
+    GET: Public
+    PUT/PATCH/DELETE: Admin
+    """
+    queryset = JobOffer.objects.all()
+    serializer_class = JobOfferSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated(), IsAdminOrCommunityManager()]
+
+
+class JobApplicationCreateAPIView(generics.CreateAPIView):
+    """
+    POST: Création d'une candidature (Public)
+    """
+    queryset = JobApplication.objects.all()
+    serializer_class = JobApplicationSerializer
+    permission_classes = [AllowAny]
+
+
+class JobApplicationListAPIView(generics.ListAPIView):
+    """
+    GET: Liste des candidatures (Admin)
+    """
+    queryset = JobApplication.objects.all().order_by('-applied_at')
+    serializer_class = JobApplicationSerializer
+    permission_classes = [IsAuthenticated, IsAdminOrCommunityManager]
+
+
+class JobApplicationDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Détail, modification (statut) et suppression d'une candidature
+    GET/PUT/PATCH/DELETE: Admin
+    """
+    queryset = JobApplication.objects.all()
+    serializer_class = JobApplicationSerializer
+    permission_classes = [IsAuthenticated, IsAdminOrCommunityManager]

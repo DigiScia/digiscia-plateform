@@ -11,6 +11,7 @@ import Services from "./pages/Services";
 import News from "./pages/News";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
+import Careers from "./pages/Careers";
 import Article from "./pages/Article"; 
 import LoadingWrapper from "./components/SplashScreen/LoadingWrapper.jsx";
 import "./App.css";
@@ -42,6 +43,7 @@ function MainPage() {
         <Element name="services"><Services /></Element>
         <Element name="news"><News /></Element>
         <Element name="team"><Team /></Element>
+        <Element name="careers"><Careers /></Element>
         <Element name="contact"><Contact /></Element>
       </main>
       <Footer />

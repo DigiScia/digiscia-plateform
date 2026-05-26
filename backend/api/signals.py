@@ -51,3 +51,54 @@ L'équipe DigiScia.
         except Exception:
             # Sécurité pour ne pas bloquer le serveur si SMTP crash
             pass
+
+from django.db.models.signals import pre_save
+from .models import JobApplication
+
+@receiver(pre_save, sender=JobApplication)
+def track_job_application_status(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            old_instance = JobApplication.objects.get(pk=instance.pk)
+            instance._old_status = old_instance.status
+        except JobApplication.DoesNotExist:
+            instance._old_status = None
+    else:
+        instance._old_status = None
+
+@receiver(post_save, sender=JobApplication)
+def notify_job_application_status_change(sender, instance, created, **kwargs):
+    applicant_full_name = f"{instance.first_name} {instance.last_name}"
+    
+    # Envoi de confirmation à la création
+    if created:
+        subject = f"Confirmation de candidature : {instance.job_offer.title}"
+        message = f"Bonjour {applicant_full_name},\n\nNous avons bien reçu votre candidature pour le poste de {instance.job_offer.title}. Nous vous contacterons prochainement.\n\nCordialement,\nL'équipe DigiScia."
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [instance.applicant_email], fail_silently=True)
+        except Exception:
+            pass
+        return
+
+    # Si le statut a changé
+    old_status = getattr(instance, '_old_status', None)
+    if old_status and old_status != instance.status:
+        subject = ""
+        message = ""
+        
+        if instance.status == 'interview':
+            date_str = instance.interview_date.strftime("%d/%m/%Y à %H:%M") if instance.interview_date else "à définir"
+            subject = f"Entretien planifié : {instance.job_offer.title}"
+            message = f"Bonjour {applicant_full_name},\n\nNous avons le plaisir de vous informer que votre candidature pour le poste de {instance.job_offer.title} a été retenue pour un entretien.\nDate de l'entretien : {date_str}.\n\nCordialement,\nL'équipe DigiScia."
+        elif instance.status == 'accepted':
+            subject = f"Candidature acceptée : {instance.job_offer.title}"
+            message = f"Bonjour {applicant_full_name},\n\nFélicitations ! Nous avons le plaisir de vous annoncer que vous êtes retenu(e) pour le poste de {instance.job_offer.title}.\nNous vous contacterons très vite avec plus de détails.\n\nCordialement,\nL'équipe DigiScia."
+        elif instance.status == 'rejected':
+            subject = f"Suite à votre candidature : {instance.job_offer.title}"
+            message = f"Bonjour {applicant_full_name},\n\nSuite à l'étude de votre profil pour le poste de {instance.job_offer.title}, nous avons le regret de vous informer que votre candidature n'a pas été retenue.\nNous vous souhaitons une excellente continuation.\n\nCordialement,\nL'équipe DigiScia."
+        
+        if subject:
+            try:
+                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [instance.applicant_email], fail_silently=True)
+            except Exception:
+                pass

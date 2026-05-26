@@ -52,7 +52,7 @@ const LoadingWrapper = ({ isLoading, children, minDuration = 1000 }) => {
         }
         @keyframes reveal-fade-in {
           from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
+          to { opacity: 1; transform: none; }
         }
       `}</style>
     </>

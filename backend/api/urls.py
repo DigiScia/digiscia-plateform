@@ -49,6 +49,15 @@ urlpatterns = [
     path("api/v1/contact/", views.ContactAPIView.as_view(), name="contact"),
 
     # ============================================
+    # 💼 CARRIERES
+    # ============================================
+    path("api/v1/job-offers/", views.JobOfferListCreateAPIView.as_view(), name="job-offers"),
+    path("api/v1/job-offers/<uuid:pk>/", views.JobOfferDetailAPIView.as_view(), name="job-offer-detail"),
+    path("api/v1/job-applications/", views.JobApplicationCreateAPIView.as_view(), name="job-applications-create"),
+    path("api/v1/job-applications/list/", views.JobApplicationListAPIView.as_view(), name="job-applications-list"),
+    path("api/v1/job-applications/<uuid:pk>/", views.JobApplicationDetailAPIView.as_view(), name="job-application-detail"),
+
+    # ============================================
     # 🏥 HEALTH CHECK
     # ============================================
     path("health/", views.health_check, name="health_check"),

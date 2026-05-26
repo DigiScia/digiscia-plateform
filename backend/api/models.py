@@ -142,3 +142,65 @@ class NewsLetterSuscribers(models.Model):
         verbose_name = "Abonné Newsletter"
         verbose_name_plural = "Abonnés Newsletter"
         ordering = ['-subscribed_at']
+
+
+# ✅ Modèle JobOffer (Offres d'emploi)
+class JobOffer(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    LOCATION_CHOICES = [
+        ('remote', 'En ligne'),
+        ('hybrid', 'Hybride'),
+        ('onsite', 'En présentiel')
+    ]
+    location = models.CharField(max_length=20, choices=LOCATION_CHOICES, default='onsite')
+    image = models.ImageField(upload_to='jobs/', blank=True, null=True)
+    deadline = models.DateField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Offre d'emploi"
+        verbose_name_plural = "Offres d'emploi"
+        ordering = ['-created_at']
+
+
+# ✅ Modèle JobApplication (Candidatures)
+class JobApplication(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'En attente'),
+        ('interview', 'Entretien planifié'),
+        ('accepted', 'Accepté'),
+        ('rejected', 'Rejeté'),
+    ]
+
+    GENDER_CHOICES = [
+        ('M', 'Homme'),
+        ('F', 'Femme'),
+        ('O', 'Autre'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    job_offer = models.ForeignKey(JobOffer, on_delete=models.CASCADE, related_name='applications')
+    first_name = models.CharField(max_length=100, default='')
+    last_name = models.CharField(max_length=100, default='')
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='O')
+    applicant_email = models.EmailField()
+    phone = models.CharField(max_length=20, default='')
+    resume = models.FileField(upload_to='resumes/')
+    projects = models.TextField(blank=True, null=True, help_text="Décrivez le projet dont vous êtes le plus fier")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    interview_date = models.DateTimeField(blank=True, null=True)
+    applied_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.job_offer.title}"
+
+    class Meta:
+        verbose_name = "Candidature"
+        verbose_name_plural = "Candidatures"
+        ordering = ['-applied_at']

@@ -12,8 +12,8 @@
   --glass-border: rgba(255, 255, 255, 0.1);
   
   /* --- Dimensions --- */
-  --header-height: 70px;
-  --container-padding: 1.5rem;
+  --header-height: 85px;
+  --container-padding: 4%;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   /* --- Polices --- */
@@ -45,7 +45,6 @@
 .header.scrolled {
   background-color: rgba(0, 8, 40, 0.95); /* #000828 avec 95% opacité */
   backdrop-filter: blur(10px);
-  height: 60px;
 }
 
 /* --- LOGO --- */
@@ -231,7 +230,7 @@ input:checked + .slider:before {
 
   .header-navbar ul {
     flex-direction: row;
-    gap: 2rem;
+    gap: 2.5rem;
   }
 
   .header-navbar a {

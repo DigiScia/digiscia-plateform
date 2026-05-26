@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserPerso, Services, News, NewsLetterSuscribers
+from .models import UserPerso, Services, News, NewsLetterSuscribers, JobOffer, JobApplication
 import re
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
@@ -265,3 +265,44 @@ class NewsLetterSuscriberSerializer(serializers.ModelSerializer):
         """Création avec email en minuscules"""
         validated_data['email'] = validated_data['email'].lower()
         return super().create(validated_data)
+
+
+# ==========================================================
+# SERIALIZER JOB OFFER
+# ==========================================================
+class JobOfferSerializer(serializers.ModelSerializer):
+    """Serializer pour les offres d'emploi"""
+    
+    class Meta:
+        model = JobOffer
+        fields = ['id', 'title', 'description', 'location', 'image', 'deadline', 'is_active', 'created_at']
+        read_only_fields = ['id', 'created_at']
+
+
+# ==========================================================
+# SERIALIZER JOB APPLICATION
+# ==========================================================
+class JobApplicationSerializer(serializers.ModelSerializer):
+    """Serializer pour les candidatures"""
+    
+    class Meta:
+        model = JobApplication
+        fields = ['id', 'job_offer', 'first_name', 'last_name', 'gender', 'applicant_email', 'phone', 'resume', 'projects', 'status', 'interview_date', 'applied_at']
+        read_only_fields = ['id', 'status', 'interview_date', 'applied_at']
+
+    def validate_applicant_email(self, value):
+        email = value.lower().strip()
+        if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email):
+            raise serializers.ValidationError("Veuillez entrer une adresse email valide.")
+        return email
+
+    def validate_resume(self, value):
+        if not value:
+            raise serializers.ValidationError("Veuillez uploader un CV.")
+        # Validation basique de l'extension de fichier
+        import os
+        ext = os.path.splitext(value.name)[1].lower()
+        valid_extensions = ['.pdf', '.doc', '.docx']
+        if not ext in valid_extensions:
+            raise serializers.ValidationError("Format de fichier non supporté. Veuillez uploader un PDF ou DOC/DOCX.")
+        return value

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers
+from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers, JobOffer, JobApplication
 
 # ==========================================================
 # CONFIGURATION GLOBALE
@@ -87,3 +87,21 @@ admin.site.register(AdminProfile, AdminProfileAdmin)
 admin.site.register(Services, ServicesAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(NewsLetterSuscribers, NewsLetterSuscribersAdmin)
+
+class JobOfferAdmin(admin.ModelAdmin):
+    list_display = ('title', 'location', 'deadline', 'is_active', 'created_at')
+    list_filter = ['is_active', 'location']
+    search_fields = ['title', 'description']
+
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'applicant_email', 'job_offer', 'status', 'interview_date', 'applied_at')
+    list_filter = ['status', 'job_offer']
+    search_fields = ['first_name', 'last_name', 'applicant_email']
+    readonly_fields = ('applied_at',)
+    fieldsets = (
+        ('Informations Candidat', {'fields': ('job_offer', 'first_name', 'last_name', 'gender', 'applicant_email', 'phone', 'status', 'interview_date', 'applied_at')}),
+        ('Dossier de Candidature', {'fields': ('resume', 'projects')}),
+    )
+
+admin.site.register(JobOffer, JobOfferAdmin)
+admin.site.register(JobApplication, JobApplicationAdmin)

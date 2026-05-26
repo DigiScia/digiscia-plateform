@@ -73,6 +73,7 @@ function Header() {
     { name: t('header.services'), id: "services" },
     { name: t('header.blog'), id: "news" },
     { name: t('header.team'), id: "team" },
+    { name: t('header.careers', 'Carrières'), id: "careers" },
     { name: t('header.contact'), id: "contacts" }
   ];
 
@@ -94,7 +95,7 @@ function Header() {
       <nav
         className={`header-navbar ${menuOpen ? "active" : ""}`}
         ref={navRef}
-        aria-hidden={!menuOpen && window.innerWidth <= 900}
+        inert={(!menuOpen && window.innerWidth <= 900) ? true : undefined}
       >
         <ul>
           {navItems.map((item) => (
