@@ -35,18 +35,14 @@ function MainPage() {
 
   return (
     <>
-      <Header /> {/* Navigation avec liens vers les sections */}
-      <main>
-        <Element name="home"><Home /></Element>
-        <Element name="about"><About /></Element>
-        <Element name="projects"><Projects /></Element>
-        <Element name="services"><Services /></Element>
-        <Element name="news"><News /></Element>
-        <Element name="team"><Team /></Element>
-        <Element name="careers"><Careers /></Element>
-        <Element name="contact"><Contact /></Element>
-      </main>
-      <Footer />
+      <Element name="home"><Home /></Element>
+      <Element name="about"><About /></Element>
+      <Element name="projects"><Projects /></Element>
+      <Element name="services"><Services /></Element>
+      <Element name="news"><News /></Element>
+      <Element name="team"><Team /></Element>
+      <Element name="careers"><Careers /></Element>
+      <Element name="contact"><Contact /></Element>
     </>
   );
 }
@@ -64,28 +60,21 @@ function App() {
 
   return (
     <ThemeProvider>
-      <LoadingWrapper isLoading={isAppLoading}>
-        <Router>
-          <div className="app-container">
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="/article/:id/:slug" element={<ArticlePageWrapper />} />
-            </Routes>
-          </div>
-        </Router>
-      </LoadingWrapper>
+      <Router>
+        <div className="app-container">
+          <Header />
+          <LoadingWrapper isLoading={isAppLoading}>
+            <main>
+              <Routes>
+                <Route path="/" element={<MainPage />} />
+                <Route path="/article/:id/:slug" element={<Article />} />
+              </Routes>
+            </main>
+          </LoadingWrapper>
+          <Footer />
+        </div>
+      </Router>
     </ThemeProvider>
-  );
-}
-
-// Wrapper pour s'assurer que la page d'article charge proprement avec le Splash Screen
-function ArticlePageWrapper() {
-  return (
-    <>
-      <Header />
-      <Article />
-      <Footer />
-    </>
   );
 }
 

@@ -99,11 +99,6 @@ function Footer() {
           <div className="footer-copyright">
             © {currentYear} DigiScia. {t('footer.rights')}
           </div>
-          <div className="footer-links">
-            <a href="#privacy" className="footer-link">{t('footer.privacy')}</a>
-            <a href="#terms" className="footer-link">{t('footer.terms')}</a>
-            <a href="#legal" className="footer-link">{t('footer.legal')}</a>
-          </div>
         </div>
 
       </div>

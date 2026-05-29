@@ -43,5 +43,6 @@ main {
 section {
   padding: 80px 20px; /* Ajuste selon la taille du header */
   min-height: 100vh; /* Chaque section prend toute la hauteur de l'écran */
+  scroll-margin-top: 90px; /* Compense la hauteur du header fixe lors du scroll */
 }
 
