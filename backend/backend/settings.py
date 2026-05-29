@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ─────────────────────────────────────────────────────────────
 # 🔒 SECRET KEY & DEBUG
 # ─────────────────────────────────────────────────────────────
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-fallback-secret-key-for-building")
 
 # En production, DEBUG doit être False.
 # DEBUG = os.getenv("DEBUG", "False").lower() == "true"
@@ -127,12 +127,14 @@ if env_cors:
 CORS_ALLOW_CREDENTIALS = True
 
 
-# 3. CSRF (Sécurité des formulaires et sessions)
-# On fait confiance aux mêmes origines que le CORS + le backend lui-même
 CSRF_TRUSTED_ORIGINS = [
     "https://digiscia-backend.fly.dev", 
     "https://api.digiscia.com",
+    f"https://{os.getenv('FLY_APP_NAME')}.fly.dev" if os.getenv("FLY_APP_NAME") else "",
 ] + CORS_ALLOWED_ORIGINS
+
+# Nettoyage pour enlever les chaînes vides
+CSRF_TRUSTED_ORIGINS = [origin for origin in CSRF_TRUSTED_ORIGINS if origin]
 
 
 # ─────────────────────────────────────────────────────────────
