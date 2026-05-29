@@ -72,12 +72,24 @@ def notify_job_application_status_change(sender, instance, created, **kwargs):
     
     # Envoi de confirmation à la création
     if created:
-        subject = f"Confirmation de candidature : {instance.job_offer.title}"
-        message = f"Bonjour {applicant_full_name},\n\nNous avons bien reçu votre candidature pour le poste de {instance.job_offer.title}. Nous vous contacterons prochainement.\n\nCordialement,\nL'équipe DigiScia."
+        subject_candidat = f"Confirmation de candidature : {instance.job_offer.title}"
+        message_candidat = f"Bonjour {applicant_full_name},\n\nNous avons bien reçu votre candidature pour le poste de {instance.job_offer.title}. Nous vous contacterons prochainement.\n\nCordialement,\nL'équipe DigiScia."
         try:
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [instance.applicant_email], fail_silently=True)
+            send_mail(subject_candidat, message_candidat, settings.DEFAULT_FROM_EMAIL, [instance.applicant_email], fail_silently=True)
         except Exception:
             pass
+            
+        # Alerter les RH
+        hr_managers = instance.job_offer.hr_managers.all()
+        hr_emails = [hr.email for hr in hr_managers] if hr_managers.exists() else [settings.CONTACT_EMAIL_RECIPIENT]
+        
+        subject_rh = f"Nouvelle candidature : {instance.job_offer.title}"
+        message_rh = f"Une nouvelle candidature a été reçue.\n\nCandidat : {applicant_full_name}\nOffre : {instance.job_offer.title}\nContact : {instance.applicant_email} / {instance.phone}\n\nConnectez-vous à l'espace administration pour voir le CV."
+        try:
+            send_mail(subject_rh, message_rh, settings.DEFAULT_FROM_EMAIL, hr_emails, fail_silently=True)
+        except Exception:
+            pass
+            
         return
 
     # Si le statut a changé
@@ -88,8 +100,9 @@ def notify_job_application_status_change(sender, instance, created, **kwargs):
         
         if instance.status == 'interview':
             date_str = instance.interview_date.strftime("%d/%m/%Y à %H:%M") if instance.interview_date else "à définir"
+            link_str = f"\nLien de l'entretien : {instance.interview_link}" if instance.interview_link else ""
             subject = f"Entretien planifié : {instance.job_offer.title}"
-            message = f"Bonjour {applicant_full_name},\n\nNous avons le plaisir de vous informer que votre candidature pour le poste de {instance.job_offer.title} a été retenue pour un entretien.\nDate de l'entretien : {date_str}.\n\nCordialement,\nL'équipe DigiScia."
+            message = f"Bonjour {applicant_full_name},\n\nNous avons le plaisir de vous informer que votre candidature pour le poste de {instance.job_offer.title} a été retenue pour un entretien.\nDate de l'entretien : {date_str}.{link_str}\n\nCordialement,\nL'équipe DigiScia."
         elif instance.status == 'accepted':
             subject = f"Candidature acceptée : {instance.job_offer.title}"
             message = f"Bonjour {applicant_full_name},\n\nFélicitations ! Nous avons le plaisir de vous annoncer que vous êtes retenu(e) pour le poste de {instance.job_offer.title}.\nNous vous contacterons très vite avec plus de détails.\n\nCordialement,\nL'équipe DigiScia."

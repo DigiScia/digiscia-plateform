@@ -54,6 +54,7 @@ class AdminProfile(models.Model):
         ('superadmin', 'Super Admin'),
         ('community', 'Community Manager'),
         ('content', 'Content Manager'),
+        ('hr', 'Ressources Humaines'),
     ]
     
     PERMISSION_CHOICES = [
@@ -158,6 +159,7 @@ class JobOffer(models.Model):
     image = models.ImageField(upload_to='jobs/', blank=True, null=True)
     deadline = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    hr_managers = models.ManyToManyField(UserPerso, limit_choices_to={'adminprofile__role': 'hr'}, blank=True, related_name='managed_offers', verbose_name="RH assignés")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -195,6 +197,9 @@ class JobApplication(models.Model):
     projects = models.TextField(blank=True, null=True, help_text="Décrivez le projet dont vous êtes le plus fier")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     interview_date = models.DateTimeField(blank=True, null=True)
+    interview_link = models.URLField(blank=True, null=True, help_text="Lien pour l'entretien en ligne (Zoom, Meet, etc.)")
+    reminder_1_day_sent = models.BooleanField(default=False)
+    reminder_20_min_sent = models.BooleanField(default=False)
     applied_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

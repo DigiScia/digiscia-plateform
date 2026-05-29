@@ -39,6 +39,9 @@ AUTH_USER_MODEL = 'api.UserPerso'
 # 📦 APPS
 # ─────────────────────────────────────────────────────────────
 INSTALLED_APPS = [
+    # Custom Admin (Jazzmin) - Must be before django.contrib.admin
+    'jazzmin',
+    
     # Django
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +58,14 @@ INSTALLED_APPS = [
 
     # App
     'api',
+    
+    # Scheduler
+    'django_apscheduler',
 ]
+
+# Config pour django_apscheduler
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
 
 # ─────────────────────────────────────────────────────────────
@@ -250,3 +260,71 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Email utilisé pour l'envoi
 CONTACT_EMAIL_RECIPIENT = EMAIL_HOST_USER  # Email qui recevra les formulaires
+
+# ─────────────────────────────────────────────────────────────
+# 🎨 JAZZMIN ADMIN SETTINGS
+# ─────────────────────────────────────────────────────────────
+JAZZMIN_SETTINGS = {
+    "site_title": "Admin DigiScia",
+    "site_header": "DigiScia",
+    "site_brand": "DigiScia Admin",
+    "welcome_sign": "Bienvenue sur l'administration DigiScia",
+    "copyright": "DigiScia",
+    "search_model": ["api.UserPerso", "api.JobApplication"],
+    "user_avatar": None,
+    "topmenu_links": [
+        {"name": "Accueil",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Voir le site", "url": "https://digiscia.com", "new_window": True},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "icons": {
+        "api.UserPerso": "fas fa-users",
+        "api.AdminProfile": "fas fa-user-shield",
+        "api.JobOffer": "fas fa-briefcase",
+        "api.JobApplication": "fas fa-file-alt",
+        "api.Services": "fas fa-cogs",
+        "api.News": "fas fa-newspaper",
+        "api.NewsLetterSuscribers": "fas fa-envelope",
+    },
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+    "related_modal_active": False,
+    "custom_css": "api/css/admin_custom.css",
+    "custom_js": None,
+    "show_ui_builder": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "darkly",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}

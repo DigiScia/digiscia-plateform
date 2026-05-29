@@ -234,9 +234,19 @@ function Careers() {
                   <p className="job-description">{job.description}</p>
                 </div>
                 <div className="job-card-action">
-                  <button className="apply-btn" onClick={() => handleApplyClick(job)}>
-                    Postuler
-                  </button>
+                  {(() => {
+                    const isExpired = job.deadline && new Date(job.deadline + 'T23:59:59') < new Date();
+                    return (
+                      <button 
+                        className={`apply-btn ${isExpired ? 'expired-btn' : ''}`} 
+                        onClick={() => !isExpired && handleApplyClick(job)}
+                        disabled={isExpired}
+                        style={isExpired ? {backgroundColor: '#ccc', cursor: 'not-allowed', color: '#666'} : {}}
+                      >
+                        {isExpired ? 'Offre expirée' : 'Postuler'}
+                      </button>
+                    );
+                  })()}
                 </div>
               </div>
             )})}

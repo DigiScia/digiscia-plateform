@@ -92,6 +92,7 @@ class JobOfferAdmin(admin.ModelAdmin):
     list_display = ('title', 'location', 'deadline', 'is_active', 'created_at')
     list_filter = ['is_active', 'location']
     search_fields = ['title', 'description']
+    filter_horizontal = ('hr_managers',)
 
 class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'applicant_email', 'job_offer', 'status', 'interview_date', 'applied_at')
@@ -99,7 +100,7 @@ class JobApplicationAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'last_name', 'applicant_email']
     readonly_fields = ('applied_at',)
     fieldsets = (
-        ('Informations Candidat', {'fields': ('job_offer', 'first_name', 'last_name', 'gender', 'applicant_email', 'phone', 'status', 'interview_date', 'applied_at')}),
+        ('Informations Candidat', {'fields': ('job_offer', 'first_name', 'last_name', 'gender', 'applicant_email', 'phone', 'status', 'interview_date', 'interview_link', 'applied_at')}),
         ('Dossier de Candidature', {'fields': ('resume', 'projects')}),
     )
 

@@ -287,8 +287,8 @@ class JobApplicationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = JobApplication
-        fields = ['id', 'job_offer', 'first_name', 'last_name', 'gender', 'applicant_email', 'phone', 'resume', 'projects', 'status', 'interview_date', 'applied_at']
-        read_only_fields = ['id', 'status', 'interview_date', 'applied_at']
+        fields = ['id', 'job_offer', 'first_name', 'last_name', 'gender', 'applicant_email', 'phone', 'resume', 'projects', 'status', 'interview_date', 'interview_link', 'applied_at']
+        read_only_fields = ['id', 'status', 'interview_date', 'interview_link', 'applied_at']
 
     def validate_applicant_email(self, value):
         email = value.lower().strip()
@@ -306,3 +306,11 @@ class JobApplicationSerializer(serializers.ModelSerializer):
         if not ext in valid_extensions:
             raise serializers.ValidationError("Format de fichier non supporté. Veuillez uploader un PDF ou DOC/DOCX.")
         return value
+
+    def validate(self, attrs):
+        job_offer = attrs.get('job_offer')
+        if job_offer and job_offer.deadline:
+            import datetime
+            if job_offer.deadline < datetime.date.today():
+                raise serializers.ValidationError({"job_offer": "La date limite pour cette offre est dépassée. Vous ne pouvez plus postuler."})
+        return attrs

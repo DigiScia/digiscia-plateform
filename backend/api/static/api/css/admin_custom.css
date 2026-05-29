@@ -1,0 +1,81 @@
+/* DigiScia Admin Theme Overrides */
+:root {
+    --primary: #5B7CFF !important;
+    --primary-hover: #747bff !important;
+    --dark-bg: #000828 !important;
+    --dark-surface: #0c1236 !important;
+}
+
+/* Base backgrounds */
+body, .wrapper, .content-wrapper, .main-footer {
+    background-color: var(--dark-bg) !important;
+    color: #ffffff !important;
+}
+
+/* Sidebar styling */
+.main-sidebar, .sidebar-dark-primary {
+    background-color: var(--dark-surface) !important;
+}
+.brand-link {
+    background-color: var(--dark-bg) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Navbar */
+.main-header.navbar {
+    background-color: var(--dark-surface) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Cards & forms */
+.card, .info-box {
+    background-color: var(--dark-surface) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+}
+.card-header {
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Primary color elements */
+.btn-primary, .bg-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: var(--primary) !important;
+}
+a {
+    color: var(--primary);
+}
+a:hover {
+    color: var(--primary-hover);
+}
+
+/* Inputs */
+input.form-control, select.form-control, textarea.form-control {
+    background-color: #1a2352 !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    color: white !important;
+}
+input.form-control:focus, select.form-control:focus, textarea.form-control:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(91, 124, 255, 0.25) !important;
+}
+
+/* Tables */
+.table {
+    color: #ffffff !important;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255,255,255,0.02) !important;
+}
+.table td, .table th {
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+}
+.table thead th {
+    border-bottom: 2px solid rgba(255,255,255,0.1) !important;
+}
