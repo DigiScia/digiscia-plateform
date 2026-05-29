@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useTheme } from '../../context/ThemeContext.jsx';
+import logoBlanc from '../../assets/logoblanc.jpg';
+import logoBleu from '../../assets/logobleu.jpg';
 import './SplashScreen.css';
 
 const SplashScreen = ({ isVisible, onFinished }) => {
+  const { theme } = useTheme();
   const [shouldRender, setShouldRender] = useState(isVisible);
   const [phase, setPhase] = useState('idle'); // idle | entering | active | exiting
   const timerRef = useRef(null);
@@ -39,23 +43,14 @@ const SplashScreen = ({ isVisible, onFinished }) => {
       {/* Main content */}
       <div className="splash-content">
 
-        {/* Logo mark + wordmark */}
+        {/* Logo Image */}
         <div className="splash-brand">
-          <div className="splash-mark-wrap">
-            <div className="splash-mark-glow" />
-            <div className="splash-mark">
-              <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect width="56" height="56" rx="13" fill="white" />
-                <path
-                  d="M28.5 14C21.044 14 15 20.044 15 27.5C15 34.956 21.044 41 28.5 41H38V34.5H28.5C24.634 34.5 21.5 31.366 21.5 27.5C21.5 23.634 24.634 20.5 28.5 20.5C32.366 20.5 35.5 23.634 35.5 27.5V29H42V27.5C42 20.044 35.956 14 28.5 14Z"
-                  fill="#00093D"
-                />
-              </svg>
-            </div>
-          </div>
-
-          <div className="splash-wordmark">
-            <span className="splash-word-digi">Digi</span><span className="splash-word-scia">Scia</span>
+          <div className="splash-logo-wrap">
+            <img 
+              src={theme === 'light' ? logoBlanc : logoBleu} 
+              alt="DigiScia Logo" 
+              className="splash-logo-img" 
+            />
           </div>
         </div>
 
@@ -67,8 +62,8 @@ const SplashScreen = ({ isVisible, onFinished }) => {
         </div>
 
         {/* Tagline */}
-        <p className="splash-tagline" aria-label="Votre Partenaire de Performance Digitale">
-          {"Votre Partenaire de Performance Digitale".split('').map((char, i) => (
+        <p className="splash-tagline" aria-label="Votre partenaire de performance digitale">
+          {"votre partenaire de performance digitale".split('').map((char, i) => (
             <span
               key={i}
               className="splash-char"
