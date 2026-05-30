@@ -47,22 +47,22 @@ function Projects() {
       image: store,
       link: "https://store.digiscia.com" 
     },
-    {
-      id: 4,
-      title: t('projects.items.datahub.title'),
-      description: t('projects.items.datahub.desc'),
-      category: t('projects.items.datahub.cat'),
-      image: echodata,
-      link: "https://echodatahub.digiscia.com" 
-    },
-    {
-      id: 5,
-      title: t('projects.items.quotidien.title'),
-      description: t('projects.items.quotidien.desc'),
-      category: t('projects.items.quotidien.cat'),
-      image: quotidien,
-      link: "https://simpleoquotidien.digiscia.com" 
-    },
+    // {
+    //   id: 4,
+    //   title: t('projects.items.datahub.title'),
+    //   description: t('projects.items.datahub.desc'),
+    //   category: t('projects.items.datahub.cat'),
+    //   image: echodata,
+    //   link: "https://echodatahub.digiscia.com" 
+    // },
+    // {
+    //   id: 5,
+    //   title: t('projects.items.quotidien.title'),
+    //   description: t('projects.items.quotidien.desc'),
+    //   category: t('projects.items.quotidien.cat'),
+    //   image: quotidien,
+    //   link: "https://simpleoquotidien.digiscia.com" 
+    // },
 
   ], [t]);
 
