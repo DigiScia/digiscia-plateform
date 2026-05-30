@@ -209,3 +209,33 @@ class JobApplication(models.Model):
         verbose_name = "Candidature"
         verbose_name_plural = "Candidatures"
         ordering = ['-applied_at']
+
+
+# ✅ Modèle CommercialTracker (Suivi des commerciaux / apporteurs d'affaires)
+class CommercialTracker(models.Model):
+    STATUS_CHOICES = [
+        ('prospection', 'Prospection'),
+        ('rdv', 'RDV'),
+        ('converti', 'Converti'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    first_name = models.CharField(max_length=100, verbose_name="Prénom")
+    last_name = models.CharField(max_length=100, verbose_name="Nom")
+    target_company = models.CharField(max_length=150, verbose_name="Entreprise cible")
+    status = models.CharField(
+        max_length=20, 
+        choices=STATUS_CHOICES, 
+        default='prospection', 
+        verbose_name="Statut"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date de création")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Dernière modification")
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.target_company} ({self.get_status_display()})"
+
+    class Meta:
+        verbose_name = "Suivi Commercial / Apporteur d'affaires"
+        verbose_name_plural = "Suivi Commerciaux / Apporteurs d'affaires"
+        ordering = ['-created_at']

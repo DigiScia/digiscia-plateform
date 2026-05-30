@@ -1,37 +1,19 @@
-from django.urls import  reverse
-from rest_framework import status
-from rest_framework_simplejwt.tokens import RefreshToken
-
-from .models import UserPerso, News, Admin
-from rest_framework.test import APITestCase
-
-#MES TESTS
-
-from rest_framework.test import APITestCase, APIClient
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status
 from django.urls import reverse
-from .models import UserPerso, Admin, News
-
-from .models import UserPerso, Admin, Projects, Services, Contacts, News, NewsLetterSuscribers
+from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.test import APITestCase, APIClient
+from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers
 
 class APITestCases(APITestCase):
     def setUp(self):
         # --- Users ---
         self.admin_user = UserPerso.objects.create_user(username='admin', email='admin@mail.com', password='admin123', is_staff=True)
         self.cm_user = UserPerso.objects.create_user(username='cm', email='cm@mail.com', password='cm123')
-        Admin.objects.create(user=self.cm_user, role='community', permission='manage')
+        AdminProfile.objects.create(user=self.cm_user, role='community', permission='manage')
         self.normal_user = UserPerso.objects.create_user(username='user', email='user@mail.com', password='user123')
-
-        # --- Projects ---
-        self.project = Projects.objects.create(title='Projet Test', description='Desc')
-        self.project_url = reverse('project', args=[self.project.id])
-        self.project_list_url = reverse('projects')
 
         # --- Services ---
         self.service = Services.objects.create(name='Service Test', description='Desc')
-        self.service_url = reverse('service', args=[self.service.id])
-        self.service_list_url = reverse('services')
 
         # --- News ---
         self.news = News.objects.create(title='Titre', content='Contenu')
@@ -48,27 +30,6 @@ class APITestCases(APITestCase):
     def get_jwt_token(self, user):
         refresh = RefreshToken.for_user(user)
         return str(refresh.access_token)
-
-    # -----------------------------
-    # EXEMPLE : ProjectDetailAPIView
-    # -----------------------------
-    def test_project_detail_unauthenticated(self):
-        response = self.client.get(self.project_url)
-        # ListCreateAPIView est avec IsAdminUser → GET interdit
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_project_detail_normal_user(self):
-        token = self.get_jwt_token(self.normal_user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
-        response = self.client.get(self.project_url)
-        # RetrieveUpdateDestroyAPIView avec IsAdminUser → GET interdit
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-
-    def test_project_detail_admin_user(self):
-        token = self.get_jwt_token(self.admin_user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
-        response = self.client.get(self.project_url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # -----------------------------
     # Exemple NewsLetter POST
@@ -167,3 +128,19 @@ class APITestCases(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         response = self.client.delete(self.news_detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+from .models import CommercialTracker
+
+class CommercialTrackerTestCase(APITestCase):
+    def test_create_commercial_tracker(self):
+        commercial = CommercialTracker.objects.create(
+            first_name="Jean",
+            last_name="Dupont",
+            target_company="Acme Corp",
+            status="prospection"
+        )
+        self.assertEqual(commercial.first_name, "Jean")
+        self.assertEqual(commercial.last_name, "Dupont")
+        self.assertEqual(commercial.target_company, "Acme Corp")
+        self.assertEqual(commercial.status, "prospection")
+        self.assertEqual(str(commercial), "Jean Dupont - Acme Corp (Prospection)")

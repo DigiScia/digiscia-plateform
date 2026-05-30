@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
-from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers, JobOffer, JobApplication
+from .models import UserPerso, AdminProfile, Services, News, NewsLetterSuscribers, JobOffer, JobApplication, CommercialTracker
 
 # ==========================================================
 # CONFIGURATION GLOBALE
@@ -106,3 +106,12 @@ class JobApplicationAdmin(admin.ModelAdmin):
 
 admin.site.register(JobOffer, JobOfferAdmin)
 admin.site.register(JobApplication, JobApplicationAdmin)
+
+class CommercialTrackerAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'target_company', 'status', 'created_at', 'updated_at')
+    list_filter = ['status', 'created_at']
+    search_fields = ['first_name', 'last_name', 'target_company']
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ['-created_at']
+
+admin.site.register(CommercialTracker, CommercialTrackerAdmin)

@@ -6,6 +6,7 @@
         "services": "Services",
         "blog": "Blog",
         "team": "Équipe",
+        "careers": "Carrières",
         "contact": "Nous Contacter"
     },
     "home": {
@@ -125,6 +126,16 @@
                 "title": "DigiScia Store",
                 "desc": "Plateforme e-commerce de matériels informatiques, électroniques et produits digitaux.",
                 "cat": "E-commerce"
+            },
+            "quotidien": {
+                "title": "SimpleOQuotidien",
+                "desc": "Application mobile pour trouver les services du quotidien.",
+                "cat": "Mobile"
+            },
+            "datahub": {
+                "title": "EchoDataHub",
+                "desc": "Plateforme de collecte de données textuelles et vocales de langues peu dotées.",
+                "cat": "Data"
             }
         }
     },
@@ -213,6 +224,44 @@
             "tip1": "Découvrez nos dernières innovations et projets en cours",
             "tip2": "Restez informé des tendances tech et des actualités du secteur",
             "tip3": "Explorez nos success stories et témoignages clients"
+        }
+    },
+    "careers": {
+        "badge": "REJOIGNEZ-NOUS",
+        "title": "Carrières",
+        "subtitle": "Découvrez nos offres d'emploi et venez contribuer au futur du digital avec DigiScia.",
+        "loading": "Chargement des offres...",
+        "noOffers": "Aucune offre d'emploi n'est disponible pour le moment. Revenez bientôt !",
+        "details": "Détails",
+        "apply": "Postuler",
+        "expired": "Expirée",
+        "expiredOffer": "Offre expirée",
+        "published": "Publié le",
+        "deadline": "Limite",
+        "close": "Fermer",
+        "modalTitle": "Postuler : {{title}}",
+        "formTitle": "Formulaire de Candidature",
+        "formSubtitle": "Veuillez remplir les informations ci-dessous pour soumettre votre candidature.",
+        "firstName": "Prénom *",
+        "lastName": "Nom *",
+        "gender": "Genre *",
+        "genderOther": "Autre",
+        "genderMale": "Homme",
+        "genderFemale": "Femme",
+        "phone": "Téléphone *",
+        "email": "Adresse Email *",
+        "projects": "Projets (Décrivez le projet dont vous êtes le plus fier) *",
+        "resume": "CV (PDF, DOC/DOCX) *",
+        "successTitle": "Candidature envoyée avec succès !",
+        "successSubtitle": "Notre équipe examinera votre profil et reviendra vers vous très vite.",
+        "sending": "Envoi en cours...",
+        "submit": "Envoyer ma candidature",
+        "resumeRequired": "Veuillez joindre votre CV.",
+        "errorGeneric": "Une erreur s'est produite lors de l'envoi de votre candidature.",
+        "locations": {
+            "remote": "En ligne",
+            "hybrid": "Hybride",
+            "onsite": "En présentiel"
         }
     },
     "seo": {

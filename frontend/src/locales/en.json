@@ -6,6 +6,7 @@
         "services": "Services",
         "blog": "Blog",
         "team": "Team",
+        "careers": "Careers",
         "contact": "Contact Us"
     },
     "home": {
@@ -125,6 +126,16 @@
                 "title": "DigiScia Store",
                 "desc": "E-commerce platform for computer hardware, electronics and digital products.",
                 "cat": "E-commerce"
+            },
+            "quotidien": {
+                "title": "SimpleOQuotidien",
+                "desc": "Mobile application to find everyday services.",
+                "cat": "Mobile"
+             },
+             "datahub": {
+                "title": "EchoDataHub",
+                "desc": "Platform for collecting textual and vocal data of under-resourced languages.",
+                "cat": "Data"
             }
         }
     },
@@ -213,6 +224,44 @@
             "tip1": "Discover our latest innovations and ongoing projects",
             "tip2": "Stay informed about tech trends and industry news",
             "tip3": "Explore our success stories and client testimonials"
+        }
+    },
+    "careers": {
+        "badge": "JOIN US",
+        "title": "Careers",
+        "subtitle": "Discover our job openings and help shape the future of digital with DigiScia.",
+        "loading": "Loading job offers...",
+        "noOffers": "No job offers are currently available. Check back soon!",
+        "details": "Details",
+        "apply": "Apply",
+        "expired": "Expired",
+        "expiredOffer": "Offer expired",
+        "published": "Published on",
+        "deadline": "Deadline",
+        "close": "Close",
+        "modalTitle": "Apply: {{title}}",
+        "formTitle": "Application Form",
+        "formSubtitle": "Please fill in the information below to submit your application.",
+        "firstName": "First Name *",
+        "lastName": "Last Name *",
+        "gender": "Gender *",
+        "genderOther": "Other",
+        "genderMale": "Male",
+        "genderFemale": "Female",
+        "phone": "Phone *",
+        "email": "Email Address *",
+        "projects": "Projects (Describe the project you are most proud of) *",
+        "resume": "CV (PDF, DOC/DOCX) *",
+        "successTitle": "Application sent successfully!",
+        "successSubtitle": "Our team will review your profile and get back to you very soon.",
+        "sending": "Sending in progress...",
+        "submit": "Send my application",
+        "resumeRequired": "Please attach your resume.",
+        "errorGeneric": "An error occurred while sending your application.",
+        "locations": {
+            "remote": "Remote",
+            "hybrid": "Hybrid",
+            "onsite": "On-site"
         }
     },
     "seo": {

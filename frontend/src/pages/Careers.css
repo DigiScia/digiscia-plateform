@@ -340,26 +340,324 @@ select.form-input option {
   font-size: 1.1rem;
 }
 
+/* ==================================
+   GRILLE DES OFFRES (CARDS)
+===================================== */
+.premium-jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.premium-job-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.premium-job-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(91, 124, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 15px 35px rgba(91, 124, 255, 0.15), 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.premium-job-card.expired {
+  opacity: 0.7;
+}
+
+.premium-job-card .card-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+
+.card-job-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.premium-job-card:hover .card-job-icon {
+  transform: scale(1.05);
+}
+
+.card-job-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-job-icon-placeholder {
+  font-size: 1.6rem;
+}
+
+.card-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-job-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-job-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.meta-badge.deadline {
+  background: rgba(255, 183, 77, 0.1);
+  border-color: rgba(255, 183, 77, 0.2);
+  color: #FFB74D;
+}
+
+.premium-job-card .card-body {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.card-job-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-tertiary);
+}
+
+.premium-job-card .card-footer {
+  display: flex;
+  gap: 1rem;
+}
+
+.details-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.details-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.premium-job-card .apply-btn {
+  flex: 1;
+}
+
+/* ==================================
+   MODALE DE DÉTAILS DE L'OFFRE
+===================================== */
+.job-details-modal {
+  background: var(--bg-secondary, #1a1a2e);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  animation: modalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-details-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 3rem 3rem 1.5rem;
+}
+
+.drawer-header-top {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.2rem;
+  padding-right: 3.5rem; /* Évite de chevaucher le bouton de fermeture */
+}
+
+.drawer-job-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-job-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.drawer-title-container {
+  flex: 1;
+}
+
+.drawer-header {
+  margin-bottom: 1.5rem;
+}
+
+.drawer-job-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+
+.drawer-job-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.drawer-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.drawer-deadline {
+  color: #FFB74D;
+  font-weight: 500;
+}
+
+.drawer-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  margin-bottom: 2rem;
+}
+
+.drawer-body {
+  padding-bottom: 2rem;
+}
+
+.job-description-iframe {
+  width: 100%;
+  border: none;
+  background: transparent;
+  overflow: hidden;
+  transition: height 0.2s ease;
+}
+
+.job-description-text {
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.job-details-modal-footer {
+  padding: 1.5rem 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.job-details-modal-footer .details-btn.secondary {
+  flex: none;
+  width: auto;
+  padding: 0.75rem 2rem;
+}
+
+.job-details-modal-footer .apply-btn {
+  flex: none;
+  width: auto;
+  padding: 0.75rem 2.5rem;
+}
+
+/* ==================================
+   RESPONSIVE DESIGN (MOBILE)
+===================================== */
 @media (max-width: 768px) {
-  .job-card {
-    flex-direction: column;
-    align-items: flex-start;
+  .premium-jobs-grid {
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
-  .job-card-image {
-    width: 100%;
-    height: 200px;
-    margin-right: 0;
+
+  .job-details-modal {
+    max-height: 90vh;
+    border-radius: 16px;
+    margin: 1rem;
   }
-  
-  .job-card-action {
-    margin-left: 0;
-    width: 100%;
+
+  .modal-details-content {
+    padding: 3rem 1.5rem 1.5rem;
   }
-  
-  .apply-btn {
-    width: 100%;
+
+  .drawer-header-top {
+    gap: 1rem;
+  }
+
+  .drawer-job-title {
+    font-size: 1.4rem;
+  }
+
+  .drawer-job-meta {
+    gap: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .job-details-modal-footer {
+    padding: 1.2rem 1.5rem;
   }
 
   .form-row {

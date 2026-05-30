@@ -11,6 +11,8 @@ import {
 import academy from "../assets/projects/academy.png";
 import media from "../assets/projects/media.png";
 import store from "../assets/projects/store.svg";
+import quotidien from "../assets/projects/quotidien.svg";
+import echodata from "../assets/projects/echodata.ico";
 
 import "./Projects.css";
 
@@ -44,7 +46,24 @@ function Projects() {
       category: t('projects.items.store.cat'),
       image: store,
       link: "https://store.digiscia.com" 
-    }
+    },
+    {
+      id: 4,
+      title: t('projects.items.datahub.title'),
+      description: t('projects.items.datahub.desc'),
+      category: t('projects.items.datahub.cat'),
+      image: echodata,
+      link: "https://echodatahub.digiscia.com" 
+    },
+    {
+      id: 5,
+      title: t('projects.items.quotidien.title'),
+      description: t('projects.items.quotidien.desc'),
+      category: t('projects.items.quotidien.cat'),
+      image: quotidien,
+      link: "https://simpleoquotidien.digiscia.com" 
+    },
+
   ], [t]);
 
   const [projects, setProjects] = useState([]);
