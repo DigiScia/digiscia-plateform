@@ -225,7 +225,7 @@ if USE_R2:
     AWS_DEFAULT_ACL = None
     
     if AWS_S3_CUSTOM_DOMAIN:
-        AWS_S3_URL_PROTOCOL = "https"
+        AWS_S3_URL_PROTOCOL = "https:"
         MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     else:
         MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
