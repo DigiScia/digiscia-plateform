@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Ajout de useNavigate
-import axios from 'axios';
+import api from '../../api';
 import Footer from '../components/Footer/Footer.jsx'; // Import du Footer
 import './ArticleView.css'; // Import du nouveau CSS
 
@@ -35,8 +35,7 @@ function ArticleView() {
       setLoading(true);
       setError(null);
       try {
-        // **IMPORTANT**: Assurez-vous que l'URL de votre API est correcte
-        const response = await axios.get(`http://127.0.0.1:8000/api/v1/news/${id}/`);
+        const response = await api.get(`/api/v1/news/${id}/`);
         setArticle(response.data);
       } catch (err) {
         console.error("Erreur lors de la récupération de l'article:", err);

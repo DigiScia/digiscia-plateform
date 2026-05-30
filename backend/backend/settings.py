@@ -94,8 +94,7 @@ MIDDLEWARE = [
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "digiscia-backend.fly.dev",
-    "api.digiscia.com",
+    "digiscia-corp-backend.fly.dev",
     # Ajoute le nom de l'app Fly dynamiquement si présent
     os.getenv("FLY_APP_NAME", "") + ".fly.dev" if os.getenv("FLY_APP_NAME") else "",
 ]
@@ -110,7 +109,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://digiscia.com",
     "https://www.digiscia.com",
     "https://digiscia-backend.fly.dev",
-    "https://api.digiscia.com",
     
     # --- LOCAL DEV (Vite utilise souvent 5173 ou 5174) ---
     "http://localhost:5173",

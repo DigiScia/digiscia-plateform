@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import fetchNews from "../services/newsService.js"; 
@@ -1009,7 +1009,7 @@ function News() {
   const handleSubscribe = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://127.0.0.1:8000/api/v1/suscribers/create/", { email });
+      await api.post("/api/v1/suscribers/create/", { email });
       setShowThankYou(true);
       setEmail('');
       setErrorMessage('');

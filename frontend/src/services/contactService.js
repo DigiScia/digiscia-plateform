@@ -2,7 +2,7 @@ import api from "../api"; // Importation de l'instance Axios
 
 const fetchProjects = async () => {
   try {
-    const response = await api.get("http://127.0.0.1:8000/api/services/"); // Remplace par le bon endpoint
+    const response = await api.get("/api/v1/services/"); // Remplace par le bon endpoint
     return response.data;
   } catch (error) {
     console.error("Erreur lors de la création de la prise de contact :", error);
