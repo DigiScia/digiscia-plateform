@@ -23,6 +23,18 @@ def notify_subscribers_on_new_news(sender, instance, created, **kwargs):
         domain = "https://digiscia.com" if not settings.DEBUG else "http://localhost:5173"
         article_url = f"{domain}/article/{instance.id}/{slug}"
         
+        import re
+        # 1. Supprimer complètement les blocs <style>...</style> (balises et code CSS)
+        clean_content = re.sub(r'<style\b[^>]*>([\s\S]*?)</style>', '', instance.content or '', flags=re.IGNORECASE)
+        # 2. Supprimer complètement les blocs <script>...</script> (balises et code JS)
+        clean_content = re.sub(r'<script\b[^>]*>([\s\S]*?)</script>', '', clean_content, flags=re.IGNORECASE)
+        # 3. Supprimer toutes les autres balises HTML
+        clean_content = re.sub(r'<[^>]*>', '', clean_content)
+        # 4. Nettoyer les espaces multiples et les sauts de ligne consécutifs
+        clean_content = re.sub(r'\s+', ' ', clean_content).strip()
+        
+        preview = clean_content[:300] + "..." if len(clean_content) > 300 else clean_content
+
         subject = f"📰 Nouvelle Actualité DigiScia : {instance.title}"
         message = f"""Bonjour,
 
@@ -31,7 +43,7 @@ Du nouveau sur DigiScia !
 🔹 Titre : {instance.title}
 
 📝 Aperçu :
-{instance.content[:300]}...
+{preview}
 
 🔗 Découvrez l'article complet ici :
 {article_url}
